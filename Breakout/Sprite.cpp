@@ -8,3 +8,8 @@ void Sprite::Render()
 {
 	SDL_RenderCopy(TextureManager::GetRenderer(), m_texture, NULL, &m_rect);
 }
+
+void Sprite::Operation()
+{
+	Render();
+}

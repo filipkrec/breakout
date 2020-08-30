@@ -57,7 +57,6 @@ void TextureManager::LoadText(std::string name, std::string text, int size, cons
 
 SDL_Texture* TextureManager::GetTexture(std::string name)
 {
-	
 	std::vector<std::pair <std::string, SDL_Texture*>>::iterator it = std::find_if(m_textures.begin(), m_textures.end(), 
 		[&name](const std::pair <std::string, SDL_Texture*>& x) { return x.first == name; });
 	
@@ -72,11 +71,8 @@ SDL_Texture* TextureManager::GetTexture(std::string name)
 
 void TextureManager::DeleteTexture(std::string name)
 {
-	/*
-	std::vector<std::pair <std::string, SDL_Texture*>>::iterator it = std::find_if(m_textures.begin(), m_textures.end(),
 	m_textures.erase(
 		std::remove_if(m_textures.begin(), m_textures.end(),
-			[&](const std::pair <std::string, SDL_Texture*> x) { x.first == name; }),
-		m_textures.end()));
-		*/
+			[&](const std::pair <std::string, SDL_Texture*> x) {return x.first == name; }),
+		m_textures.end());
 }

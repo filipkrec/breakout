@@ -23,62 +23,48 @@ Window::Window(Vector2 size, bool fullscreeen)
 
 void Window::GameLoop()
 {
-    const Uint32 second = 1000;
     Uint32 frameEnd = 0;
     Uint32 frameStart = 0;
-    Uint32 fps = 0;
-    Uint32 secondTime = 0;
-    Uint32 secondTimeLast = 0;
-
-    TextureManager::LoadTexture("Doggie", "image.bmp");
-    TextureManager::LoadText("TestTxt", "This is a test text!");
-
-    //Sprite msg()
-    Sprite bg(TextureManager::GetTexture("Doggie"), Vector2(500, 500), Vector2(390, 110));
-    Sprite txt(TextureManager::GetTexture("TestTxt"), Vector2(100, 100), Vector2(0, 0));
 
     while (!m_gameOver)
     {
         SDL_RenderClear(TextureManager::GetRenderer());
         frameStart = SDL_GetTicks();
 
-        secondTime = SDL_GetTicks() - secondTimeLast;
+        m_scene.Process();
+        Input();
 
-        bg.Render();
-        txt.Render();
-
-        fps++;
-
-        if (SDL_PollEvent(&m_event)) {
-            switch (m_event.type) {
-            case SDL_QUIT:
-                m_gameOver = 1;
-                break;
-
-            case SDL_KEYDOWN:
-                switch (m_event.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                case SDLK_q:
-                    m_gameOver = 1;
-                    break;
-                }
-                break;
-            }
-        }
-
-        if (secondTime >= 1000)
-        {
-            //SDL_DestroyTexture(msg);
-            secondTimeLast = SDL_GetTicks();
-            //msg = AddText(std::to_string(fps), Vector2(0, 0), 100);
-            fps = 0;
-        }
 
         SDL_RenderPresent(TextureManager::GetRenderer());
-        frameEnd = SDL_GetTicks() - frameStart;
 
+        frameEnd = SDL_GetTicks() - frameStart;
         if (1000 / 60 > frameEnd)
             SDL_Delay(1000 / 60 - frameEnd);
 
     }
+}
+
+void Window::Input()
+{
+    if (SDL_PollEvent(&m_event)) {
+        switch (m_event.type) {
+        case SDL_QUIT:
+            m_gameOver = 1;
+            break;
+
+        case SDL_KEYDOWN:
+            switch (m_event.key.keysym.sym) {
+            case SDLK_ESCAPE:
+            case SDLK_q:
+                m_gameOver = 1;
+                break;
+            }
+            break;
+        }
+    }
+}
+
+void Window::LoadScene(Scene& scene)
+{
+    m_scene = scene;
 }
