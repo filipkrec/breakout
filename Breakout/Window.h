@@ -15,6 +15,7 @@ private:
 	bool m_gameOver;
 	SDL_Window* m_window;
 public:
-	Window(Vector2 size, bool fullscreeen);
+	Window(Vector2 size, Vector2 ratio, bool fullscreeen);
+	void ResizeWindow();
 	void GameLoop();
 };

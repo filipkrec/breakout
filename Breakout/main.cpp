@@ -5,7 +5,7 @@
 
 int main(int arc, char* argv[])
 {
-    Window* winMain = new Window(Vector2(1280, 720), false);
+    Window* winMain = new Window(Vector2(1280, 720),Vector2(16,9), false);
     Scene scene;
 
     TextureManager::LoadTexture("Doggie", "image.bmp");
