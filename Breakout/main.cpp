@@ -9,13 +9,13 @@ int main(int arc, char* argv[])
     TextureManager::LoadTexture("Doggie", "image.bmp");
     TextureManager::LoadText("TestTxt", "This is a test text!");
 
-    Sprite bg(TextureManager::GetTexture("Doggie"), Vector2(500, 500), Vector2(390, 110));
-    Sprite txt(TextureManager::GetTexture("TestTxt"), Vector2(100, 100), Vector2(0, 0));
+    Sprite bg(TextureManager::GetTexture("Doggie"), Vector2(500, 500));
+    Sprite txt(TextureManager::GetTexture("TestTxt"), Vector2(100, 100));
 
-    GameObject background;
+    GameObject background(Vector2(390,110));
     background.Add(&bg);
 
-    GameObject text;
+    GameObject text(Vector2(0,0));
     text.Add(&txt);
 
     scene.Add(&text);

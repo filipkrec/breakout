@@ -1,5 +1,23 @@
 #include "GameObject.h"
 
+GameObject::GameObject(Vector2 position)
+{
+    m_position = position;
+}
+
+template <class T>
+T* GameObject::GetComponent()
+{
+    for (Component* comp : m_children)
+    {
+        if (typeid(*comp) == typeid(T))
+            return comp;
+    }
+
+    std::cout << "ERROR: no component found" << std::endl;
+    return nullptr;
+}
+
 void GameObject::Add(Component* component) {
     this->m_children.push_back(component);
     component->SetParent(this);
@@ -20,4 +38,15 @@ void GameObject::Operation() {
     for (Component* c : m_children) {
         c->Operation();
     }
+}
+
+void GameObject::Move(Vector2 movement)
+{
+    m_position.x += movement.x;
+    m_position.y += movement.y;
+}
+
+Vector2 GameObject::GetPosition()
+{
+    return m_position;
 }

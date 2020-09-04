@@ -3,7 +3,7 @@
 
 class Component {
 protected:
-    Component* parent_;
+    Component* m_parent;
 public:
     virtual ~Component() {}
     void SetParent(Component* parent);

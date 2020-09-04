@@ -1,11 +1,14 @@
 #include "Component.h"
 
 void Component::SetParent(Component* parent) {
-    this->parent_ = parent;
+    if (parent->IsComposite())
+        m_parent = parent;
 }
+
 Component* Component::GetParent() const {
-    return this->parent_;
+    return m_parent;
 }
+
 void Component::Add(Component* component) {}
 
 void Component::Remove(Component* component) {}

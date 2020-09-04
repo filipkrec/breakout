@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "TextureManager.h"
 #include "Scene.h"
+#include "Sprite.h"
 #include <string>
 
 class Window
@@ -19,4 +20,5 @@ public:
 	void GameLoop();
 	void Input();
 	void LoadScene(Scene& scene);
+	Scene& GetActiveScene();
 };

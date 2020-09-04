@@ -68,3 +68,9 @@ void Window::LoadScene(Scene& scene)
 {
     m_scene = scene;
 }
+
+
+Scene& Window::GetActiveScene()
+{
+    return m_scene;
+}
