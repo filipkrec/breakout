@@ -6,7 +6,7 @@ GameObject::GameObject(Vector2 position)
 }
 
 template <class T>
-T* GameObject::GetComponent()
+Component* GameObject::GetComponent()
 {
     for (Component* comp : m_children)
     {
@@ -35,9 +35,15 @@ bool GameObject::IsComposite() const {
 }
 
 void GameObject::Operation() {
+    Update();
+
     for (Component* c : m_children) {
         c->Operation();
     }
+}
+
+void GameObject::Update()
+{
 }
 
 void GameObject::Move(Vector2 movement)
@@ -46,7 +52,38 @@ void GameObject::Move(Vector2 movement)
     m_position.y += movement.y;
 }
 
-Vector2 GameObject::GetPosition()
+Vector2 GameObject::GetPosition() const
 {
     return m_position;
+}
+
+
+Component* GameObject::GetCollision()
+{
+    if (GetComponent<BoxCollision>())
+        return GetComponent<BoxCollision>();
+    else if (GetComponent<CircleCollision>())
+        return GetComponent<CircleCollision>();
+    else
+        return nullptr;
+
+    std::cout << "ERROR: no collision found" << std::endl;
+}
+
+Component* GameObject::GetPhysics()
+{
+    return GetComponent<Physics>();
+}
+
+
+
+void GameObject::SetPosition(Vector2 newPosition)
+{
+    m_position = newPosition;
+}
+
+void GameObject::Translate(Vector2 translationVector)
+{
+    m_position.x += translationVector.x;
+    m_position.y += translationVector.y;
 }

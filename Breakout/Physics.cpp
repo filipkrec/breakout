@@ -1,12 +1,26 @@
 #include "Physics.h"
 
+Physics::Physics() 
+	:m_speed(0),m_angle(0)
+{}
+
 void Physics::Operation()
 {
 	ResolveCollision();
 	Move();
 }
 
-Line Physics::GetCollidingLine(Vector2 position, const BoxCollision& collision)
+void Physics::SetSpeed(int units)
+{
+	m_speed = units;
+}
+
+void Physics::SetAngle(int degrees)
+{
+	m_angle = degrees;
+}
+
+Line Physics::GetCollidingLine(Vector2 position, BoxCollision& collision)
 {
 	SDL_Rect rect = collision.GetCollisionRect();
 	Vector2 A = Vector2(rect.x, rect.y);
@@ -26,27 +40,31 @@ Line Physics::GetCollidingLine(Vector2 position, const BoxCollision& collision)
 
 void Physics::ResolveCollision()
 {
-	CircleCollision* collision = ((GameObject*)m_parent)->GetComponent<CircleCollision>();
+	Component* collision = m_parent->GetCollision();
 
-	if (collision == nullptr) return;
+	if(typeid(collision) != typeid(CircleCollision*))
+		return;
 
-	std::vector<BoxCollision*>& rects = collision->GetColliding();
+	CircleCollision* circleCollision = (CircleCollision*)collision;
 
+	std::vector<BoxCollision*>& rects = circleCollision->GetColliding();
+
+	if(!rects.empty())
 	for (BoxCollision* collidingBox : rects)
 	{
-		Line collidingLine = GetCollidingLine(collision->GetPosition(), *collidingBox);
+		Line collidingLine = GetCollidingLine(circleCollision->GetPosition(), *collidingBox);
 
 		Vector2 otherVec;
 
-		Physics* otherPhys = ((GameObject*)collidingBox->GetParent())->GetComponent<Physics>();
+		Physics* otherPhys = (Physics*)collidingBox->GetParent()->GetPhysics();
 		if (otherPhys != nullptr)
 		{
-			otherVec = Vector2::AngleToVec(otherPhys->angle);
-			otherVec.Multiply(otherPhys->speed);
+			otherVec = Vector2::AngleToVec(otherPhys->m_angle);
+			otherVec.Multiply(otherPhys->m_speed);
 		}
 
-		Vector2 newVec = Vector2::AngleToVec(angle);
-		newVec.Multiply(speed);
+		Vector2 newVec = Vector2::AngleToVec(m_angle);
+		newVec.Multiply(m_speed);
 
 		if (collidingLine.a.x == collidingLine.b.x) //horizontal
 		{
@@ -59,23 +77,16 @@ void Physics::ResolveCollision()
 			newVec.x += otherVec.x;
 		}
 
-		speed = Vector2::Length(newVec);
-		angle = Vector2::VecToAngle(newVec);
+		m_speed = Vector2::Length(newVec);
+		m_angle = Vector2::VecToAngle(newVec);
 	}
 }
 
 void Physics::Move()
 {
-	Vector2 moveVector = Vector2::AngleToVec(angle);
-	moveVector.Multiply(speed);
+	Vector2 moveVector = Vector2::AngleToVec(m_angle);
+	moveVector.Multiply(m_speed);
 
-	((GameObject*)m_parent)->Move(moveVector);
-}
-
-
-template <class T>
-T* GameObject::GetComponent()
-{
-	return nullptr;
+	m_parent->Translate(moveVector);
 }
 

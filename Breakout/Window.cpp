@@ -26,41 +26,21 @@ void Window::GameLoop()
     Uint32 frameEnd = 0;
     Uint32 frameStart = 0;
 
-    while (!m_gameOver)
+    while (!Input::GameOver())
     {
         SDL_RenderClear(TextureManager::GetRenderer());
+
         frameStart = SDL_GetTicks();
 
+        Input::ProcessInput();
         m_scene.Process();
-        Input();
-
 
         SDL_RenderPresent(TextureManager::GetRenderer());
 
         frameEnd = SDL_GetTicks() - frameStart;
-        if (1000 / 60 > frameEnd)
-            SDL_Delay(1000 / 60 - frameEnd);
+        if (1000 / fpsLimit > frameEnd)
+            SDL_Delay(1000 / fpsLimit - frameEnd);
 
-    }
-}
-
-void Window::Input()
-{
-    if (SDL_PollEvent(&m_event)) {
-        switch (m_event.type) {
-        case SDL_QUIT:
-            m_gameOver = 1;
-            break;
-
-        case SDL_KEYDOWN:
-            switch (m_event.key.keysym.sym) {
-            case SDLK_ESCAPE:
-            case SDLK_q:
-                m_gameOver = 1;
-                break;
-            }
-            break;
-        }
     }
 }
 

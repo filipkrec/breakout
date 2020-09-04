@@ -1,7 +1,8 @@
 #include "CircleCollision.h"
+#include "Scene.h"
 
 CircleCollision::CircleCollision(int radius)
-	:m_radius(radius)
+	:m_radius(radius), m_colliding()
 {
 }
 
@@ -9,11 +10,16 @@ void CircleCollision::Collide()
 {
 	m_colliding.clear();
 
-	for (GameObject* go : Scene::GetActiveScene().GetObjects())
+	for (Component* go : Scene::GetActiveScene().GetObjects())
 	{
-		BoxCollision* bc = go->GetComponent<BoxCollision>();
+		Component* collision = go->GetCollision();
 
-		if (CheckCollision(bc->GetCollisionRect()))
+		BoxCollision* bc = nullptr;
+
+		if (typeid(collision) == typeid(BoxCollision))
+			bc == (BoxCollision*)collision;
+
+		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{
 			m_colliding.push_back(bc);
 		}
@@ -53,10 +59,4 @@ Vector2 CircleCollision::GetPosition()
 std::vector<BoxCollision*>& CircleCollision::GetColliding()
 {
 	return m_colliding;
-}
-
-template <class T>
-T* GameObject::GetComponent()
-{
-	return nullptr;
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "SDL.h";
-#include "GameObject.h"
 #include "Vector2.h"
 #include "TextureManager.h"
 #include "Component.h"

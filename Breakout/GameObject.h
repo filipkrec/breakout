@@ -1,13 +1,12 @@
 #pragma once
 #include "Component.h"
 #include "Vector2.h"
+#include "Input.h"
+#include "Physics.h"
+#include "BoxCollision.h"
+#include "CircleCollision.h"
 #include <iostream>
 #include <vector>
-
-class Physics;
-class Sprite;
-class BoxCollision;
-class CircleCollision;
 
 class GameObject : public Component
 {
@@ -19,7 +18,7 @@ public:
     GameObject(Vector2 position);
 
     template <class T> 
-    T* GetComponent();
+    Component* GetComponent();
 
     void Add(Component* component) override;
 
@@ -29,7 +28,14 @@ public:
 
     void Operation() override;
 
+    virtual void Update();
+
     void Move(Vector2 movement);
 
-    Vector2 GetPosition();
+    Vector2 GetPosition() const override;
+    Component* GetCollision() override;
+    Component* GetPhysics() override;
+
+    void SetPosition(Vector2 newPosition) override;
+    void Translate(Vector2 translationVector) override;
 };

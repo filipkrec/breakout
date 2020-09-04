@@ -19,5 +19,5 @@ void Sprite::Operation()
 
 Vector2 Sprite::GetPosition()
 {
-	return ((GameObject*)m_parent)->GetPosition();
+	return m_parent->GetPosition();
 }

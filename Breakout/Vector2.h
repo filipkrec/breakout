@@ -40,8 +40,10 @@ struct Vector2
 	{
 		float rads = toRadians(angle);
 		Vector2 result;
-		result.x = cos(rads);
-		result.y = sin(rads);
+		float x = cos(rads);
+		float y = sin(rads);
+		result.x = x;
+		result.y = y;
 
 		return result;
 	}

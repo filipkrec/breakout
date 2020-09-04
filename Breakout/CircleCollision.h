@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
 #include "BoxCollision.h"
 #include "Vector2.h"
 #include "Line.h"
 #include <cmath>
+#include <vector>
 
 class CircleCollision : public Component
 {
@@ -23,5 +23,5 @@ public:
 
 	std::vector<BoxCollision*>& GetColliding();
 
-	void Operation() override {};
+	void Operation() override {}
 };
