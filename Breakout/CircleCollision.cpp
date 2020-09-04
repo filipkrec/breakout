@@ -6,6 +6,11 @@ CircleCollision::CircleCollision(int radius)
 {
 }
 
+void CircleCollision::Operation()
+{
+	Collide();
+}
+
 void CircleCollision::Collide()
 {
 	m_colliding.clear();
@@ -16,8 +21,7 @@ void CircleCollision::Collide()
 
 		BoxCollision* bc = nullptr;
 
-		if (typeid(collision) == typeid(BoxCollision))
-			bc == (BoxCollision*)collision;
+		bc = dynamic_cast<BoxCollision*>(collision);
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{
@@ -29,19 +33,13 @@ void CircleCollision::Collide()
 
 bool CircleCollision::CheckCollision(const SDL_Rect& rect)
 {
-	int circleDistanceX = abs(GetPosition().x - rect.x);
-	int circleDistanceY = abs(GetPosition().y - rect.y);
+	int circleDistanceX = abs((GetPosition().x + m_radius) - (rect.x + rect.w / 2));
+	int circleDistanceY = abs((GetPosition().y + m_radius) - (rect.y + rect.h / 2));
 
 	if (circleDistanceX > (rect.w / 2 + m_radius)) { return false; }
 	if (circleDistanceY > (rect.h / 2 + m_radius)) { return false; }
 
-	if (circleDistanceX <= (rect.w / 2)) { return true; }
-	if (circleDistanceY <= (rect.h / 2)) { return true; }
-
-	int cornerDistance = (int)pow((circleDistanceX - rect.w / 2), 2) +
-		(int)pow((circleDistanceY - rect.h / 2),2);
-
-	return (cornerDistance <= (m_radius ^ 2));
+	return true;
 }
 
 

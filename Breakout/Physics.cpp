@@ -42,10 +42,10 @@ void Physics::ResolveCollision()
 {
 	Component* collision = m_parent->GetCollision();
 
-	if(typeid(collision) != typeid(CircleCollision*))
-		return;
+	CircleCollision* circleCollision = dynamic_cast<CircleCollision*>(collision);
 
-	CircleCollision* circleCollision = (CircleCollision*)collision;
+	if (!circleCollision)
+		return;
 
 	std::vector<BoxCollision*>& rects = circleCollision->GetColliding();
 
@@ -66,7 +66,7 @@ void Physics::ResolveCollision()
 		Vector2 newVec = Vector2::AngleToVec(m_angle);
 		newVec.Multiply(m_speed);
 
-		if (collidingLine.a.x == collidingLine.b.x) //horizontal
+		if (collidingLine.a.y == collidingLine.b.y) //horizontal
 		{
 			newVec.y = -newVec.y;
 			newVec.x += otherVec.x;

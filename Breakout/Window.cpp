@@ -33,7 +33,7 @@ void Window::GameLoop()
         frameStart = SDL_GetTicks();
 
         Input::ProcessInput();
-        m_scene.Process();
+        Scene::GetActiveScene().Process();
 
         SDL_RenderPresent(TextureManager::GetRenderer());
 
@@ -42,15 +42,4 @@ void Window::GameLoop()
             SDL_Delay(1000 / fpsLimit - frameEnd);
 
     }
-}
-
-void Window::LoadScene(Scene& scene)
-{
-    m_scene = scene;
-}
-
-
-Scene& Window::GetActiveScene()
-{
-    return m_scene;
 }

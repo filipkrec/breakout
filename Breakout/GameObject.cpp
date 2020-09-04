@@ -14,7 +14,7 @@ Component* GameObject::GetComponent()
             return comp;
     }
 
-    std::cout << "ERROR: no component found" << std::endl;
+    // std::cout << "ERROR: no component found" << typeid(T).name() << std::endl;
     return nullptr;
 }
 

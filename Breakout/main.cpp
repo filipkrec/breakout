@@ -1,6 +1,7 @@
 #include "SDL.h"
 #include "Window.h"
 #include "Paddle.h"
+#include "Ball.h"
 
 int main(int arc, char* argv[])
 {
@@ -20,12 +21,14 @@ int main(int arc, char* argv[])
     text.Add(&txt);
 
     Paddle paddle;
+    Ball ball;
 
-    scene.Add(&text);
     scene.Add(&background);
+    scene.Add(&text);
     scene.Add(&paddle);
+    scene.Add(&ball);
 
-    winMain->LoadScene(scene);
+    Scene::LoadScene(scene);
     winMain->GameLoop();
 
     SDL_Quit();

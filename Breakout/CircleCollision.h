@@ -23,5 +23,5 @@ public:
 
 	std::vector<BoxCollision*>& GetColliding();
 
-	void Operation() override {}
+	void Operation() override;
 };

@@ -1,6 +1,6 @@
 #pragma once
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 struct Vector2
 {
@@ -32,7 +32,7 @@ struct Vector2
 
 	static int VecToAngle(const Vector2& vectorDistanceToOther)
 	{
-		float rads = atanf(vectorDistanceToOther.y / vectorDistanceToOther.x);
+		float rads = std::atan2(vectorDistanceToOther.y , vectorDistanceToOther.x);
 		return toDegrees(rads);
 	}
 
