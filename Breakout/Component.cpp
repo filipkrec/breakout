@@ -17,7 +17,7 @@ bool Component::IsComposite() const {
     return false;
 }
 
-Vector2 Component::GetPosition() const { return Vector2::Zero(); }
+Vector2 Component::GetPosition() const { return m_parent->GetPosition(); }
 
 void Component::SetPosition(Vector2 newPosition) {}
 void Component::Translate(Vector2 translationVector) {}

@@ -98,5 +98,20 @@ void Physics::Move()
 	moveVector.Multiply(m_speed);
 
 	m_parent->Translate(moveVector);
+
+	//paddle collision with walls
+	BoxCollision* bc = dynamic_cast<BoxCollision*>(m_parent->GetCollision());
+	if(bc)
+	{
+		if(bc->Collided())
+		{
+			const Rect& rect = bc->GetCollisionRect();
+			const Rect& collidedRect = bc->GetCollidedRect();
+			if (m_angle == 0) //right collision
+				m_parent->SetPosition(Vector2(collidedRect.x - rect.w - 1, rect.y));
+			else
+				m_parent->SetPosition(Vector2(collidedRect.x + collidedRect.w + 1, rect.y));
+		}
+	}
 }
 

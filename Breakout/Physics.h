@@ -21,7 +21,5 @@ public:
 private:
 	bool CollidingLineHorizontal(Vector2 position, BoxCollision& collision);
 	void ResolveCollision();
-	void OnCircleEnterBox();
-	void OnCircleExitBox();
 	void Move();
 };

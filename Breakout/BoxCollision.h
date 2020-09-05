@@ -8,11 +8,18 @@
 class BoxCollision : public Component
 {
 	Rect m_rect;
+	Rect m_collidedRect;
 
 public:
 	BoxCollision(Vector2 size);
 
 	const Rect& GetCollisionRect();
 
+	const Rect& GetCollidedRect() const;
+
 	void Operation() override {};
+
+	bool Collided();
+
+	bool CheckCollision(const Rect& rect);
 };
