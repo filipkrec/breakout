@@ -1,5 +1,10 @@
 #include "GameObject.h"
 
+GameObject::GameObject()
+{
+
+}
+
 GameObject::GameObject(Vector2 position)
 {
     m_position = position;

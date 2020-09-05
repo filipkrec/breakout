@@ -15,7 +15,7 @@ public:
 
 	void Collide();
 
-	bool CheckCollision(const SDL_Rect& rect);
+	bool CheckCollision(const Rect& rect);
 
 	int GetRadius();
 

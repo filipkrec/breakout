@@ -31,7 +31,7 @@ void CircleCollision::Collide()
 }
 
 
-bool CircleCollision::CheckCollision(const SDL_Rect& rect)
+bool CircleCollision::CheckCollision(const Rect& rect)
 {
 	int circleDistanceX = abs((GetPosition().x + m_radius) - (rect.x + rect.w / 2));
 	int circleDistanceY = abs((GetPosition().y + m_radius) - (rect.y + rect.h / 2));

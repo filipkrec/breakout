@@ -9,6 +9,7 @@ class Physics : public Component
 {
 	int m_speed;
 	int m_angle;
+	bool m_collisionResolved;
 
 public:
 	Physics();
@@ -18,7 +19,9 @@ public:
 	void SetAngle(int degrees);
 
 private:
-	Line GetCollidingLine(Vector2 position, BoxCollision& collision);
+	bool CollidingLineHorizontal(Vector2 position, BoxCollision& collision);
 	void ResolveCollision();
+	void OnCircleEnterBox();
+	void OnCircleExitBox();
 	void Move();
 };

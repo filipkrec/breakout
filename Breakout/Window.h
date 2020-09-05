@@ -14,8 +14,9 @@ private:
 	const Uint32 fpsLimit = 60;
 	bool m_gameOver;
 	SDL_Window* m_window;
+	Vector2 m_resolution;
 public:
-	Window(Vector2 size, Vector2 ratio, bool fullscreeen);
+	Window(Vector2 size, bool fullscreeen);
 	void ResizeWindow();
 	void GameLoop();
 };

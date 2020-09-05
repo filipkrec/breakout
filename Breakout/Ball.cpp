@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 Ball::Ball()
-	:GameObject(Vector2(500, 0))
+	:GameObject(Vector2(775, 425))
 {
     const int rad = 25;
 
@@ -10,8 +10,8 @@ Ball::Ball()
     Add(new Physics());
     Add(new CircleCollision(rad));
 
-    ((Physics*)GetComponent<Physics>())->SetSpeed(1);
-    ((Physics*)GetComponent<Physics>())->SetAngle(90);
+    ((Physics*)GetComponent<Physics>())->SetSpeed(4);
+    ((Physics*)GetComponent<Physics>())->SetAngle(270);
 }
 
 void Ball::Update()

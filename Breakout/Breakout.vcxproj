@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BoxCollision.cpp" />
     <ClCompile Include="CircleCollision.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arena.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BoxCollision.h" />
     <ClInclude Include="CircleCollision.h" />

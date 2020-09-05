@@ -1,10 +1,10 @@
 #include "Paddle.h"
 
 Paddle::Paddle()
-    :GameObject(Vector2(680, 600))
+    :GameObject(Vector2(725, 100))
 {
-    const int width = 200;
-    const int height = 50;
+    const int width = 150;
+    const int height = 20;
 
     TextureManager::LoadTexture("Paddle", "Green.png");
     Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(width, height)));
@@ -14,13 +14,13 @@ Paddle::Paddle()
 
 void Paddle::Update()
 {
-    if(GetComponent<Physics>())
-    if (Input::Pressed(SDLK_LEFT))
+    if (GetComponent<Physics>())
+    if (Input::Pressed(SDLK_LEFT) || Input::Pressed(SDLK_a))
     {
         ((Physics*)GetComponent<Physics>())->SetSpeed(35);
         ((Physics*)GetComponent<Physics>())->SetAngle(180);
     }
-    else if (Input::Pressed(SDLK_RIGHT))
+    else if (Input::Pressed(SDLK_RIGHT) || Input::Pressed(SDLK_d))
     {
         ((Physics*)GetComponent<Physics>())->SetSpeed(35);
         ((Physics*)GetComponent<Physics>())->SetAngle(0);

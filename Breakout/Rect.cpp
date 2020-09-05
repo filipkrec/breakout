@@ -16,11 +16,15 @@ Rect::Rect(Vector2 position, Vector2 size)
 
 SDL_Rect Rect::SDLRect()
 {
-	return SDL_Rect{ (int)((float)x * ratioX), (int)((float)y * ratioY), (int)((float)w * ratioX), (int)((float)h * ratioY) };
+	return SDL_Rect{ 
+		(int)((float)	x * ratioX	), 
+		(int)((float)	(900  - y - h) * ratioY		),
+		(int)((float)   w * ratioX				),
+		(int)((float)   h * ratioY				) };
 }
 
-void Rect::SDL_SetRatio(Vector2 ratio, Vector2 resolution)
+void Rect::SetRatio(Vector2 resolution)
 {
-	ratioX = (float)resolution.x / (ratio.x * 100);
-	ratioY = (float)resolution.y / (ratio.y * 100);
+	ratioX = (float)resolution.x / 1600;
+	ratioY = (float)resolution.y / 900;
 }

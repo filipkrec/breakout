@@ -1,17 +1,18 @@
 #pragma once
 #include "Component.h"
 #include "SDL.h"
+#include "Rect.h"
 #include "Vector2.h"
 #include <vector>
 
 class BoxCollision : public Component
 {
-	SDL_Rect m_rect;
+	Rect m_rect;
 
 public:
 	BoxCollision(Vector2 size);
 
-	const SDL_Rect& GetCollisionRect();
+	const Rect& GetCollisionRect();
 
 	void Operation() override {};
 };

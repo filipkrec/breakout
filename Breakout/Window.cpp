@@ -3,7 +3,7 @@
 #include "Rect.h"
 #include <iostream>
 
-Window::Window(Vector2 size, Vector2 ratio, bool fullscreeen) 
+Window::Window(Vector2 size, bool fullscreeen) 
     : m_gameOver(false)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -15,6 +15,9 @@ Window::Window(Vector2 size, Vector2 ratio, bool fullscreeen)
 
 	m_window = SDL_CreateWindow("SDL Test", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, size.x, size.y, flag);
+
+    m_resolution = size;
+    Rect::SetRatio(size);
 
 	//renderer
 	TextureManager::SetRenderer(SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED));
@@ -51,5 +54,5 @@ void Window::GameLoop()
 
 void Window::ResizeWindow()
 {
-    Rect::SDL_SetRatio(Vector2(16, 9), Vector2(Input::GetWindowEventValues().x, Input::GetWindowEventValues().y));
+    Rect::SetRatio(Vector2(Input::GetWindowEventValues().x, Input::GetWindowEventValues().y));
 }

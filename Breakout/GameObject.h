@@ -15,6 +15,8 @@ protected:
     Vector2 m_position;
 
 public:
+    GameObject();
+
     GameObject(Vector2 position);
 
     template <class T> 

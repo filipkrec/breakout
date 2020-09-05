@@ -1,11 +1,11 @@
 #include "BoxCollision.h"
 
 BoxCollision::BoxCollision(Vector2 size)
-	:m_rect(SDL_Rect{0,0,size.x,size.y})
+	:m_rect(Rect(Vector2::Zero(),size))
 {
 }
 
-const SDL_Rect& BoxCollision::GetCollisionRect()
+const Rect& BoxCollision::GetCollisionRect()
 {
 	m_rect.x = m_parent->GetPosition().x;
 	m_rect.y = m_parent->GetPosition().y;
