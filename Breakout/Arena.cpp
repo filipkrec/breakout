@@ -3,7 +3,6 @@
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* texture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
 {
-
     const int padding = 25;
     const int wallThickness = 50;
 
@@ -20,7 +19,7 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
     const int originLeft = leftoverWidth / 2;
     const int originRight = leftoverWidth / 2 + levelWidth + wallThickness;
     const int horOriginBot = padding;
-    const int vertOriginBot = padding + wallThickness;
+    const int vertOriginBot = padding + wallThickness - 1;
     const int horWallWidth = levelWidth + wallThickness * 2;
     const int vertWallHeight = levelHeight;
     const int originTop = vertOriginBot + levelHeight;

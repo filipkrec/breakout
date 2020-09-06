@@ -7,10 +7,15 @@
 
 int main(int arc, char* argv[])
 {
-    const int unitsX = 1600;
-    const int unitsY = 900;
+    int unitsX = 1600;
+    int unitsY = 900;
+    Scene menu;
 
-    Window* winMain = new Window(Vector2(1200, 720), false);
+
+
+    Window* winMain = new Window(Vector2(1600, 900), false);
+     
+
     Scene scene;
 
     TextureManager::LoadTexture("BGTexture", "BackgroundTexture.jpg");

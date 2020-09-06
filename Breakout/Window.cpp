@@ -28,8 +28,9 @@ void Window::GameLoop()
     Uint32 frameEnd = 0;
     Uint32 frameStart = 0;
 
-    while (!Input::GameOver())
+    while (Input::Running())
     {
+        Input::Clear();
         SDL_RenderClear(TextureManager::GetRenderer());
 
         frameStart = SDL_GetTicks();
@@ -38,6 +39,7 @@ void Window::GameLoop()
             ResizeWindow();
 
         Input::ProcessInput();
+
         Scene::GetActiveScene().Process();
 
         SDL_RenderPresent(TextureManager::GetRenderer());

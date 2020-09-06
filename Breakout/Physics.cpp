@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "Input.h"
 
 Physics::Physics() 
 	:m_speed(0),m_angle(0),m_collisionResolved(false)
@@ -6,9 +7,12 @@ Physics::Physics()
 
 void Physics::Operation()
 {
-	ResolveCollision();
+	if (!Input::Paused())
+	{
+		ResolveCollision();
 
-	Move();
+		Move();
+	}
 }
 
 void Physics::SetSpeed(int units)

@@ -31,4 +31,9 @@ void Paddle::Update()
         ((Physics*)GetComponent<Physics>())->SetAngle(0);
     }
 
+    if (Input::Clicked(SDLK_p))
+    {
+        Input::TogglePause();
+    }
+
 }
