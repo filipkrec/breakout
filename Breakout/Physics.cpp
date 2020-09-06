@@ -55,7 +55,7 @@ void Physics::ResolveCollision()
 			m_collisionResolved = true;
 			for (BoxCollision* collidingBox : rects)
 			{
-
+				collidingBox->OnCollision(this);
 				Vector2 circleCenter;
 				circleCenter.x = (circleCollision->GetPosition().x + circleCollision->GetRadius());
 				circleCenter.y = (circleCollision->GetPosition().y + circleCollision->GetRadius());

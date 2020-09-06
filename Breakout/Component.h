@@ -22,4 +22,6 @@ public:
     virtual Vector2 GetPosition() const;
     virtual void SetPosition(Vector2 newPosition);
     virtual void Translate(Vector2 translationVector);
+
+    virtual void OnCollision(Component* collidedOther);
 };

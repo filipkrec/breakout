@@ -14,6 +14,7 @@ public:
 	std::vector<GameObject*>& GetObjects();
 	void Add(GameObject* gameObject);
 	void Destroy(GameObject* gameObject);
+	void ProcessDestroyed();
 	void Clear();
 	void Process();
 };

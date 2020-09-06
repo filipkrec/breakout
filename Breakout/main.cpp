@@ -5,21 +5,20 @@
 #include "Arena.h"
 #include "Brick.h"
 #include "Button.h"
+#include <fstream>
 
 void LoadGame();
 
 int main(int arc, char* argv[])
-{
-    
+{   
     Window* winMain = new Window(Vector2(1600, 900), false);
     Scene menu;
-    TextureManager::LoadTexture("Button", "Button.png");
+    TextureManager::LoadTexture("Button", "Textures/Buttons/Button.dds");
     TextureManager::LoadText("NewGame", "New Game!");
     Button button(TextureManager::GetTexture("Button"), TextureManager::GetTexture("NewGame"), Vector2(600, 700), Vector2(400, 100), 
         LoadGame);
     menu.Add(&button);
     Scene::LoadScene(menu);
-
 
     winMain->GameLoop();
 
@@ -33,7 +32,8 @@ void LoadGame()
     int unitsY = 900;
 
     Scene* scene = new Scene();
-    TextureManager::LoadTexture("BGTexture", "BackgroundTexture.jpg");
+    TextureManager::LoadTexture("BGTexture", "Textures/Backgrounds/Background1.dds");
+    TextureManager::LoadTexture("Board", "Textures/Boards/Board_01.dds");
 
     const int textureSize = 400;
     for (int x = 0; x < unitsX; x += textureSize)
@@ -45,12 +45,6 @@ void LoadGame()
             scene->Add(temp);
         }
 
-
-    TextureManager::LoadTexture("Doggie", "image.bmp");
-    Sprite* bg = new Sprite(TextureManager::GetTexture("Doggie"), Vector2(1050, 800));
-    GameObject* background = new GameObject(Vector2(250, 25));
-    background->Add(bg);
-
     TextureManager::LoadText("TestTxt", "This is a test text!");
     Sprite* txt = new Sprite(TextureManager::GetTexture("TestTxt"), Vector2(100, 100));
     GameObject* text = new GameObject(Vector2(0, 0));
@@ -58,13 +52,17 @@ void LoadGame()
 
     Paddle* paddle = new Paddle();
     Ball* ball = new Ball();
-    Arena* arena = new Arena(30, 20, 3, 2, TextureManager::GetTexture("Paddle"), TextureManager::GetTexture("Doggie"));
+    TextureManager::LoadTexture("Wall", "Textures/Walls/Wall.dds");
+    Arena* arena = new Arena(30, 20, 3, 2, TextureManager::GetTexture("Wall"), TextureManager::GetTexture("Board"));
 
-    scene->Add(background);
+    Brick* brick = new Brick("M", 3, 9, 1, 50, "Textures/Bricks/Brick.dds");
+    brick->SetPosition(Vector2(500, 600));
+
     arena->AddToScene(*scene);
     scene->Add(text);
     scene->Add(paddle);
     scene->Add(ball);
+    scene->Add(brick);
 
     Scene::LoadScene(*scene);
 }

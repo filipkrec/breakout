@@ -16,6 +16,7 @@ void Scene::Add(GameObject* gameObject)
 
 void Scene::Destroy(GameObject* gameObject)
 {
+	gameObject->Clear();
 	m_gameObjects.erase(
 		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
 			[&](GameObject* x) {return x == gameObject; }),
@@ -46,5 +47,13 @@ void Scene::Clear()
 	m_gameObjects.erase(
 		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
 			[&](GameObject* x) {return true; }),
+		m_gameObjects.end());
+}
+
+void Scene::ProcessDestroyed()
+{
+	m_gameObjects.erase(
+		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
+			[&](GameObject* x) {return x->ToDestroy(); }),
 		m_gameObjects.end());
 }

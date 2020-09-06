@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "IL/il.h"
 #include "Scene.h"
 #include "Input.h"
 #include <string>

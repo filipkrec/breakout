@@ -6,7 +6,7 @@ Window::Window(Vector2 size, bool fullscreeen)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
-
+    ilInit();
 	//window 
 
 	Uint32 flag = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | (fullscreeen ? SDL_WINDOW_FULLSCREEN : 0);
@@ -43,6 +43,8 @@ void Window::GameLoop()
         Scene::GetActiveScene().Process();
 
         SDL_RenderPresent(TextureManager::GetRenderer());
+
+        Scene::GetActiveScene().ProcessDestroyed();
 
         frameEnd = SDL_GetTicks() - frameStart;
         if (1000 / fpsLimit > frameEnd)

@@ -14,7 +14,10 @@ protected:
     std::vector<Component*> m_children;
     Vector2 m_position;
 
+    bool m_destroy;
 public:
+    ~GameObject();
+
     GameObject();
 
     GameObject(Vector2 position);
@@ -40,6 +43,10 @@ public:
 
     void SetPosition(Vector2 newPosition) override;
     void Translate(Vector2 translationVector) override;
+
+    void Destroy();
+    bool ToDestroy();
+    void Clear();
 
 protected:
 

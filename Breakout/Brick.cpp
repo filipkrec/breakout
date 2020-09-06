@@ -23,3 +23,13 @@ Brick* Brick::Clone(Brick& other)
 {
 	return new Brick(other);
 }
+
+void Brick::OnCollision(Component* other)
+{
+	if (m_destructible)
+	{
+		m_HP--;
+		if (m_HP == 0)
+			Destroy();
+	}
+}

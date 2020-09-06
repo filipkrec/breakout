@@ -5,7 +5,7 @@ Ball::Ball()
 {
     const int rad = 25;
 
-    TextureManager::LoadTexture("Ball", "Ball.png");
+    TextureManager::LoadTexture("Ball", "Textures/Balls/Ball1.dds");
     Add(new Sprite(TextureManager::GetTexture("Ball"), Vector2(rad * 2, rad * 2)));
     Add(new Physics());
     Add(new CircleCollision(rad));

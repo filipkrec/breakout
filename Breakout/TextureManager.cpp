@@ -1,4 +1,5 @@
 #include "TextureManager.h"
+#include "IL/il.h"
 
 std::vector<std::pair <std::string, SDL_Texture*>> TextureManager::m_textures;
 SDL_Renderer* TextureManager::m_renderer;
@@ -20,15 +21,42 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 		std::cout << "ERROR: renderer null" << std::endl;
 		return;
 	}
+	
+	std::string path =  imgLink;
+	path = "../Assets/" + imgLink;
 
-	SDL_Surface* temp = IMG_Load(imgLink.c_str());
-	SDL_Texture* tex = SDL_CreateTextureFromSurface(m_renderer, temp);
+	SDL_Texture* tex;
+	SDL_Surface* temp;
+	if (path.substr(path.size() - 4) == ".dds")
+	{
+		ILboolean ballean = ilLoadImage(std::wstring(path.begin(), path.end()).c_str());
+
+		temp = SDL_CreateRGBSurface(SDL_SWSURFACE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BITS_PER_PIXEL)
+			, 0x000000ff,0x0000ff00, 0x00ff0000,0xff000000);
+		SDL_LockSurface(temp);
+
+		try
+		{
+			ilCopyPixels(0, 0, 0, temp->w, temp->h, 1, IL_RGBA, IL_UNSIGNED_BYTE, temp->pixels);
+		}
+		catch (int e)
+		{
+			std::cout << "Unsupported image format" <<std::endl;
+		}
+		SDL_UnlockSurface(temp);
+	}
+	else
+	{
+		temp = IMG_Load(path.c_str());
+	}
+
+	tex = SDL_CreateTextureFromSurface(m_renderer, temp);
 	SDL_FreeSurface(temp);
 
 	if (tex)
 		m_textures.push_back(std::make_pair(name, tex));
 	else
-		std::cout << "ERROR: invalid link - " << imgLink << std::endl;
+		std::cout << "ERROR: invalid link - " << path << std::endl;
 
 }
 

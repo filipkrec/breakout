@@ -6,7 +6,7 @@ Paddle::Paddle()
     const int width = 150;
     const int height = 20;
 
-    TextureManager::LoadTexture("Paddle", "Green.png");
+    TextureManager::LoadTexture("Paddle", "Textures/Paddles/Paddle.dds");
     Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(width, height)));
     Add(new Physics());
     Add(new BoxCollision(Vector2(width, height)));

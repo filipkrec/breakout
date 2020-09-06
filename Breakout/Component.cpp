@@ -26,3 +26,10 @@ Component* Component::GetCircleCollision() { return m_parent -> GetCircleCollisi
 Component* Component::GetPhysics() { return m_parent->GetPhysics(); }
 Component* Component::GetBoxCollision() { return m_parent->GetBoxCollision(); }
 Component* Component::GetSprite() { return m_parent->GetSprite(); }
+void Component::OnCollision(Component* collidedOther) 
+{
+    if (m_parent != nullptr)
+    {
+        m_parent->OnCollision(collidedOther);
+    }
+}

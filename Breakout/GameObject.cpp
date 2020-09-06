@@ -1,11 +1,18 @@
 #include "GameObject.h"
 
+GameObject::~GameObject()
+{
+    Clear();
+}
+
 GameObject::GameObject()
+    : m_destroy(false)
 {
 
 }
 
 GameObject::GameObject(Vector2 position)
+    : m_destroy(false)
 {
     m_position = position;
 }
@@ -94,4 +101,23 @@ void GameObject::Translate(Vector2 translationVector)
 {
     m_position.x += translationVector.x;
     m_position.y += translationVector.y;
+}
+
+
+void GameObject::Destroy()
+{
+    m_destroy = true;
+}
+
+void GameObject::Clear()
+{
+    m_children.erase(
+        std::remove_if(m_children.begin(), m_children.end(),
+            [&](Component* x) {return true; }),
+        m_children.end());
+}
+
+bool GameObject::ToDestroy()
+{
+    return m_destroy;
 }

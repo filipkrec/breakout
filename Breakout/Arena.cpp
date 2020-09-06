@@ -2,6 +2,7 @@
 #include "Arena.h"
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* texture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
+    :background(nullptr)
 {
     const int padding = 25;
     const int wallThickness = 50;
@@ -25,42 +26,45 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
     const int originTop = vertOriginBot + levelHeight;
 
     //BotHorizontal wall
-    m_walls[0] = GameObject(Vector2(originLeft, horOriginBot));
-    m_walls[0].Add(new Sprite(texture, Vector2(horWallWidth, wallThickness)));
-    m_walls[0].Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
+    m_walls[0] = new GameObject(Vector2(originLeft, horOriginBot));
+    m_walls[0]->Add(new Sprite(texture, Vector2(horWallWidth, wallThickness)));
+    m_walls[0]->Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
 
     //TopHorizontal wall
-    m_walls[1] = GameObject(Vector2(originLeft, originTop));
-    m_walls[1].Add(new Sprite(texture, Vector2(horWallWidth, wallThickness)));
-    m_walls[1].Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
+    m_walls[1] = new GameObject(Vector2(originLeft, originTop));
+    m_walls[1]->Add(new Sprite(texture, Vector2(horWallWidth, wallThickness)));
+    m_walls[1]->Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
     
     //Left vertical wall
-    m_walls[2] = GameObject(Vector2(originLeft, vertOriginBot));
-    m_walls[2].Add(new Sprite(texture, Vector2(wallThickness, vertWallHeight)));
-    m_walls[2].Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
+    m_walls[2] = new GameObject(Vector2(originLeft, vertOriginBot));
+    m_walls[2]->Add(new Sprite(texture, Vector2(wallThickness, vertWallHeight)));
+    m_walls[2]->Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
     
     //Right vertical wall
-    m_walls[3] = GameObject(Vector2(originRight, vertOriginBot));
-    m_walls[3].Add(new Sprite(texture, Vector2(wallThickness, vertWallHeight)));
-    m_walls[3].Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
+    m_walls[3] = new GameObject(Vector2(originRight, vertOriginBot));
+    m_walls[3]->Add(new Sprite(texture, Vector2(wallThickness, vertWallHeight)));
+    m_walls[3]->Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
 
     if (backgroundTexture != nullptr)
     {
-        background = GameObject(Vector2(originLeft + wallThickness - 1, vertOriginBot));
-        background.Add(new Sprite(backgroundTexture, Vector2(levelWidth + 1, levelHeight)));
+        background = new GameObject(Vector2(originLeft + wallThickness - 1, vertOriginBot));
+        background->Add(new Sprite(backgroundTexture, Vector2(levelWidth + 1, levelHeight)));
     }
 }
 
 
 void Arena::AddToScene(Scene& scene)
 {
-    Component* comp = background.GetSprite();
+    Component* comp = nullptr;
+    if(background)
+        comp = background->GetSprite();
+
     if (comp != nullptr)
-        scene.Add(&background);
+        scene.Add(background);
 
     for (int i = 0; i < 4; ++i)
     {
-        scene.Add(&m_walls[i]);
+        scene.Add(m_walls[i]);
     }
 }
 
