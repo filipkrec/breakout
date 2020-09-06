@@ -30,8 +30,6 @@ public:
 
     void Operation() override;
 
-    virtual void Update();
-
     void Move(Vector2 movement);
 
     Vector2 GetPosition() const override;
@@ -42,4 +40,8 @@ public:
 
     void SetPosition(Vector2 newPosition) override;
     void Translate(Vector2 translationVector) override;
+
+protected:
+
+    virtual void Update();
 };

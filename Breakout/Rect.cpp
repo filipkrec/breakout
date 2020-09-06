@@ -14,7 +14,7 @@ Rect::Rect(Vector2 position, Vector2 size)
 	h = size.y;
 }
 
-SDL_Rect Rect::SDLRect()
+const SDL_Rect Rect::SDLRect() const
 {
 	return SDL_Rect{ 
 		(int)((float)	x * ratioX	), 

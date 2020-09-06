@@ -55,3 +55,13 @@ bool BoxCollision::CheckCollision(const Rect& rect)
 	return false;
 }
 
+
+bool BoxCollision::CheckPointCollision(const Vector2& point)
+{
+	const SDL_Rect& rect = GetCollisionRect().SDLRect();
+	if (point.x >= rect.x && point.x <= rect.x + rect.w && point.y >= rect.y && point.y <= rect.y + rect.h)
+		return true;
+
+	return false;
+}
+

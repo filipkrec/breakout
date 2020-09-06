@@ -37,5 +37,14 @@ Scene& Scene::GetActiveScene()
 
 void Scene::LoadScene(Scene& scene)
 {
+	m_activeScene.Clear();
 	m_activeScene = scene;
+}
+
+void Scene::Clear()
+{
+	m_gameObjects.erase(
+		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
+			[&](GameObject* x) {return true; }),
+		m_gameObjects.end());
 }

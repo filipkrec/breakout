@@ -24,4 +24,6 @@ public:
 	bool Collided();
 
 	bool CheckCollision(const Rect& rect);
+
+	bool CheckPointCollision(const Vector2& point);
 };

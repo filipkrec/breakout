@@ -4,7 +4,7 @@
 SDL_Event Input::m_event;
 std::map<Uint32, bool> Input::m_pressed;
 std::map<Uint32, bool> Input::m_clicked;
-bool Input::m_leftMousePressed = false;
+bool Input::m_leftMouseClicked = false;
 
 bool Input::m_running = true;
 bool Input::m_paused = false;
@@ -29,7 +29,7 @@ void Input::ProcessInput()
             break;
         case SDL_MOUSEBUTTONDOWN:
             if (m_event.button.button == SDL_BUTTON_LEFT)
-                m_leftMousePressed = true;
+                m_leftMouseClicked = true;
             break;
         case SDL_KEYDOWN:
             PressKey(m_event.key.keysym.sym);
@@ -98,7 +98,7 @@ bool Input::Running()
 
 void Input::Clear()
 {
-    m_leftMousePressed = false;
+    m_leftMouseClicked = false;
 
     for (auto& x : m_clicked)
     {
@@ -131,4 +131,9 @@ bool Input::Paused()
 void Input::TogglePause()
 {
     m_paused = !m_paused;
+}
+
+bool Input::LMBClicked()
+{
+    return m_leftMouseClicked;
 }

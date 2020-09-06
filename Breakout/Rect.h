@@ -16,6 +16,6 @@ public:
 
 	Rect();
 	Rect(Vector2 position, Vector2 size);
-	SDL_Rect SDLRect();
+	const SDL_Rect SDLRect() const;
 	static void SetRatio(Vector2 resolution);
 };
