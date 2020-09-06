@@ -1,12 +1,12 @@
 #pragma once
 #include "Component.h"
-#include "Vector2.h"
 #include "Input.h"
+#include "Sprite.h"
 #include "Physics.h"
 #include "BoxCollision.h"
 #include "CircleCollision.h"
 #include <iostream>
-#include <vector>
+#include <vector>=
 
 class GameObject : public Component
 {
@@ -35,8 +35,10 @@ public:
     void Move(Vector2 movement);
 
     Vector2 GetPosition() const override;
-    Component* GetCollision() override;
+    Component* GetCircleCollision() override;
     Component* GetPhysics() override;
+    Component* GetBoxCollision() override;
+    Component* GetSprite() override;
 
     void SetPosition(Vector2 newPosition) override;
     void Translate(Vector2 translationVector) override;

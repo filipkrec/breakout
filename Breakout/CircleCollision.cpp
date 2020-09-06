@@ -17,11 +17,7 @@ void CircleCollision::Collide()
 
 	for (Component* go : Scene::GetActiveScene().GetObjects())
 	{
-		Component* collision = go->GetCollision();
-
-		BoxCollision* bc = nullptr;
-
-		bc = dynamic_cast<BoxCollision*>(collision);
+		BoxCollision* bc = dynamic_cast<BoxCollision*>(go->GetBoxCollision());
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{

@@ -3,6 +3,7 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Arena.h"
+#include "Brick.h"
 
 int main(int arc, char* argv[])
 {
@@ -29,6 +30,7 @@ int main(int arc, char* argv[])
     Sprite bg(TextureManager::GetTexture("Doggie"), Vector2(1050, 800));
     GameObject background(Vector2(250, 25));
     background.Add(&bg);
+
     TextureManager::LoadText("TestTxt", "This is a test text!");
     Sprite txt(TextureManager::GetTexture("TestTxt"), Vector2(100, 100));
     GameObject text(Vector2(0, 0));
@@ -36,50 +38,16 @@ int main(int arc, char* argv[])
 
     Paddle paddle;
     Ball ball;
-
-    //Arena
-    const int levelHeight = 750;
-    const int levelWidth = 1300;
-    const int wallThickness = 50;
-    const int padding = 25;
-    const int leftoverWidth = unitsX - levelWidth - wallThickness * 2;
-    const int originLeft = leftoverWidth / 2;
-    const int originRight = leftoverWidth / 2 + levelWidth + wallThickness;
-    const int horOriginBot = padding;
-    const int vertOriginBot = padding + wallThickness;
-    const int horWallWidth = levelWidth + wallThickness * 2;
-    const int vertWallHeight = levelHeight;
-    const int originTop = vertOriginBot + levelHeight;
-
-    GameObject wallB(Vector2(originLeft, horOriginBot));
-    wallB.Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(horWallWidth, wallThickness)));
-    wallB.Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
-
-    GameObject wallT(Vector2(originLeft, originTop));
-    wallT.Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(horWallWidth, wallThickness)));
-    wallT.Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
-
-    GameObject wallL(Vector2(originLeft, vertOriginBot));
-    wallL.Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(wallThickness, vertWallHeight)));
-    wallL.Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
-
-    GameObject wallR(Vector2(originRight, vertOriginBot));
-    wallR.Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(wallThickness, vertWallHeight)));
-    wallR.Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
+    Arena arena(30, 20, 3, 2, TextureManager::GetTexture("Paddle"), TextureManager::GetTexture("Doggie"));
 
     scene.Add(&background);
+    arena.AddToScene(scene);
     scene.Add(&text);
     scene.Add(&paddle);
     scene.Add(&ball);
 
-    scene.Add(&wallT);
-    scene.Add(&wallB);
-    scene.Add(&wallL);
-    scene.Add(&wallR);
-
     Scene::LoadScene(scene);
 
-    Arena arena();
     winMain->GameLoop();
 
     SDL_Quit();

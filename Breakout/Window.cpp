@@ -1,6 +1,4 @@
 #include "Window.h"
-#include "Sprite.h"
-#include "Rect.h"
 #include <iostream>
 
 Window::Window(Vector2 size, bool fullscreeen) 

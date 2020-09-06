@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <typeinfo>
+#include <iostream>
 
 class Physics : public Component
 {

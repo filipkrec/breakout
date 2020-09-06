@@ -5,6 +5,11 @@ Sprite::Sprite(SDL_Texture* texture, Vector2 size)
 {
 }
 
+Sprite::Sprite(Sprite& other)
+	:m_texture(other.m_texture), m_rect(other.m_rect)
+{
+}
+
 void Sprite::Render()
 {
 	m_rect.x = GetPosition().x;

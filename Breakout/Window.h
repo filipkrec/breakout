@@ -1,10 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_ttf.h"
-#include "Vector2.h"
-#include "TextureManager.h"
 #include "Scene.h"
-#include "Sprite.h"
 #include "Input.h"
 #include <string>
 

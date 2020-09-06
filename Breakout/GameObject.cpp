@@ -63,16 +63,19 @@ Vector2 GameObject::GetPosition() const
 }
 
 
-Component* GameObject::GetCollision()
+Component* GameObject::GetBoxCollision()
 {
-    if (GetComponent<BoxCollision>())
-        return GetComponent<BoxCollision>();
-    else if (GetComponent<CircleCollision>())
-        return GetComponent<CircleCollision>();
-    else
-        return nullptr;
+    return GetComponent<BoxCollision>();
+}
 
-    std::cout << "ERROR: no collision found" << std::endl;
+Component* GameObject::GetCircleCollision()
+{
+    return GetComponent<CircleCollision>();
+}
+
+Component* GameObject::GetSprite()
+{
+    return (GetComponent<Sprite>());
 }
 
 Component* GameObject::GetPhysics()

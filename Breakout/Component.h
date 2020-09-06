@@ -15,8 +15,10 @@ public:
 
     virtual void Operation() = 0;
 
-    virtual Component* GetCollision();
+    virtual Component* GetCircleCollision();
     virtual Component* GetPhysics();
+    virtual Component* GetBoxCollision();
+    virtual Component* GetSprite();
     virtual Vector2 GetPosition() const;
     virtual void SetPosition(Vector2 newPosition);
     virtual void Translate(Vector2 translationVector);

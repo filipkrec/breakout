@@ -6,6 +6,12 @@ BoxCollision::BoxCollision(Vector2 size)
 {
 }
 
+BoxCollision::BoxCollision(BoxCollision& other)
+	:m_rect(other.m_rect)
+{
+
+}
+
 const Rect& BoxCollision::GetCollisionRect()
 {
 	m_rect.x = m_parent->GetPosition().x;
@@ -26,11 +32,7 @@ bool BoxCollision::Collided()
 		if (go == m_parent)
 			continue;
 
-		Component* collision = go->GetCollision();
-
-		BoxCollision* bc = nullptr;
-
-		bc = dynamic_cast<BoxCollision*>(collision);
+		BoxCollision* bc = dynamic_cast<BoxCollision*>(go->GetBoxCollision());
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{

@@ -1,5 +1,4 @@
 #include "Physics.h"
-#include <iostream>
 
 Physics::Physics() 
 	:m_speed(0),m_angle(0),m_collisionResolved(false)
@@ -37,9 +36,7 @@ void Physics::ResolveCollision()
 	const int maxSpeed = 25;
 	const int bonusSpeedDivider = 10;
 
-	Component* collision = m_parent->GetCollision();
-
-	CircleCollision* circleCollision = dynamic_cast<CircleCollision*>(collision);
+	CircleCollision* circleCollision = dynamic_cast<CircleCollision*>(GetCircleCollision());
 
 	if (!circleCollision)
 		return;
@@ -100,7 +97,7 @@ void Physics::Move()
 	m_parent->Translate(moveVector);
 
 	//paddle collision with walls
-	BoxCollision* bc = dynamic_cast<BoxCollision*>(m_parent->GetCollision());
+	BoxCollision* bc = dynamic_cast<BoxCollision*>(GetBoxCollision());
 	if(bc)
 	{
 		if(bc->Collided())

@@ -22,5 +22,7 @@ Vector2 Component::GetPosition() const { return m_parent->GetPosition(); }
 void Component::SetPosition(Vector2 newPosition) {}
 void Component::Translate(Vector2 translationVector) {}
 
-Component* Component::GetCollision() { return nullptr; }
-Component* Component::GetPhysics() { return nullptr; }
+Component* Component::GetCircleCollision() { return m_parent -> GetCircleCollision(); }
+Component* Component::GetPhysics() { return m_parent->GetPhysics(); }
+Component* Component::GetBoxCollision() { return m_parent->GetBoxCollision(); }
+Component* Component::GetSprite() { return m_parent->GetSprite(); }

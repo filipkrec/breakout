@@ -13,6 +13,8 @@ class BoxCollision : public Component
 public:
 	BoxCollision(Vector2 size);
 
+	BoxCollision(BoxCollision& other);
+
 	const Rect& GetCollisionRect();
 
 	const Rect& GetCollidedRect() const;

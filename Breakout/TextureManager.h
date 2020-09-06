@@ -18,5 +18,4 @@ public:
 	static void LoadText(std::string name, std::string text, int size = 24, const SDL_Color& color = { 255,255,255 });
 	static SDL_Texture* GetTexture(std::string name);
 	static void DeleteTexture(std::string name);
-	static void Render();
 };

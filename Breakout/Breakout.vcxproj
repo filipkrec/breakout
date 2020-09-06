@@ -154,6 +154,7 @@
     <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BoxCollision.cpp" />
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="CircleCollision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Arena.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BoxCollision.h" />
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="CircleCollision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />

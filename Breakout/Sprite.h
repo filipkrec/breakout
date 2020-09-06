@@ -13,6 +13,8 @@ class Sprite : public Component
 public:
 	Sprite(SDL_Texture* texture, Vector2 size);
 
+	Sprite(Sprite& other);
+
 	void Render();
 
 	Vector2 GetPosition();
