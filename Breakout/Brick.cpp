@@ -1,11 +1,11 @@
 #include "Brick.h"
 
-Brick::Brick(std::string id, float height, float width, int HP, int score, std::string Texture, bool destructible)
+Brick::Brick(std::string id, float width, float height,  int HP, int score, std::string Texture, bool destructible)
 	:m_HP(HP),m_score(score),m_destructible(destructible)
 {
 	TextureManager::LoadTexture(id, Texture);
-	Add(new Sprite(TextureManager::GetTexture(id), Vector2(height * 10, width * 10)));
-	Add(new BoxCollision(Vector2(height * 10, width * 10)));
+	Add(new Sprite(TextureManager::GetTexture(id), Vector2(width * 10, height * 10)));
+	Add(new BoxCollision(Vector2(width * 10, height * 10)));
 }
 
 Brick::Brick(Brick& other)

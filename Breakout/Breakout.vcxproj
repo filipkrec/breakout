@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Libs\SDL2-2.0.12\include;$(SolutionDir)Libs\SDL2_ttf-2.0.15\include;$(SolutionDir)Libs\SDL2_image-2.0.5\include;$(SolutionDir)Libs\DevIL Windows SDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;C:\Users\ficom\source\repos\Breakout\Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\TinyXML\Include;$(SolutionDir)Libs\SDL2-2.0.12\include;$(SolutionDir)Libs\SDL2_ttf-2.0.15\include;$(SolutionDir)Libs\SDL2_image-2.0.5\include;$(SolutionDir)Libs\DevIL Windows SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\fkrec\source\repos\breakout\Libs\TinyXML\lib;$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;$(SolutionDir)Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,7 +126,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_Image.lib;DeviL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_Image.lib;DevIL.lib;ILU.lib;ILUT.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
@@ -160,6 +160,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Physics.h" />

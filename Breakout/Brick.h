@@ -11,7 +11,7 @@ class Brick : public GameObject
 	void Update() override {}
 
 public:
-	Brick(std::string id, float height, float width, int HP, int score, std::string Texture, bool destructible = true);
+	Brick(std::string id, float width, float height, int HP, int score, std::string Texture, bool destructible = true);
 	Brick(Brick& other);
 	Brick* Clone(Brick& other);
 

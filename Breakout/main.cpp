@@ -5,12 +5,18 @@
 #include "Arena.h"
 #include "Brick.h"
 #include "Button.h"
+#include "Level.h"
 #include <fstream>
 
 void LoadGame();
 
 int main(int arc, char* argv[])
 {   
+
+    Level lvl;
+    lvl.Load("test.xml");
+
+
     Window* winMain = new Window(Vector2(1600, 900), false);
     Scene menu;
     TextureManager::LoadTexture("Button", "Textures/Buttons/Button.dds");
@@ -55,7 +61,7 @@ void LoadGame()
     TextureManager::LoadTexture("Wall", "Textures/Walls/Wall.dds");
     Arena* arena = new Arena(30, 20, 3, 2, TextureManager::GetTexture("Wall"), TextureManager::GetTexture("Board"));
 
-    Brick* brick = new Brick("M", 3, 9, 1, 50, "Textures/Bricks/Brick.dds");
+    Brick* brick = new Brick("M", 9, 3, 1, 50, "Textures/Bricks/Brick.dds");
     brick->SetPosition(Vector2(500, 600));
 
     arena->AddToScene(*scene);
