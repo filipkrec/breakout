@@ -62,7 +62,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 
 void TextureManager::LoadText(std::string name, std::string text, int size, const SDL_Color& color)
 {
-	TTF_Font* font = TTF_OpenFont("ariblk.ttf", 24);
+	TTF_Font* font = TTF_OpenFont("../Assets/Fonts/ariblk.ttf", 36);
 
 	if (!font)
 	{

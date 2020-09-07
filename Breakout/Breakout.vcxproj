@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Libs\TinyXML\Include;$(SolutionDir)Libs\SDL2-2.0.12\include;$(SolutionDir)Libs\SDL2_ttf-2.0.15\include;$(SolutionDir)Libs\SDL2_image-2.0.5\include;$(SolutionDir)Libs\DevIL Windows SDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\fkrec\source\repos\breakout\Libs\TinyXML\lib;$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;$(SolutionDir)Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Libs\TinyXML\lib;$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;$(SolutionDir)Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

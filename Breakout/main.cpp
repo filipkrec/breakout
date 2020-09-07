@@ -14,8 +14,7 @@ int main(int arc, char* argv[])
 {   
 
     Level lvl;
-    lvl.Load("test.xml");
-
+    lvl.Load("../Assets/Levels/Level.xml");
 
     Window* winMain = new Window(Vector2(1600, 900), false);
     Scene menu;
