@@ -13,6 +13,7 @@ class Physics : public Component
 	bool m_collisionResolved;
 
 public:
+	~Physics() override {}
 	Physics();
 	void Operation() override;
 

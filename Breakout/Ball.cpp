@@ -10,11 +10,28 @@ Ball::Ball()
     Add(new Physics());
     Add(new CircleCollision(rad));
 
-    ((Physics*)GetComponent<Physics>())->SetSpeed(4);
-    ((Physics*)GetComponent<Physics>())->SetAngle(270);
+    SetSpeed(4);
+    SetAngle(270);
 }
 
 void Ball::Update()
 {
 
+}
+
+
+void Ball::SetSpeed(int speed)
+{
+    if (GetComponent<Physics>())
+    {
+        (static_cast<Physics*>(GetComponent<Physics>()))->SetSpeed(speed);
+    }
+}
+
+void Ball::SetAngle(int angle)
+{
+    if (GetComponent<Physics>())
+    {
+        (static_cast<Physics*>(GetComponent<Physics>()))->SetAngle(270);
+    }
 }

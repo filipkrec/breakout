@@ -1,15 +1,27 @@
 #include "Level.h"
 
+Level::~Level()
+{
+	delete m_arena;
+
+	m_brickTypes.erase(
+		std::remove_if(m_brickTypes.begin(), m_brickTypes.end(),
+			[&](Brick* x) {return true; }),
+		m_brickTypes.end());
+}
+
 void Level::Load(std::string xmlFile)
 {
-	const int brickWidth = 90;
-	const int brickHeight = 30;
+	TextureManager::LoadTexture("Wall","Textures/Walls/Wall.dds");
+	m_wallTexture = TextureManager::GetTexture("Wall");
 
 	using namespace tinyxml2;
 	XMLDocument doc;
 	if (doc.LoadFile(xmlFile.c_str()) != XML_SUCCESS)
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: load failed - " << xmlFile << std::endl;
+#endif
 		return;
 	}
 
@@ -46,7 +58,7 @@ void Level::Load(std::string xmlFile)
 				std::string breakSound = LoadStringAttribute(element, "BreakSound");
 				int breakScore = LoadIntAttribute(element, "BreakScore");
 
-				m_brickTypes.push_back(new Brick(id, brickWidth, brickHeight, hp, breakScore, texture, destructible));
+				m_brickTypes.push_back(new Brick(id, 0, 0, hp, breakScore, texture, destructible));
 			}
 		}
 
@@ -71,7 +83,9 @@ std::string Level::LoadStringAttribute(tinyxml2::XMLElement* element, std::strin
 	}
 	else
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: no" << attribute << " attribute!" << std::endl;
+#endif
 		return "Error";
 	}
 }
@@ -90,7 +104,24 @@ int Level::LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute
 	}
 	else
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: no" << attribute << " attribute!" << std::endl;
+#endif
 		return 0;
 	}
+}
+
+
+void Level::InitialiseLevel(Paddle* paddle,Ball* ball, Scene* scene)
+{
+	const int ballStartSpeed = 4;
+	const int downAngle = 90;
+
+	m_arena = new Arena(m_columnCount,m_rowCount,m_rowSpacing,m_columnSpacing,m_wallTexture,m_board,60,40);
+	m_arena->LoadBricks(m_layout, m_brickTypes);
+	m_arena->AddToScene(*scene);
+	ball->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y + 300));
+	ball->SetSpeed(ballStartSpeed);
+	ball->SetAngle(downAngle);
+	paddle->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y));
 }

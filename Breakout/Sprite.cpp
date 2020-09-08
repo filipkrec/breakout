@@ -26,3 +26,9 @@ Vector2 Sprite::GetPosition()
 {
 	return m_parent->GetPosition();
 }
+
+void Sprite::SetSize(Vector2 size)
+{
+	m_rect.w = size.x;
+	m_rect.h = size.y;
+}

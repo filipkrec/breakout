@@ -65,3 +65,9 @@ bool BoxCollision::CheckPointCollision(const Vector2& point)
 	return false;
 }
 
+void BoxCollision::SetSize(Vector2 size)
+{
+	m_rect.w = size.x;
+	m_rect.h = size.y;
+}
+

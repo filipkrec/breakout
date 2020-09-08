@@ -16,7 +16,7 @@ protected:
 
     bool m_destroy;
 public:
-    ~GameObject();
+    ~GameObject() override;
 
     GameObject();
 

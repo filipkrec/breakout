@@ -18,9 +18,22 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 {
 	if (!m_renderer)
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: renderer null" << std::endl;
+#endif
 		return;
 	}
+
+	if (std::find_if(m_textures.begin(), m_textures.end(),
+		[&name](const std::pair <std::string, SDL_Texture*>& x) { return x.first == name; })
+		!= m_textures.end())
+	{
+#ifdef _DEBUG
+		std::cout << "ERROR: texture already loaded" << std::endl;
+#endif
+		return;
+	}
+
 	
 	std::string path =  imgLink;
 	path = "../Assets/" + imgLink;
@@ -41,7 +54,9 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 		}
 		catch (int e)
 		{
+#ifdef _DEBUG
 			std::cout << "Unsupported image format" <<std::endl;
+#endif
 		}
 		SDL_UnlockSurface(temp);
 	}
@@ -56,7 +71,11 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 	if (tex)
 		m_textures.push_back(std::make_pair(name, tex));
 	else
+	{
+#ifdef _DEBUG
 		std::cout << "ERROR: invalid link - " << path << std::endl;
+#endif
+	}
 
 }
 
@@ -66,7 +85,9 @@ void TextureManager::LoadText(std::string name, std::string text, int size, cons
 
 	if (!font)
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: TTF_OpenFont - " << TTF_GetError() << std::endl;
+#endif
 		return;
 	}
 
@@ -79,7 +100,11 @@ void TextureManager::LoadText(std::string name, std::string text, int size, cons
 	if (msg)
 		m_textures.push_back(std::make_pair(name, msg));
 	else
+	{
+#ifdef _DEBUG 
 		std::cout << "ERROR: message error - " << name << std::endl;
+#endif
+	}
 }
 
 
@@ -92,7 +117,9 @@ SDL_Texture* TextureManager::GetTexture(std::string name)
 		return (*it).second;
 	else
 	{
+#ifdef _DEBUG
 		std::cout << "ERROR: No Texture Found - " << name << std::endl;
+#endif
 		return nullptr;
 	}
 }

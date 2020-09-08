@@ -11,6 +11,7 @@ class CircleCollision : public Component
 	std::vector<BoxCollision*> m_colliding;
 
 public:
+	~CircleCollision() override {}
 	CircleCollision(int radius);
 
 	void Collide();

@@ -11,6 +11,7 @@ class BoxCollision : public Component
 	Rect m_collidedRect;
 
 public:
+	~BoxCollision() override {}
 	BoxCollision(Vector2 size);
 
 	BoxCollision(BoxCollision& other);
@@ -26,4 +27,6 @@ public:
 	bool CheckCollision(const Rect& rect);
 
 	bool CheckPointCollision(const Vector2& point);
+
+	void SetSize(Vector2 size);
 };

@@ -11,6 +11,8 @@ class Sprite : public Component
 	Rect m_rect;
 
 public:
+	~Sprite() override {}
+
 	Sprite(SDL_Texture* texture, Vector2 size);
 
 	Sprite(Sprite& other);
@@ -18,6 +20,8 @@ public:
 	void Render();
 
 	Vector2 GetPosition();
+
+	void SetSize(Vector2 size);
 
 	void Operation() override;
 };
