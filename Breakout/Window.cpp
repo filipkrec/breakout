@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Level.h"
 #include <iostream>
 
 Window::Window(Vector2 size, bool fullscreeen) 

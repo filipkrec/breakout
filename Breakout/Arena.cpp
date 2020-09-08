@@ -28,7 +28,7 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
 
     if (levelWidth > screenWidth)
     {
-        m_brickWidth = (screenWidth - (padding + wallThickness) * 2) / (columnCount + columnSpacing);
+        m_brickWidth = (screenWidth - (padding + wallThickness) * 2 - columnSpacing) / (columnCount + columnSpacing);
         levelWidth = screenWidth - (padding + wallThickness) * 2;
     }
 

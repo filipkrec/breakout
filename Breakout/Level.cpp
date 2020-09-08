@@ -10,6 +10,16 @@ Level::~Level()
 		m_brickTypes.end());
 }
 
+Level::Level()
+{
+
+}
+
+Level::Level(std::string xmlFile)
+{
+	Load(xmlFile);
+}
+
 void Level::Load(std::string xmlFile)
 {
 	TextureManager::LoadTexture("Wall","Textures/Walls/Wall.dds");
@@ -112,7 +122,7 @@ int Level::LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute
 }
 
 
-void Level::InitialiseLevel(Paddle* paddle,Ball* ball, Scene* scene)
+void Level::Initialise(Paddle* paddle,Ball* ball, Scene* scene)
 {
 	const int ballStartSpeed = 4;
 	const int downAngle = 90;
@@ -124,4 +134,9 @@ void Level::InitialiseLevel(Paddle* paddle,Ball* ball, Scene* scene)
 	ball->SetSpeed(ballStartSpeed);
 	ball->SetAngle(downAngle);
 	paddle->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y));
+}
+
+void Level::ClearFromScene()
+{
+	delete m_arena;
 }

@@ -1,11 +1,7 @@
 #include "SDL.h"
 #include "Window.h"
-#include "Paddle.h"
-#include "Ball.h"
-#include "Arena.h"
-#include "Brick.h"
 #include "Button.h"
-#include "Level.h"
+#include "LevelManager.h"
 #include <fstream>
 
 void LoadGame();
@@ -34,16 +30,21 @@ void LoadGame()
     TextureManager::LoadTexture("BGTexture", "Textures/Backgrounds/Background1.dds");
     FillBackground(scene);
 
-    Paddle* paddle = new Paddle();
     Ball* ball = new Ball();
+    Paddle* paddle = new Paddle();
 
-    Level* level = new Level();
-    level->Load("../Assets/Levels/Level.xml");
-    level->InitialiseLevel(paddle,ball,scene);
-    scene->Add(paddle);
-    scene->Add(ball);
+    LevelManager::LoadLevel("../Assets/Levels/Level.xml");
+    LevelManager::LoadLevel("../Assets/Levels/Level2.xml");
+    LevelManager::SetBall(ball);
+    LevelManager::SetPaddle(paddle);
+
     Scene::LoadScene(*scene);
+    LevelManager::AddFirst();
+    Scene::GetActiveScene().Add(paddle);
+    Scene::GetActiveScene().Add(ball);
+    LevelManager::AddNext();
 }
+
 
 void FillBackground(Scene* scene)
 {

@@ -131,3 +131,11 @@ void TextureManager::DeleteTexture(std::string name)
 			[&](const std::pair <std::string, SDL_Texture*> x) {return x.first == name; }),
 		m_textures.end());
 }
+
+void TextureManager::Clear()
+{
+	m_textures.erase(
+		std::remove_if(m_textures.begin(), m_textures.end(),
+			[&](const std::pair <std::string, SDL_Texture*> x) { return true; }),
+		m_textures.end());
+}

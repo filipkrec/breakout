@@ -20,12 +20,14 @@ class Level
 	Arena* m_arena;
 	std::string m_layout;
 
-
 public:
 	~Level();
+	Level();
+	Level(std::string xmlFile);
 	void Load(std::string xmlFile);
 	std::string LoadStringAttribute(tinyxml2::XMLElement* element,std::string attribute);
 	int LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute);
 
-	void InitialiseLevel(Paddle* paddle,Ball* ball, Scene* scene);
+	void Initialise(Paddle* paddle,Ball* ball, Scene* scene);
+	void ClearFromScene();
 };
