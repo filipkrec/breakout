@@ -42,7 +42,6 @@ void LoadGame()
     LevelManager::AddFirst();
     Scene::GetActiveScene().Add(paddle);
     Scene::GetActiveScene().Add(ball);
-    LevelManager::AddNext();
 }
 
 

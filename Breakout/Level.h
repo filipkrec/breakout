@@ -29,5 +29,6 @@ public:
 	int LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute);
 
 	void Initialise(Paddle* paddle,Ball* ball, Scene* scene);
+	int GetBrickCount();
 	void ClearFromScene();
 };

@@ -1,4 +1,5 @@
 #include "Brick.h"
+#include "LevelManager.h"
 
 Brick::Brick(std::string id, float width, float height,  int HP, int score, std::string Texture, bool destructible)
 	:m_id(id),m_HP(HP),m_score(score),m_destructible(destructible)
@@ -32,7 +33,10 @@ void Brick::OnCollision(Component* other)
 	{
 		m_HP--;
 		if (m_HP == 0)
+		{
 			Destroy();
+			LevelManager::BrickDestroyed(m_score);
+		}
 	}
 }
 

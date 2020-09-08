@@ -23,6 +23,19 @@ void Scene::Destroy(GameObject* gameObject)
 		m_gameObjects.end());
 }
 
+
+void Scene::PlaceFront(GameObject* gameobject)
+{
+	for (auto it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it) {
+		if (*it == gameobject) {
+			GameObject* x = *it; // or std::move(*it)
+			m_gameObjects.erase(it);
+			m_gameObjects.push_back(x);
+			break;
+		}
+	}
+}
+
 void Scene::Process()
 {
 	for (GameObject* obj : m_gameObjects)

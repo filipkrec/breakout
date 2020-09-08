@@ -1,7 +1,7 @@
 #include "Paddle.h"
 
 Paddle::Paddle()
-    :GameObject(Vector2(725, 100))
+    :GameObject(Vector2(725, 100)), m_score(0)
 {
     const int width = 150;
     const int height = 20;
@@ -36,4 +36,9 @@ void Paddle::Update()
         Input::TogglePause();
     }
 
+}
+
+void Paddle::AddScore(int score)
+{
+    m_score += score;
 }

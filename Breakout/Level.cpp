@@ -136,6 +136,11 @@ void Level::Initialise(Paddle* paddle,Ball* ball, Scene* scene)
 	paddle->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y));
 }
 
+int Level::GetBrickCount()
+{
+	return m_arena->GetBrickCount();
+}
+
 void Level::ClearFromScene()
 {
 	delete m_arena;

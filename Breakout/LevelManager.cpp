@@ -3,6 +3,9 @@
 std::vector<Level*>::iterator LevelManager::m_currentLevel;
 std::vector<Level*> LevelManager::m_levels;
 
+int LevelManager::m_currentScore;
+int LevelManager::m_brickCount;
+
 Paddle* LevelManager::m_activePaddle;
 Ball* LevelManager::m_activeBall;
 
@@ -21,11 +24,13 @@ void LevelManager::AddFirst()
 {
 	if (m_levels.size() > 0)
 	{
+		m_currentScore = 0;
 		if (*m_currentLevel)
 			(*m_currentLevel)->ClearFromScene();
 
 		m_currentLevel = m_levels.begin();
 		(*m_currentLevel)->Initialise(m_activePaddle, m_activeBall, &Scene::GetActiveScene());
+		m_brickCount = (*m_currentLevel)->GetBrickCount();
 	}
 }
 
@@ -38,6 +43,10 @@ void LevelManager::AddNext()
 
 		m_currentLevel++;
 		(*m_currentLevel)->Initialise(m_activePaddle, m_activeBall, &Scene::GetActiveScene());
+		m_brickCount = (*m_currentLevel)->GetBrickCount();
+
+		Scene::GetActiveScene().PlaceFront(m_activePaddle);
+		Scene::GetActiveScene().PlaceFront(m_activeBall);
 	}
 }
 
@@ -65,4 +74,15 @@ void LevelManager::Clear()
 		std::remove_if(m_levels.begin(), m_levels.end(),
 			[&](const Level* x) {return true; }),
 		m_levels.end());
+}
+
+void LevelManager::BrickDestroyed(int score)
+{
+	m_currentScore += score;
+	m_brickCount--;
+
+	if (m_brickCount == 0)
+	{
+		LevelManager::AddNext();
+	}
 }

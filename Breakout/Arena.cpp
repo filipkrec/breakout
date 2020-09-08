@@ -161,3 +161,8 @@ void Arena::LoadBricks(std::string layout,const std::vector<Brick*>& brickTypes)
         }
     }
 }
+
+int Arena::GetBrickCount()
+{
+    return m_brickCount;
+}

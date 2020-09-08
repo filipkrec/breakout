@@ -26,6 +26,7 @@ public:
 	Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* wallTexture, SDL_Texture* backgroundTexture = nullptr, int brickWidth = 40, int brickHeight = 25, int screenWidth = 1600, int screenHeight = 900);
 	void AddToScene(Scene& scene);
 	void LoadBricks(std::string layout, const std::vector<Brick*>& brickTypes);
+	int GetBrickCount();
 
 	inline const int GetCenter() const { return m_centerX; }
 };
