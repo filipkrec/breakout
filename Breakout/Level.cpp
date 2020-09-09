@@ -65,7 +65,13 @@ void Level::Load(std::string xmlFile)
 					destructible = false;
 
 				std::string hitSound = LoadStringAttribute(element, "HitSound");
+
+				SoundManager::GetManager()->AddSound(id + "hit", hitSound);
+
 				std::string breakSound = LoadStringAttribute(element, "BreakSound");
+
+				SoundManager::GetManager()->AddSound(id + "break", breakSound);
+
 				int breakScore = LoadIntAttribute(element, "BreakScore");
 
 				m_brickTypes.push_back(new Brick(id, 0, 0, hp, breakScore, texture, destructible));

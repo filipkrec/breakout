@@ -29,6 +29,7 @@ Brick* Brick::Clone() const
 
 void Brick::OnCollision(Component* other)
 {
+	SoundManager::GetManager()->PlaySound(m_id + "hit");
 	if (m_destructible)
 	{
 		m_HP--;
@@ -36,6 +37,7 @@ void Brick::OnCollision(Component* other)
 		{
 			Destroy();
 			LevelManager::BrickDestroyed(m_score);
+			SoundManager::GetManager()->PlaySound(m_id + "break");
 		}
 	}
 }

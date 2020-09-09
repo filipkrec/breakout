@@ -36,6 +36,23 @@ void Scene::PlaceFront(GameObject* gameobject)
 	}
 }
 
+void Scene::LoadMusic(std::string name, std::string link)
+{
+	SoundManager::GetManager()->AddSound(name, link);
+	m_music = name;
+}
+
+void Scene::PlayMusic()
+{
+	if(!m_music.empty())
+	m_musicId = SoundManager::GetManager()->PlaySound(m_music);
+}
+
+void Scene::StopMusic()
+{
+	SoundManager::GetManager()->StopSound(m_musicId);
+}
+
 void Scene::Process()
 {
 	for (GameObject* obj : m_gameObjects)
@@ -53,10 +70,12 @@ void Scene::LoadScene(Scene& scene)
 {
 	m_activeScene.Clear();
 	m_activeScene = scene;
+	m_activeScene.PlayMusic();
 }
 
 void Scene::Clear()
 {
+	StopMusic();
 	m_gameObjects.erase(
 		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
 			[&](GameObject* x) {return true; }),

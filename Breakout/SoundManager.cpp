@@ -24,7 +24,8 @@ SoundManager::SoundManager()
 
 void SoundManager::AddSound(std::string name, std::string file)
 {
-	Mix_Chunk* sample = Mix_LoadWAV("sound.wav");
+	std::string link = "../Assets/" + file;
+	Mix_Chunk* sample = Mix_LoadWAV(link.c_str());
 
 	if (!sample)
 	{

@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Button.h"
 #include "LevelManager.h"
+#include "SoundManager.h"
 #include <fstream>
 
 void LoadGame();
@@ -13,6 +14,7 @@ int main(int arc, char* argv[])
     Scene menu;
     TextureManager::LoadTexture("Button", "Textures/Buttons/Button.dds");
     TextureManager::LoadText("NewGame", "New Game!");
+    menu.LoadMusic("MenuMusic", "Sounds/Music/MenuMusic.wav");
     Button button(TextureManager::GetTexture("Button"), TextureManager::GetTexture("NewGame"), Vector2(600, 700), Vector2(400, 100), 
         LoadGame);
     menu.Add(&button);
@@ -29,6 +31,8 @@ void LoadGame()
     Scene* scene = new Scene();
     TextureManager::LoadTexture("BGTexture", "Textures/Backgrounds/Background1.dds");
     FillBackground(scene);
+
+    scene->LoadMusic("PlayMusic", "Sounds/Music/PlayMusic.wav");
 
     Ball* ball = new Ball();
     Paddle* paddle = new Paddle();

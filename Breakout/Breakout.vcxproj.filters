@@ -79,7 +79,7 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,12 @@
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
