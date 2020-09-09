@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Libs\TinyXML\Include;$(SolutionDir)Libs\SDL2-2.0.12\include;$(SolutionDir)Libs\SDL2_ttf-2.0.15\include;$(SolutionDir)Libs\SDL2_image-2.0.5\include;$(SolutionDir)Libs\DevIL Windows SDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\TinyXML\lib;$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;$(SolutionDir)Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\SDL2_mixer-2.0.4\include;$(SolutionDir)Libs\TinyXML\Include;$(SolutionDir)Libs\SDL2-2.0.12\include;$(SolutionDir)Libs\SDL2_ttf-2.0.15\include;$(SolutionDir)Libs\SDL2_image-2.0.5\include;$(SolutionDir)Libs\DevIL Windows SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\SDL2_mixer-2.0.4\lib\x64;$(SolutionDir)Libs\TinyXML\lib;$(SolutionDir)Libs\SDL2_ttf-2.0.15\lib\x64;$(SolutionDir)Libs\SDL2-2.0.12\lib\x64;$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x64;$(SolutionDir)Libs\DevIL Windows SDK\lib\x64\unicode\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,7 +126,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_Image.lib;DevIL.lib;ILU.lib;ILUT.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_Image.lib;SDL2_mixer.lib;DevIL.lib;ILU.lib;ILUT.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
@@ -167,6 +167,7 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2.h" />
