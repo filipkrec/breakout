@@ -33,7 +33,11 @@ struct Vector2
 	static float VecToAngle(const Vector2& vectorDistanceToOther)
 	{
 		float rads = std::atan2(vectorDistanceToOther.y , vectorDistanceToOther.x);
-		return toDegrees(rads);
+		float deg = toDegrees(rads);
+		if (deg < 0)
+			deg = 360.0f + deg;
+
+		return deg;
 	}
 
 	static Vector2 AngleToVec(int angle)

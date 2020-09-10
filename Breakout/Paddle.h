@@ -4,6 +4,7 @@
 class Paddle : public GameObject 
 {
 	int m_score;
+	int m_hitCounter;
 
 public:
 	Paddle();
@@ -11,5 +12,6 @@ public:
 	
 private:
 	void Update() override;
+	virtual void OnCollisionEnterGO(Component* collidedOther) override;
 
 };

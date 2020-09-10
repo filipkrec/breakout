@@ -9,19 +9,27 @@
 class Physics : public Component
 {
 	int m_speed;
-	int m_angle;
+	float m_angle;
 	bool m_collisionResolved;
+
+	enum class Side
+	{
+		TOP, BOTTOM, LEFT, RIGHT
+	};
 
 public:
 	~Physics() override {}
 	Physics();
 	void Operation() override;
 
+	inline const int GetSpeed() const { return m_speed; }
 	void SetSpeed(int units);
-	void SetAngle(int degrees);
+	void SetAngle(float degrees);
+
+	void OnCollisionEnter(Component* collidedOther) override;
 
 private:
-	bool CollidingLineHorizontal(Vector2 position, BoxCollision& collision);
-	void ResolveCollision();
+	Side GetCollidingSide(CircleCollision& position, BoxCollision& collision);
+	void ResolveBallCollision(BoxCollision* collidedRect);
 	void Move();
 };

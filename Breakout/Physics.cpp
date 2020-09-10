@@ -9,8 +9,6 @@ void Physics::Operation()
 {
 	if (!Input::Paused())
 	{
-		ResolveCollision();
-
 		Move();
 	}
 }
@@ -20,77 +18,66 @@ void Physics::SetSpeed(int units)
 	m_speed = units;
 }
 
-void Physics::SetAngle(int degrees)
+void Physics::SetAngle(float degrees)
 {
 	m_angle = degrees;
 }
 
-bool Physics::CollidingLineHorizontal(Vector2 position, BoxCollision& collision)
+Physics::Side Physics::GetCollidingSide(CircleCollision& circle, BoxCollision& collision)
 {
-	Rect rect = collision.GetCollisionRect();
+ 	Rect rect = collision.GetCollisionRect();
 
-	if (position.x < rect.x || position.x >(rect.x + rect.w))
-		return false;
-
-	return true;
+	Vector2 circleCenter(circle.GetPosition().x + circle.GetRadius(), circle.GetPosition().y + circle.GetRadius());
+	Vector2 rectCenter = Vector2(rect.x + rect.w / 2, rect.y + rect.h / 2);
+	float angle = Vector2::VecToAngle(Vector2(circleCenter.x - rectCenter.x, circleCenter.y - rectCenter.y));
+	
+	float rectAngleA = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y - rectCenter.y));
+	float rectAngleB = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y - rectCenter.y));
+	float rectAngleC = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y + rect.h - rectCenter.y));
+	float rectAngleD = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y + rect.h - rectCenter.y));
+																									    
+	if (angle >= rectAngleA && angle <= rectAngleB)
+		return Side::BOTTOM;
+	else if
+		(angle >= rectAngleC && angle <= rectAngleD)
+		return Side::TOP;
+	else if
+		(angle > rectAngleD && angle < rectAngleA)
+		return Side::LEFT;
+	else
+		return Side::RIGHT;
 }
 
-void Physics::ResolveCollision()
+void Physics::ResolveBallCollision(BoxCollision* collidedRect)
 {
-	const int maxSpeed = 25;
-	const int bonusSpeedDivider = 10;
+	CircleCollision* thisCircle = dynamic_cast<CircleCollision*>(GetCircleCollision());
 
-	CircleCollision* circleCollision = dynamic_cast<CircleCollision*>(GetCircleCollision());
-
-	if (!circleCollision)
+	if (!thisCircle)
 		return;
 
-	std::vector<BoxCollision*>& rects = circleCollision->GetColliding();
+	const int maxSpeed = 25;
+	const int bonusSpeed = 1;
 
 
-	if (!rects.empty())
+	Vector2 newVec = Vector2::AngleToVec(m_angle);
+
+	switch (GetCollidingSide(*thisCircle, *collidedRect))
 	{
-		if (!m_collisionResolved)
-		{
-			m_collisionResolved = true;
-			for (BoxCollision* collidingBox : rects)
-			{
-				collidingBox->OnCollision(this);
-				Vector2 circleCenter;
-				circleCenter.x = (circleCollision->GetPosition().x + circleCollision->GetRadius());
-				circleCenter.y = (circleCollision->GetPosition().y + circleCollision->GetRadius());
-				CollidingLineHorizontal(circleCenter, *collidingBox);
-
-				Vector2 otherVec;
-
-				Physics* otherPhys = (Physics*)collidingBox->GetParent()->GetPhysics();
-				if (otherPhys != nullptr)
-				{
-					otherVec = Vector2::AngleToVec(otherPhys->m_angle);
-					otherVec.Multiply((otherPhys->m_speed / bonusSpeedDivider));
-				}
-
-				Vector2 newVec = Vector2::AngleToVec(m_angle);
-				newVec.Multiply(m_speed);
-
-				if (CollidingLineHorizontal(circleCenter, *collidingBox))
-				{
-					newVec.y = -newVec.y;
-					newVec.x += otherVec.x;
-				}
-				else //vertical
-				{
-					newVec.x = -newVec.x;
-					newVec.x += otherVec.x;
-				}
-
-				m_speed = Vector2::Length(newVec) > maxSpeed ? maxSpeed : Vector2::Length(newVec);
-				m_angle = Vector2::VecToAngle(newVec);
-			}
-		}
+	case Side::TOP : 
+		newVec.y = newVec.y > 0 ? newVec.y : -newVec.y;
+		break;
+	case Side::BOTTOM:
+		newVec.y = newVec.y < 0 ? newVec.y : -newVec.y;
+		break;
+	case Side::RIGHT:
+		newVec.x = newVec.x > 0 ? newVec.x : -newVec.x;
+		break;
+	case Side::LEFT:
+		newVec.x = newVec.x < 0 ? newVec.x : -newVec.x;
+		break;
 	}
-	else
-		m_collisionResolved = false;
+
+	m_angle = Vector2::VecToAngle(newVec);
 }
 
 void Physics::Move()
@@ -116,3 +103,13 @@ void Physics::Move()
 	}
 }
 
+void Physics::OnCollisionEnter(Component* collidedOther)
+{
+	CircleCollision* thisCircle = dynamic_cast<CircleCollision*>(GetCircleCollision());
+	BoxCollision* otherBox = dynamic_cast<BoxCollision*>(collidedOther);
+
+	if (thisCircle && otherBox)
+	{
+		ResolveBallCollision(otherBox);
+	}
+}

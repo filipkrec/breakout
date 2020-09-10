@@ -45,7 +45,7 @@ void Scene::LoadMusic(std::string name, std::string link)
 void Scene::PlayMusic()
 {
 	if(!m_music.empty())
-	m_musicId = SoundManager::GetManager()->PlaySound(m_music);
+	m_musicId = SoundManager::GetManager()->PlaySound(m_music,true);
 }
 
 void Scene::StopMusic()

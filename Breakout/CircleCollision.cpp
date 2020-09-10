@@ -1,8 +1,9 @@
 #include "CircleCollision.h"
 #include "Scene.h"
+#include <math.h>
 
 CircleCollision::CircleCollision(int radius)
-	:m_radius(radius), m_colliding()
+	:m_radius(radius), m_collided()
 {
 }
 
@@ -13,28 +14,54 @@ void CircleCollision::Operation()
 
 void CircleCollision::Collide()
 {
-	m_colliding.clear();
-
 	for (Component* go : Scene::GetActiveScene().GetObjects())
 	{
 		BoxCollision* bc = dynamic_cast<BoxCollision*>(go->GetBoxCollision());
 
+		std::vector<BoxCollision*>::iterator it = std::find_if(m_collided.begin(), m_collided.end(),
+			[&bc](BoxCollision* x)
+			{
+				return x == bc;
+			}
+		);
+
 		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{
-			m_colliding.push_back(bc);
+			CheckCollision(bc->GetCollisionRect());
+			if (it == m_collided.end())
+			{
+				m_collided.push_back(bc);
+				OnCollisionEnter(bc);
+				bc->OnCollisionEnter(this);
+			}
+		}
+		else if (it != m_collided.end())
+		{
+			OnCollisionExit(bc);
+			bc->OnCollisionExit(this);
+			m_collided.erase(it);
 		}
 	}
 }
 
-
 bool CircleCollision::CheckCollision(const Rect& rect)
 {
-	int circleDistanceX = abs((GetPosition().x + m_radius) - (rect.x + rect.w / 2));
-	int circleDistanceY = abs((GetPosition().y + m_radius) - (rect.y + rect.h / 2));
+	float circleDistanceX = abs((GetPosition().x + m_radius) - (rect.x + rect.w / 2));
+	float circleDistanceY = abs((GetPosition().y + m_radius) - (rect.y + rect.h / 2));
 
 	if (circleDistanceX > (rect.w / 2 + m_radius)) { return false; }
 	if (circleDistanceY > (rect.h / 2 + m_radius)) { return false; }
 
+	if (circleDistanceX <= (rect.w / 2)) { return true; }
+	if (circleDistanceY <= (rect.h / 2)) { return true; }
+
+	float closestX = (GetPosition().x < rect.x ? rect.x : (GetPosition().x > (rect.x + rect.w) ? (rect.x + rect.w) : GetPosition().x));
+	float closestY = (GetPosition().y < (rect.y + rect.h) ? (rect.y + rect.h) : (GetPosition().y > rect.y ? rect.y : GetPosition().y));
+
+	float cornerDistance_sq = pow((circleDistanceX - closestX),2) +
+		pow((circleDistanceY - closestY),2);
+
+	return (cornerDistance_sq <= pow(m_radius,2));
 	return true;
 }
 
@@ -44,13 +71,8 @@ int CircleCollision::GetRadius()
 	return m_radius;
 }
 
-Vector2 CircleCollision::GetPosition()
-{
-	return ((GameObject*)m_parent)->GetPosition();
-}
-
 
 std::vector<BoxCollision*>& CircleCollision::GetColliding()
 {
-	return m_colliding;
+	return m_collided;
 }

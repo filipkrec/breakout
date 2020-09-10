@@ -27,7 +27,7 @@ Brick* Brick::Clone() const
 	return new Brick(const_cast<Brick&>(*this));
 }
 
-void Brick::OnCollision(Component* other)
+void Brick::OnCollisionEnterGO(Component* other)
 {
 	SoundManager::GetManager()->PlaySound(m_id + "hit");
 	if (m_destructible)

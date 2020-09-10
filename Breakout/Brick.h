@@ -17,7 +17,7 @@ public:
 	Brick* Clone() const;
 
 	void setSize(Vector2 size);
-	void OnCollision(Component* other) override;
+	void OnCollisionEnterGO(Component* other) override;
 	inline const std::string GetId() const { return m_id; }
 	inline const bool IsDestructible() const { return m_destructible; }
 };

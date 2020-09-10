@@ -1,7 +1,7 @@
 #include "Paddle.h"
 
 Paddle::Paddle()
-    :GameObject(Vector2(725, 100)), m_score(0)
+    :GameObject(Vector2(725, 100)), m_score(0), m_hitCounter(0)
 {
     const int width = 150;
     const int height = 20;
@@ -41,4 +41,27 @@ void Paddle::Update()
 void Paddle::AddScore(int score)
 {
     m_score += score;
+}
+
+
+void Paddle::OnCollisionEnterGO(Component* collidedOther)
+{
+    Physics* ballPhys = dynamic_cast<Physics*>(collidedOther->GetPhysics());
+    if (ballPhys)
+    {
+        m_hitCounter++;
+        if (m_hitCounter > 5)
+        {
+            m_hitCounter = 0;
+            if (ballPhys->GetSpeed() < 20);
+            ballPhys->SetSpeed(ballPhys->GetSpeed() + 1);
+        }
+        Vector2 centerToBall =
+            Vector2(
+                static_cast<CircleCollision*>(collidedOther->GetCircleCollision())->GetCenter().x -
+                (GetPosition().x + static_cast<BoxCollision*>(GetBoxCollision())->GetCollisionRect().w/2),
+                static_cast<CircleCollision*>(collidedOther->GetCircleCollision())->GetCenter().y
+            );
+        ballPhys->SetAngle(Vector2::VecToAngle(centerToBall));
+    }
 }

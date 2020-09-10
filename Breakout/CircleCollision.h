@@ -8,7 +8,7 @@
 class CircleCollision : public Component
 {
 	int m_radius;
-	std::vector<BoxCollision*> m_colliding;
+	std::vector<BoxCollision*> m_collided;
 
 public:
 	~CircleCollision() override {}
@@ -20,7 +20,9 @@ public:
 
 	int GetRadius();
 
-	Vector2 GetPosition();
+	inline Vector2 GetPosition() const override { return m_parent->GetPosition(); }
+
+	inline const Vector2 GetCenter() const { return Vector2(GetPosition().x + m_radius / 2, GetPosition().y + m_radius); }
 
 	std::vector<BoxCollision*>& GetColliding();
 

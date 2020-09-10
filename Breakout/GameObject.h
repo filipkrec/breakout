@@ -10,6 +10,8 @@
 
 class GameObject : public Component
 {
+    bool m_collisionProcessed;
+
 protected:
     std::vector<Component*> m_children;
     Vector2 m_position;
@@ -48,7 +50,9 @@ public:
     bool ToDestroy();
     void Clear();
 
-protected:
+    void OnCollisionEnter(Component* collidedOther) override;
 
+protected:
+    virtual void OnCollisionEnterGO(Component* collidedOther);
     virtual void Update();
 };

@@ -23,5 +23,6 @@ public:
     virtual void SetPosition(Vector2 newPosition);
     virtual void Translate(Vector2 translationVector);
 
-    virtual void OnCollision(Component* collidedOther);
+    virtual void OnCollisionEnter(Component* collidedOther);
+    virtual void OnCollisionExit(Component* collidedOther);
 };

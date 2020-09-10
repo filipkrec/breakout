@@ -10,7 +10,7 @@ Ball::Ball()
     Add(new Physics());
     Add(new CircleCollision(rad));
 
-    SetSpeed(4);
+    SetSpeed(6);
     SetAngle(270);
 }
 

@@ -6,13 +6,13 @@ GameObject::~GameObject()
 }
 
 GameObject::GameObject()
-    : m_destroy(false)
+    : m_destroy(false), m_collisionProcessed(false)
 {
 
 }
 
 GameObject::GameObject(Vector2 position)
-    : m_destroy(false)
+    : m_destroy(false), m_collisionProcessed(false)
 {
     m_position = position;
 }
@@ -49,6 +49,7 @@ bool GameObject::IsComposite() const {
 void GameObject::Operation() {
     Update();
 
+    m_collisionProcessed = false;
     for (Component* c : m_children) {
         c->Operation();
     }
@@ -121,3 +122,19 @@ bool GameObject::ToDestroy()
 {
     return m_destroy;
 }
+
+
+void GameObject::OnCollisionEnter(Component* collidedOther)
+{
+    if (!m_collisionProcessed)
+    {
+        m_collisionProcessed = true;
+        for (Component* child : m_children)
+        {
+            child->OnCollisionEnter(collidedOther);
+        }
+        OnCollisionEnterGO(collidedOther);
+    }
+}
+
+void GameObject::OnCollisionEnterGO(Component* collidedOther){ }
