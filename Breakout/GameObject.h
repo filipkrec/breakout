@@ -51,6 +51,7 @@ public:
     void Clear();
 
     void OnCollisionEnter(Component* collidedOther) override;
+    void AllowCollisionProcess();
 
 protected:
     virtual void OnCollisionEnterGO(Component* collidedOther);

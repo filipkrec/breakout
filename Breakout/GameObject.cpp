@@ -48,8 +48,7 @@ bool GameObject::IsComposite() const {
 
 void GameObject::Operation() {
     Update();
-
-    m_collisionProcessed = false;
+    
     for (Component* c : m_children) {
         c->Operation();
     }
@@ -137,4 +136,11 @@ void GameObject::OnCollisionEnter(Component* collidedOther)
     }
 }
 
-void GameObject::OnCollisionEnterGO(Component* collidedOther){ }
+void GameObject::AllowCollisionProcess()
+{
+    m_collisionProcessed = false;
+}
+
+void GameObject::OnCollisionEnterGO(Component* collidedOther)
+{
+}

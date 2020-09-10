@@ -130,8 +130,8 @@ int Level::LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute
 
 void Level::Initialise(Paddle* paddle,Ball* ball, Scene* scene)
 {
-	const int ballStartSpeed = 4;
-	const int downAngle = 90;
+	const int ballStartSpeed = 20;
+	const int downAngle = 270;
 
 	m_arena = new Arena(m_columnCount,m_rowCount,m_rowSpacing,m_columnSpacing,m_wallTexture,m_board,60,40);
 	m_arena->LoadBricks(m_layout, m_brickTypes);

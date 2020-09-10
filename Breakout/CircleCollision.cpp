@@ -26,13 +26,22 @@ void CircleCollision::Collide()
 		);
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
-		{
+		{ 
 			CheckCollision(bc->GetCollisionRect());
 			if (it == m_collided.end())
 			{
-				m_collided.push_back(bc);
+				if (m_collided.size() == 2)
+				{
+					int test = m_collided.size();
+				}
+
+				static_cast<GameObject*>(this->GetParent())->AllowCollisionProcess();
 				OnCollisionEnter(bc);
+				static_cast<GameObject*>(bc->GetParent())->AllowCollisionProcess();
 				bc->OnCollisionEnter(this);
+
+				if (!static_cast<GameObject*>(bc->GetParent())->ToDestroy())
+					m_collided.push_back(bc);
 			}
 		}
 		else if (it != m_collided.end())

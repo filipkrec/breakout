@@ -46,6 +46,7 @@ void Paddle::AddScore(int score)
 
 void Paddle::OnCollisionEnterGO(Component* collidedOther)
 {
+    std::cout << "EXTRACOL" << std::endl;
     Physics* ballPhys = dynamic_cast<Physics*>(collidedOther->GetPhysics());
     if (ballPhys)
     {

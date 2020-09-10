@@ -29,13 +29,44 @@ Physics::Side Physics::GetCollidingSide(CircleCollision& circle, BoxCollision& c
 
 	Vector2 circleCenter(circle.GetPosition().x + circle.GetRadius(), circle.GetPosition().y + circle.GetRadius());
 	Vector2 rectCenter = Vector2(rect.x + rect.w / 2, rect.y + rect.h / 2);
+
 	float angle = Vector2::VecToAngle(Vector2(circleCenter.x - rectCenter.x, circleCenter.y - rectCenter.y));
 	
 	float rectAngleA = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y - rectCenter.y));
 	float rectAngleB = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y - rectCenter.y));
 	float rectAngleC = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y + rect.h - rectCenter.y));
 	float rectAngleD = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y + rect.h - rectCenter.y));
-																									    
+					
+	if (rect.x == 118, rect.y == 74, rect.w == 50, rect.h == 750)
+	{
+		std::cout << "RIGHT " << std::endl;
+		std::cout << "angle " << angle << std::endl;
+		std::cout << "A " << rectAngleA << std::endl;
+		std::cout << "B " << rectAngleB << std::endl;
+		std::cout << "C " << rectAngleC << std::endl;
+		std::cout << "D " << rectAngleD << std::endl;
+	}
+	else if (rect.x == 1431, rect.y == 74, rect.w == 50, rect.h == 750)
+	{
+		std::cout << "RIGHT " << std::endl;
+		std::cout << "angle " << angle << std::endl;
+		std::cout << "A " << rectAngleA << std::endl;
+		std::cout << "B " << rectAngleB << std::endl;
+		std::cout << "C " << rectAngleC << std::endl;
+		std::cout << "D " << rectAngleD << std::endl;
+	}
+	else 
+	{
+		std::cout << "OTHER	" << std::endl;
+		std::cout << "angle " << angle << std::endl;
+		std::cout << "A " << rectAngleA << std::endl;
+		std::cout << "B " << rectAngleB << std::endl;
+		std::cout << "C " << rectAngleC << std::endl;
+		std::cout << "D " << rectAngleD << std::endl;
+	}
+
+
+
 	if (angle >= rectAngleA && angle <= rectAngleB)
 		return Side::BOTTOM;
 	else if
