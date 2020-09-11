@@ -19,9 +19,9 @@ Window::Window(Vector2 size, bool fullscreeen)
     Rect::SetRatio(size);
 
 	//renderer
-	TextureManager::SetRenderer(SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED));
+	TextureManager::GetManager()->SetRenderer(SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED));
 
-	SDL_SetRenderDrawColor(TextureManager::GetRenderer(),0,0,0,255); //black BG
+	SDL_SetRenderDrawColor(TextureManager::GetManager()->GetRenderer(),0,0,0,255); //black BG
 }
 
 void Window::GameLoop()
@@ -32,7 +32,7 @@ void Window::GameLoop()
     while (Input::Running())
     {
         Input::Clear();
-        SDL_RenderClear(TextureManager::GetRenderer());
+        SDL_RenderClear(TextureManager::GetManager()->GetRenderer());
 
         frameStart = SDL_GetTicks();
 
@@ -43,7 +43,7 @@ void Window::GameLoop()
 
         Scene::GetActiveScene().Process();
 
-        SDL_RenderPresent(TextureManager::GetRenderer());
+        SDL_RenderPresent(TextureManager::GetManager()->GetRenderer());
 
         Scene::GetActiveScene().ProcessDestroyed();
 

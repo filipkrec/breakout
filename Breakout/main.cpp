@@ -12,10 +12,10 @@ int main(int arc, char* argv[])
 {   
     Window* winMain = new Window(Vector2(1600, 900), false);
     Scene menu;
-    TextureManager::LoadTexture("Button", "Textures/Buttons/Button.dds");
-    TextureManager::LoadText("NewGame", "New Game!");
+    TextureManager::GetManager()->LoadTexture("Button", "Textures/Buttons/Button.dds");
+    TextureManager::GetManager()->LoadText("NewGame", "New Game!");
     menu.LoadMusic("MenuMusic", "Sounds/Music/MenuMusic.wav");
-    Button button(TextureManager::GetTexture("Button"), TextureManager::GetTexture("NewGame"), Vector2(600, 700), Vector2(400, 100), 
+    Button button(TextureManager::GetManager()->GetTexture("Button"), TextureManager::GetManager()->GetTexture("NewGame"), Vector2(600, 700), Vector2(400, 100),
         LoadGame);
     menu.Add(&button);
     Scene::LoadScene(menu);
@@ -29,7 +29,7 @@ int main(int arc, char* argv[])
 void LoadGame()
 {
     Scene* scene = new Scene();
-    TextureManager::LoadTexture("BGTexture", "Textures/Backgrounds/Background1.dds");
+    TextureManager::GetManager()->LoadTexture("BGTexture", "Textures/Backgrounds/Background1.dds");
     FillBackground(scene);
 
     scene->LoadMusic("PlayMusic", "Sounds/Music/PlayMusic.wav");
@@ -58,7 +58,7 @@ void FillBackground(Scene* scene)
     for (int x = 0; x < unitsX; x += textureSize)
         for (int y = 0; y < unitsY; y += textureSize)
         {
-            Sprite* img = new Sprite(TextureManager::GetTexture("BGTexture"), Vector2(textureSize, textureSize));
+            Sprite* img = new Sprite(TextureManager::GetManager()->GetTexture("BGTexture"), Vector2(textureSize, textureSize));
             GameObject* temp = new GameObject(Vector2(x, y));
             temp->Add(img);
             scene->Add(temp);

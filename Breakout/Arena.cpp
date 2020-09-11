@@ -14,12 +14,15 @@ Arena::~Arena()
 
     m_bricks.erase(
         std::remove_if(m_bricks.begin(), m_bricks.end(),
-            [&](Brick* x) {return true; }),
+            [&](Brick* x) {
+                delete x;
+                return true; 
+            }),
         m_bricks.end());
 }
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* wallTexture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
-    :GameObject(),m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
+    :GameObject("Arena"),m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
     , m_columnCount(columnCount), m_brickCount(0), m_brickWidth(brickWidth), m_brickHeight(brickHeight)
 {
     m_minHeight = screenHeight / 3;
@@ -86,6 +89,8 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
 
 void Arena::AddToScene(Scene& scene)
 {
+    scene.Add(this);
+
     Component* comp = nullptr;
     if(m_background)
         comp = m_background->GetSprite();

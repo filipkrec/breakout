@@ -21,8 +21,8 @@ Level::Level(std::string xmlFile)
 
 void Level::Load(std::string xmlFile)
 {
-	TextureManager::LoadTexture("Wall","Textures/Walls/Wall.dds");
-	m_wallTexture = TextureManager::GetTexture("Wall");
+	TextureManager::GetManager()->LoadTexture("Wall","Textures/Walls/Wall.dds");
+	m_wallTexture = TextureManager::GetManager()->GetTexture("Wall");
 
 	using namespace tinyxml2;
 	XMLDocument doc;
@@ -42,9 +42,9 @@ void Level::Load(std::string xmlFile)
 	m_rowSpacing = LoadIntAttribute(element, "RowSpacing");
 	m_columnSpacing = LoadIntAttribute(element, "ColumnSpacing"); 
 	
-	TextureManager::LoadTexture(std::to_string(m_ordinal), 
+	TextureManager::GetManager()->LoadTexture(std::to_string(m_ordinal),
 		LoadStringAttribute(element, "BackgroundTexture"));
-	m_board = TextureManager::GetTexture(std::to_string(m_ordinal));
+	m_board = TextureManager::GetManager()->GetTexture(std::to_string(m_ordinal));
 
 	//BrickTypes
 	element = root->FirstChildElement("BrickTypes");
@@ -129,16 +129,16 @@ int Level::LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute
 
 void Level::Initialise(Paddle* paddle,Ball* ball, Scene* scene)
 {
-	const int ballStartSpeed = 20;
 	const int downAngle = 270;
 
 	m_arena = new Arena(m_columnCount,m_rowCount,m_rowSpacing,m_columnSpacing,m_wallTexture,m_board,60,40);
 	m_arena->LoadBricks(m_layout, m_brickTypes);
 	m_arena->AddToScene(*scene);
 	ball->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y + 300));
-	ball->SetSpeed(ballStartSpeed);
+	ball->SetSpeed(m_ballStartSpeed);
 	ball->SetAngle(downAngle);
-	paddle->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y));
+	float paddlewidth = static_cast<BoxCollision*>(paddle->GetBoxCollision())->GetCollisionRect().w / 2;
+	paddle->SetPosition(Vector2(m_arena->GetCenter() - paddlewidth, paddle->GetPosition().y));
 }
 
 int Level::GetBrickCount()

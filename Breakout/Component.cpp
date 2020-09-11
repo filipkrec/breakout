@@ -1,5 +1,6 @@
 #include "Component.h"
 
+
 void Component::SetParent(Component* parent) {
     if (parent->IsComposite())
         m_parent = parent;
@@ -28,6 +29,8 @@ Component* Component::GetCircleCollision() { return m_parent -> GetCircleCollisi
 Component* Component::GetPhysics() { return m_parent->GetPhysics(); }
 Component* Component::GetBoxCollision() { return m_parent->GetBoxCollision(); }
 Component* Component::GetSprite() { return m_parent->GetSprite(); }
+Component* Component::GetText() { return m_parent->GetText(); }
+
 void Component::OnCollisionEnter(Component* collidedOther)
 {
     if (m_parent != nullptr)

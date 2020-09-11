@@ -85,6 +85,13 @@ void Scene::ProcessDestroyed()
 {
 	m_gameObjects.erase(
 		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
-			[&](GameObject* x) {return x->ToDestroy(); }),
+			[&](GameObject* x) {
+				if (x->ToDestroy())
+				{
+					delete x;
+					return true;
+				}
+				return false;
+								}),
 		m_gameObjects.end());
 }

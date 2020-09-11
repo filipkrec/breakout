@@ -72,7 +72,9 @@ void LevelManager::Clear()
 
 	m_levels.erase(
 		std::remove_if(m_levels.begin(), m_levels.end(),
-			[&](const Level* x) {return true; }),
+			[&](const Level* x) {
+				delete x;
+				return true; }),
 		m_levels.end());
 }
 

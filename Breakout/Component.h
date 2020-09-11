@@ -19,6 +19,7 @@ public:
     virtual Component* GetPhysics();
     virtual Component* GetBoxCollision();
     virtual Component* GetSprite();
+    virtual Component* GetText();
     virtual Vector2 GetPosition() const;
     virtual std::string& GetName() const;
     virtual void SetPosition(Vector2 newPosition);

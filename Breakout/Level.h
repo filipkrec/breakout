@@ -8,6 +8,8 @@
 
 class Level
 {
+	const int m_ballStartSpeed = 6;
+
 	int m_ordinal;
 	int m_rowCount;
 	int m_columnCount;

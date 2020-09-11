@@ -84,7 +84,10 @@ void SoundManager::Clear()
 
 	m_sounds.erase(
 		std::remove_if(m_sounds.begin(), m_sounds.end(),
-			[&](const std::pair <std::string, Mix_Chunk*> x) { return true; }),
+			[&](const std::pair <std::string, Mix_Chunk*> x) { 
+				delete x.second;
+				return true; 
+			}),
 		m_sounds.end());
 
 	Mix_Quit();

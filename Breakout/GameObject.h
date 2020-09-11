@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "Physics.h"
 #include "BoxCollision.h"
 #include "CircleCollision.h"
@@ -46,6 +47,7 @@ public:
     Component* GetPhysics() override;
     Component* GetBoxCollision() override;
     Component* GetSprite() override;
+    Component* GetText() override;
 
     void SetPosition(Vector2 newPosition) override;
     void Translate(Vector2 translationVector) override;

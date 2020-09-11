@@ -2,6 +2,10 @@
 
 GameObject::~GameObject()
 {
+    if (m_name == "Arena")
+    {
+        std::cout << "Arena!";
+    }
     Clear();
 }
 
@@ -94,6 +98,11 @@ Component* GameObject::GetPhysics()
     return GetComponent<Physics>();
 }
 
+Component* GameObject::GetText()
+{
+    return GetComponent<Text>();
+}
+
 
 
 void GameObject::SetPosition(Vector2 newPosition)
@@ -117,7 +126,9 @@ void GameObject::Clear()
 {
     m_children.erase(
         std::remove_if(m_children.begin(), m_children.end(),
-            [&](Component* x) {return true; }),
+            [&](Component* x) {
+                delete x;
+                return true; }),
         m_children.end());
 }
 

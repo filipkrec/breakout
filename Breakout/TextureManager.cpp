@@ -1,8 +1,16 @@
 #include "TextureManager.h"
 #include "IL/il.h"
 
-std::vector<std::pair <std::string, SDL_Texture*>> TextureManager::m_textures;
-SDL_Renderer* TextureManager::m_renderer;
+TextureManager* TextureManager::m_instance;
+
+TextureManager* TextureManager::GetManager()
+{
+	if (!m_instance)
+	{
+		m_instance = new TextureManager();
+	}
+	return m_instance;
+}
 
 SDL_Renderer* TextureManager::GetRenderer()
 {
@@ -136,6 +144,8 @@ void TextureManager::Clear()
 {
 	m_textures.erase(
 		std::remove_if(m_textures.begin(), m_textures.end(),
-			[&](const std::pair <std::string, SDL_Texture*> x) { return true; }),
+			[&](const std::pair <std::string, SDL_Texture*> x) { 
+				delete x.second;
+				return true; }),
 		m_textures.end());
 }

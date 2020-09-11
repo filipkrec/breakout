@@ -4,8 +4,8 @@
 Brick::Brick(std::string id, float width, float height,  int HP, int score, std::string Texture, bool destructible)
 	:m_id(id),m_HP(HP),m_score(score),m_destructible(destructible)
 {
-	TextureManager::LoadTexture(id, Texture);
-	Add(new Sprite(TextureManager::GetTexture(id), Vector2(width, height)));
+	TextureManager::GetManager()->LoadTexture(id, Texture);
+	Add(new Sprite(TextureManager::GetManager()->GetTexture(id), Vector2(width, height)));
 	Add(new BoxCollision(Vector2(width, height)));
 }
 

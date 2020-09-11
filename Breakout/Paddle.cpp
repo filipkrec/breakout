@@ -2,14 +2,14 @@
 #include "Arena.h"
 
 Paddle::Paddle()
-    :GameObject("Paddle",Vector2(725, 100)), m_score(0), m_hitCounter(0)
+    :GameObject("Paddle",Vector2(625, 100)), m_score(0), m_hitCounter(0)
 {
     const int width = 150;
     const int height = 20;
 
-    TextureManager::LoadTexture("Paddle", "Textures/Paddles/Paddle.dds");
+    TextureManager::GetManager()->LoadTexture("Paddle", "Textures/Paddles/Paddle.dds");
     SoundManager::GetManager()->AddSound("Paddle", "Sounds/Paddle.wav");
-    Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(width, height)));
+    Add(new Sprite(TextureManager::GetManager()->GetTexture("Paddle"), Vector2(width, height)));
     Add(new Physics());
     Add(new BoxCollision(Vector2(width, height)));
 }

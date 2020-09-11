@@ -14,7 +14,7 @@ void Sprite::Render()
 {
 	m_rect.x = GetPosition().x;
 	m_rect.y = GetPosition().y;
-	SDL_RenderCopy(TextureManager::GetRenderer(), m_texture, NULL, &m_rect.SDLRect());
+	SDL_RenderCopy(TextureManager::GetManager()->GetRenderer(), m_texture, NULL, &m_rect.SDLRect());
 }
 
 void Sprite::Operation()
