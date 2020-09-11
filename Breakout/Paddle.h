@@ -13,5 +13,5 @@ public:
 private:
 	void Update() override;
 	virtual void OnCollisionEnterGO(Component* collidedOther) override;
-
+	bool TunnelingCheck(BoxCollision* other);
 };

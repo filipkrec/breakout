@@ -1,6 +1,8 @@
 #pragma once
 #include "Arena.h"
 
+int Arena::m_minHeight;
+
 Arena::~Arena()
 {
     m_background->Destroy();
@@ -17,13 +19,23 @@ Arena::~Arena()
 }
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* wallTexture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
-    :m_background(nullptr), m_centerX(screenWidth/2), m_rowSpacing(rowSpacing),m_columnSpacing(columnSpacing)
-    ,m_columnCount(columnCount),m_brickCount(0),m_brickWidth(brickWidth),m_brickHeight(brickHeight)
+    :m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
+    , m_columnCount(columnCount), m_brickCount(0), m_brickWidth(brickWidth), m_brickHeight(brickHeight)
 {
+    m_minHeight = screenHeight / 3;
+
     const int padding = 25;
     const int wallThickness = 50;
 
     const int levelHeight = screenHeight - (padding + wallThickness) * 2;
+
+    if (levelHeight < m_minHeight)
+    {
+#ifdef _DEBUG
+        std::cout << "ERROR: level too small, reduce padding or wall thickness - " << "Padding: " << padding << ", Wall Thickness:" << wallThickness << std::endl;
+#endif
+    }
+
     int levelWidth = columnSpacing + (brickWidth + columnSpacing) * columnCount;
 
     if (levelWidth > screenWidth)

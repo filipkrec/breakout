@@ -4,7 +4,11 @@
 
 class Arena
 {
+public:
+	static int m_minHeight;
+
 private: 
+
 	GameObject* m_walls[4];
 	GameObject* m_background;
 	std::vector<Brick*> m_bricks;
