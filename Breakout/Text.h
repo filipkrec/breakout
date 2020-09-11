@@ -7,7 +7,7 @@
 
 class Text : public Component
 {
-	const int m_size = 24;
+	const int m_size = 144;
 
 	std::string m_text;
 	SDL_Color m_color;

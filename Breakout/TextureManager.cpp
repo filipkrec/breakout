@@ -50,7 +50,15 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 	SDL_Surface* temp;
 	if (path.substr(path.size() - 4) == ".dds")
 	{
-		ILboolean ballean = ilLoadImage(std::wstring(path.begin(), path.end()).c_str());
+		ILboolean loaded = ilLoadImage(std::wstring(path.begin(), path.end()).c_str());
+
+		if (!loaded)
+		{
+#ifdef _DEBUG
+			std::cout << "ERROR: invalid link - " << path << std::endl;
+#endif
+			return;
+		}
 
 		temp = SDL_CreateRGBSurface(SDL_SWSURFACE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BITS_PER_PIXEL)
 			, 0x000000ff,0x0000ff00, 0x00ff0000,0xff000000);
@@ -89,7 +97,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 
 void TextureManager::LoadText(std::string name, std::string text, int size, const SDL_Color& color)
 {
-	TTF_Font* font = TTF_OpenFont("../Assets/Fonts/ariblk.ttf", 36);
+	TTF_Font* font = TTF_OpenFont("../Assets/Fonts/ariblk.ttf", size);
 
 	if (!font)
 	{

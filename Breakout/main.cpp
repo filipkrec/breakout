@@ -9,14 +9,20 @@ void LoadGame();
 void FillBackground(Scene* scene);
 
 int main(int arc, char* argv[])
-{   
+{
+    const int unitsX = 1600;
+    const int unitsY = 900;
+
     Window* winMain = new Window(Vector2(1600, 900), false);
     Scene menu;
+    TextureManager::GetManager()->LoadTexture("MenuBackground", "Textures/Backgrounds/MenuBackground.dds");
     TextureManager::GetManager()->LoadTexture("Button", "Textures/Buttons/Button.dds");
-    TextureManager::GetManager()->LoadText("NewGame", "New Game!");
     menu.LoadMusic("MenuMusic", "Sounds/Music/MenuMusic.wav");
-    Button button(TextureManager::GetManager()->GetTexture("Button"), TextureManager::GetManager()->GetTexture("NewGame"), Vector2(600, 700), Vector2(400, 100),
+    Button button(TextureManager::GetManager()->GetTexture("Button"),"New Game" , Vector2(600, 700), Vector2(400, 100),
         LoadGame);
+    GameObject menuBackground;
+    menuBackground.Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), Vector2(unitsX, unitsY)));
+    menu.Add(&menuBackground);
     menu.Add(&button);
     Scene::LoadScene(menu);
 

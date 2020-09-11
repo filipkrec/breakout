@@ -1,11 +1,11 @@
 #include "Button.h"
 
 
-Button::Button(SDL_Texture* background, SDL_Texture* text, Vector2 position, Vector2 size, void(*onClick)())
+Button::Button(SDL_Texture* background, std::string text, Vector2 position, Vector2 size, void(*onClick)())
 	: m_onClick(onClick)
 {
 	Add(new Sprite(background, size));
-	Add(new Sprite(text, size));
+	Add(new Text(text, size / 1.5, SDL_Color{255,255,255}, size/6));
 	Add(new BoxCollision(size));
 	SetPosition(position);
 }

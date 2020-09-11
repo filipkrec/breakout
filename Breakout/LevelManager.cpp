@@ -36,7 +36,7 @@ void LevelManager::AddFirst()
 
 void LevelManager::AddNext()
 {
-	if (std::distance(m_levels.begin(), m_currentLevel) < m_levels.size())
+	if (std::distance(m_levels.begin(), m_currentLevel) < (m_levels.size() - 1))
 	{
 		if (*m_currentLevel)
 			(*m_currentLevel)->ClearFromScene();
