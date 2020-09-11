@@ -5,16 +5,15 @@ GameObject::~GameObject()
     Clear();
 }
 
-GameObject::GameObject()
-    : m_destroy(false), m_collisionProcessed(false)
-{
-
-}
 
 GameObject::GameObject(Vector2 position)
-    : m_destroy(false), m_collisionProcessed(false)
+    : m_destroy(false), m_collisionProcessed(false), m_position(position)
 {
-    m_position = position;
+}
+
+GameObject::GameObject(std::string name, Vector2 position)
+    : m_destroy(false), m_collisionProcessed(false), m_position(position), m_name(name)
+{
 }
 
 template <class T>
@@ -62,6 +61,11 @@ void GameObject::Move(Vector2 movement)
 {
     m_position.x += movement.x;
     m_position.y += movement.y;
+}
+
+std::string& GameObject::GetName() const
+{
+    return const_cast<std::string&>(m_name);
 }
 
 Vector2 GameObject::GetPosition() const

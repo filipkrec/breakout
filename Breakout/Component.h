@@ -20,6 +20,7 @@ public:
     virtual Component* GetBoxCollision();
     virtual Component* GetSprite();
     virtual Vector2 GetPosition() const;
+    virtual std::string& GetName() const;
     virtual void SetPosition(Vector2 newPosition);
     virtual void Translate(Vector2 translationVector);
 

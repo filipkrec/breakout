@@ -19,6 +19,8 @@ bool Component::IsComposite() const {
 
 Vector2 Component::GetPosition() const { return m_parent->GetPosition(); }
 
+std::string& Component::GetName() const { return m_parent->GetName(); }
+
 void Component::SetPosition(Vector2 newPosition) {}
 void Component::Translate(Vector2 translationVector) {}
 

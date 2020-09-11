@@ -13,6 +13,7 @@ class Level
 	int m_columnCount;
 	int m_rowSpacing;
 	int m_columnSpacing;
+
 	SDL_Texture* m_board;
 	SDL_Texture* m_wallTexture;
 

@@ -12,7 +12,6 @@ Level::~Level()
 
 Level::Level()
 {
-
 }
 
 Level::Level(std::string xmlFile)
@@ -149,5 +148,6 @@ int Level::GetBrickCount()
 
 void Level::ClearFromScene()
 {
-	delete m_arena;
+	if(m_arena)
+		m_arena->Destroy();
 }

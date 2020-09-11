@@ -22,9 +22,20 @@ Brick::Brick(Brick& other)
 	m_destructible = other.m_destructible;
 }
 
+Brick::Brick(std::string name, Brick& other)
+	:Brick(other)
+{
+	m_name = name;
+}
+
 Brick* Brick::Clone() const
 {
 	return new Brick(const_cast<Brick&>(*this));
+}
+
+Brick* Brick::Clone(std::string name) const
+{
+	return new Brick(name, const_cast<Brick&>(*this));
 }
 
 void Brick::OnCollisionEnterGO(Component* other)

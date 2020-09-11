@@ -11,6 +11,13 @@ class BoxCollision : public Component
 	Rect m_collidedRect;
 
 public:
+
+	enum class Side
+	{
+		TOP, BOTTOM, LEFT, RIGHT
+	};
+
+public:
 	~BoxCollision() override {}
 	BoxCollision(Vector2 size);
 
@@ -29,4 +36,6 @@ public:
 	bool CheckPointCollision(const Vector2& point);
 
 	void SetSize(Vector2 size);
+
+	Side GetCollidingSide(Component& circleComp);
 };

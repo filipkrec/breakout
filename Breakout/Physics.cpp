@@ -23,62 +23,6 @@ void Physics::SetAngle(float degrees)
 	m_angle = degrees;
 }
 
-Physics::Side Physics::GetCollidingSide(CircleCollision& circle, BoxCollision& collision)
-{
- 	Rect rect = collision.GetCollisionRect();
-
-	Vector2 circleCenter(circle.GetPosition().x + circle.GetRadius(), circle.GetPosition().y + circle.GetRadius());
-	Vector2 rectCenter = Vector2(rect.x + rect.w / 2, rect.y + rect.h / 2);
-
-	float angle = Vector2::VecToAngle(Vector2(circleCenter.x - rectCenter.x, circleCenter.y - rectCenter.y));
-	
-	float rectAngleA = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y - rectCenter.y));
-	float rectAngleB = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y - rectCenter.y));
-	float rectAngleC = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y + rect.h - rectCenter.y));
-	float rectAngleD = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y + rect.h - rectCenter.y));
-					
-	if (rect.x == 118, rect.y == 74, rect.w == 50, rect.h == 750)
-	{
-		std::cout << "RIGHT " << std::endl;
-		std::cout << "angle " << angle << std::endl;
-		std::cout << "A " << rectAngleA << std::endl;
-		std::cout << "B " << rectAngleB << std::endl;
-		std::cout << "C " << rectAngleC << std::endl;
-		std::cout << "D " << rectAngleD << std::endl;
-	}
-	else if (rect.x == 1431, rect.y == 74, rect.w == 50, rect.h == 750)
-	{
-		std::cout << "RIGHT " << std::endl;
-		std::cout << "angle " << angle << std::endl;
-		std::cout << "A " << rectAngleA << std::endl;
-		std::cout << "B " << rectAngleB << std::endl;
-		std::cout << "C " << rectAngleC << std::endl;
-		std::cout << "D " << rectAngleD << std::endl;
-	}
-	else 
-	{
-		std::cout << "OTHER	" << std::endl;
-		std::cout << "angle " << angle << std::endl;
-		std::cout << "A " << rectAngleA << std::endl;
-		std::cout << "B " << rectAngleB << std::endl;
-		std::cout << "C " << rectAngleC << std::endl;
-		std::cout << "D " << rectAngleD << std::endl;
-	}
-
-
-
-	if (angle >= rectAngleA && angle <= rectAngleB)
-		return Side::BOTTOM;
-	else if
-		(angle >= rectAngleC && angle <= rectAngleD)
-		return Side::TOP;
-	else if
-		(angle > rectAngleD && angle < rectAngleA)
-		return Side::LEFT;
-	else
-		return Side::RIGHT;
-}
-
 void Physics::ResolveBallCollision(BoxCollision* collidedRect)
 {
 	CircleCollision* thisCircle = dynamic_cast<CircleCollision*>(GetCircleCollision());
@@ -92,18 +36,18 @@ void Physics::ResolveBallCollision(BoxCollision* collidedRect)
 
 	Vector2 newVec = Vector2::AngleToVec(m_angle);
 
-	switch (GetCollidingSide(*thisCircle, *collidedRect))
+	switch (collidedRect->GetCollidingSide(*thisCircle))
 	{
-	case Side::TOP : 
+	case BoxCollision::Side::TOP : 
 		newVec.y = newVec.y > 0 ? newVec.y : -newVec.y;
 		break;
-	case Side::BOTTOM:
+	case BoxCollision::Side::BOTTOM:
 		newVec.y = newVec.y < 0 ? newVec.y : -newVec.y;
 		break;
-	case Side::RIGHT:
+	case BoxCollision::Side::RIGHT:
 		newVec.x = newVec.x > 0 ? newVec.x : -newVec.x;
 		break;
-	case Side::LEFT:
+	case BoxCollision::Side::LEFT:
 		newVec.x = newVec.x < 0 ? newVec.x : -newVec.x;
 		break;
 	}

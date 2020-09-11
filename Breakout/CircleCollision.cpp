@@ -16,6 +16,8 @@ void CircleCollision::Collide()
 {
 	for (Component* go : Scene::GetActiveScene().GetObjects())
 	{
+		if (Scene::GetActiveScene().InteruptIteration()) return; //if scene altered while iterating
+
 		BoxCollision* bc = dynamic_cast<BoxCollision*>(go->GetBoxCollision());
 
 		std::vector<BoxCollision*>::iterator it = std::find_if(m_collided.begin(), m_collided.end(),
@@ -26,7 +28,8 @@ void CircleCollision::Collide()
 		);
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
-		{ 
+		{
+
 			CheckCollision(bc->GetCollisionRect());
 			if (it == m_collided.end())
 			{

@@ -13,16 +13,18 @@ class GameObject : public Component
     bool m_collisionProcessed;
 
 protected:
+    std::string m_name;
     std::vector<Component*> m_children;
     Vector2 m_position;
 
     bool m_destroy;
+
 public:
-    ~GameObject() override;
+    virtual ~GameObject() override;
 
-    GameObject();
+    GameObject(Vector2 position = Vector2::Zero());
 
-    GameObject(Vector2 position);
+    GameObject(std::string name, Vector2 position = Vector2::Zero());
 
     template <class T> 
     Component* GetComponent();
@@ -36,6 +38,8 @@ public:
     void Operation() override;
 
     void Move(Vector2 movement);
+
+    std::string& GetName() const override;
 
     Vector2 GetPosition() const override;
     Component* GetCircleCollision() override;

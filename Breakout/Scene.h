@@ -9,6 +9,7 @@ class Scene
 	std::vector<GameObject*> m_gameObjects;
 	std::string m_music;
 	int m_musicId;
+	bool m_gameObjectsAltered;
 public:
 	static Scene& GetActiveScene();
 	static void LoadScene(Scene& scene);
@@ -22,6 +23,8 @@ public:
 	void LoadMusic(std::string name, std::string link);
 	void PlayMusic();
 	void StopMusic();
+
+	inline const bool InteruptIteration() const { return m_gameObjectsAltered; }
 
 	void ProcessDestroyed();
 	void Clear();

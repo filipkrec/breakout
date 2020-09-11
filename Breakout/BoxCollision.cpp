@@ -71,3 +71,58 @@ void BoxCollision::SetSize(Vector2 size)
 	m_rect.h = size.y;
 }
 
+
+BoxCollision::Side BoxCollision::GetCollidingSide(Component& circleComp)
+{
+	Rect rect = GetCollisionRect();
+
+	CircleCollision* circle = dynamic_cast<CircleCollision*>(&circleComp);
+
+	Vector2 circleCenter(circle->GetPosition().x + circle->GetRadius(), circle->GetPosition().y + circle->GetRadius());
+	Vector2 rectCenter = Vector2(rect.x + rect.w / 2, rect.y + rect.h / 2);
+
+	Physics* phys = dynamic_cast<Physics*>(circle->GetPhysics());
+
+	if (phys) //calc tunneling prevention
+	{
+		Vector2 backtrackVec = Vector2::AngleToVec(phys->GetAngle()) * -phys->GetSpeed();
+		float radius = circle->GetRadius();
+		float circleDistanceX = abs((circleCenter.x + radius) - (rect.x + rect.w / 2));
+		float circleDistanceY = abs((circleCenter.y + radius) - (rect.y + rect.h / 2));
+		while (circleDistanceX < radius + rect.w/2 && circleDistanceY < radius + rect.h/2)
+		{
+			circleCenter = circleCenter + backtrackVec / 10;
+			circleDistanceX = abs((circleCenter.x + radius) - (rect.x + rect.w / 2));
+			circleDistanceY = abs((circleCenter.y + radius) - (rect.y + rect.h / 2));
+		}
+	}
+
+	float angle = Vector2::VecToAngle(Vector2(circleCenter.x - rectCenter.x, circleCenter.y - rectCenter.y));
+
+	float rectAngleA = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y - rectCenter.y));
+	float rectAngleB = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y - rectCenter.y));
+	float rectAngleC = Vector2::VecToAngle(Vector2(rect.x + rect.w - rectCenter.x, rect.y + rect.h - rectCenter.y));
+	float rectAngleD = Vector2::VecToAngle(Vector2(rect.x - rectCenter.x, rect.y + rect.h - rectCenter.y));
+
+#ifdef _DEBUG
+		std::cout << GetName() << std::endl;
+		std::cout << "angle " << angle << std::endl;
+		std::cout << "A " << rectAngleA << std::endl;
+		std::cout << "B " << rectAngleB << std::endl;
+		std::cout << "C " << rectAngleC << std::endl;
+		std::cout << "D " << rectAngleD << std::endl;
+#endif
+
+
+	if (angle >= rectAngleA && angle <= rectAngleB)
+		return Side::BOTTOM;
+	else if
+		(angle >= rectAngleC && angle <= rectAngleD)
+		return Side::TOP;
+	else if
+		(angle > rectAngleD && angle < rectAngleA)
+		return Side::LEFT;
+	else
+		return Side::RIGHT;
+}
+

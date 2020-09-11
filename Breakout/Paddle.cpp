@@ -2,12 +2,13 @@
 #include "Arena.h"
 
 Paddle::Paddle()
-    :GameObject(Vector2(725, 100)), m_score(0), m_hitCounter(0)
+    :GameObject("Paddle",Vector2(725, 100)), m_score(0), m_hitCounter(0)
 {
     const int width = 150;
     const int height = 20;
 
     TextureManager::LoadTexture("Paddle", "Textures/Paddles/Paddle.dds");
+    SoundManager::GetManager()->AddSound("Paddle", "Sounds/Paddle.wav");
     Add(new Sprite(TextureManager::GetTexture("Paddle"), Vector2(width, height)));
     Add(new Physics());
     Add(new BoxCollision(Vector2(width, height)));
@@ -48,6 +49,7 @@ void Paddle::AddScore(int score)
 void Paddle::OnCollisionEnterGO(Component* collidedOther)
 {
     std::cout << "EXTRACOL" << std::endl;
+    SoundManager::GetManager()->PlaySound("Paddle");
     Physics* ballPhys = dynamic_cast<Physics*>(collidedOther->GetPhysics());
     CircleCollision* circleCol = dynamic_cast<CircleCollision*>(collidedOther->GetCircleCollision());
     if (ballPhys)

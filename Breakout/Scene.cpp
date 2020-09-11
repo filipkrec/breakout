@@ -2,7 +2,9 @@
 
 Scene Scene::m_activeScene;
 
-Scene::Scene(){}
+Scene::Scene()
+	: m_gameObjectsAltered(false),m_musicId(0),m_music("")
+{}
 
 std::vector<GameObject*>& Scene::GetObjects()
 {
@@ -11,18 +13,14 @@ std::vector<GameObject*>& Scene::GetObjects()
 
 void Scene::Add(GameObject* gameObject)
 {
+	m_gameObjectsAltered = true;
 	m_gameObjects.push_back(gameObject);
 }
 
 void Scene::Destroy(GameObject* gameObject)
 {
-	gameObject->Clear();
-	m_gameObjects.erase(
-		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
-			[&](GameObject* x) {return x == gameObject; }),
-		m_gameObjects.end());
+	gameObject->Destroy();
 }
-
 
 void Scene::PlaceFront(GameObject* gameobject)
 {
@@ -55,6 +53,7 @@ void Scene::StopMusic()
 
 void Scene::Process()
 {
+	m_gameObjectsAltered = false;
 	for (GameObject* obj : m_gameObjects)
 	{
 		obj->Operation();

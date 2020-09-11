@@ -14,7 +14,9 @@ class Brick : public GameObject
 public:
 	Brick(std::string id, float width, float height, int HP, int score, std::string Texture, bool destructible = true);
 	Brick(Brick& other);
+	Brick(std::string name, Brick& other);
 	Brick* Clone() const;
+	Brick* Clone(std::string name) const;
 
 	void setSize(Vector2 size);
 	void OnCollisionEnterGO(Component* other) override;

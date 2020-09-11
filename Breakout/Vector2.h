@@ -58,4 +58,44 @@ struct Vector2
 		y *= X;
 		return *this;
 	}
+
+	Vector2 operator+(const Vector2& other)
+	{
+		return Vector2(other.x + x, other.y + y);
+	}
+
+	Vector2 operator*(const Vector2& other)
+	{
+		return Vector2(other.x * x, other.y * y);
+	}
+
+	Vector2 operator*(const float other)
+	{
+		return Vector2(other * x, other * y);
+	}
+
+	Vector2 operator-(const Vector2& other)
+	{
+		return Vector2(x - other.x, y - other.y);
+	}
+
+	Vector2 operator/(const Vector2& other)
+	{
+		return Vector2(x / other.x, y / other.y);
+	}
+
+	Vector2 operator/(const float other)
+	{
+		return Vector2(x / other, y / other);
+	}
+
+	bool operator==(const Vector2& other)
+	{
+		return other.x == x && other.y == y;
+	}
+
+	bool operator!=(const Vector2& other)
+	{
+		return other.x != x || other.y != y;
+	}
 };

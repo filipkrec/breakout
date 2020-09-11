@@ -19,7 +19,7 @@ Arena::~Arena()
 }
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* wallTexture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
-    :m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
+    :GameObject(),m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
     , m_columnCount(columnCount), m_brickCount(0), m_brickWidth(brickWidth), m_brickHeight(brickHeight)
 {
     m_minHeight = screenHeight / 3;
@@ -57,22 +57,22 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
     m_brickOrigin = Vector2(originLeft + wallThickness + columnSpacing, (originTop - (brickHeight + rowSpacing)));
 
     //BotHorizontal wall
-    m_walls[0] = new GameObject(Vector2(originLeft, horOriginBot));
+    m_walls[0] = new GameObject("WallBot",Vector2(originLeft, horOriginBot));
     m_walls[0]->Add(new Sprite(wallTexture, Vector2(horWallWidth, wallThickness)));
     m_walls[0]->Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
 
     //TopHorizontal wall
-    m_walls[1] = new GameObject(Vector2(originLeft, originTop));
+    m_walls[1] = new GameObject("WallTop", Vector2(originLeft, originTop));
     m_walls[1]->Add(new Sprite(wallTexture, Vector2(horWallWidth, wallThickness)));
     m_walls[1]->Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
     
     //Left vertical wall
-    m_walls[2] = new GameObject(Vector2(originLeft, vertOriginBot));
+    m_walls[2] = new GameObject("WallLeft", Vector2(originLeft, vertOriginBot));
     m_walls[2]->Add(new Sprite(wallTexture, Vector2(wallThickness, vertWallHeight)));
     m_walls[2]->Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
     
     //Right vertical wall
-    m_walls[3] = new GameObject(Vector2(originRight, vertOriginBot));
+    m_walls[3] = new GameObject("WallRight", Vector2(originRight, vertOriginBot));
     m_walls[3]->Add(new Sprite(wallTexture, Vector2(wallThickness, vertWallHeight)));
     m_walls[3]->Add(new BoxCollision(Vector2(wallThickness, vertWallHeight)));
 
@@ -100,7 +100,11 @@ void Arena::AddToScene(Scene& scene)
 
     for (Brick* brick : m_bricks)
     {
+#ifdef _DEBUG
+        scene.Add(brick->Clone(brick->GetName()));
+#else 
         scene.Add(brick->Clone());
+#endif 
     }
 }
 
@@ -131,7 +135,13 @@ void Arena::LoadBricks(std::string layout,const std::vector<Brick*>& brickTypes)
 
             if (typeMatch)
             {
+#ifdef _DEBUG
+                std::string name = "Brick - " +std::to_string(currentColumn) + "," + std::to_string(currentRow);
+                currentBrick = brickType->Clone(name);
+#else 
                 currentBrick = brickType->Clone();
+#endif 
+
                 break;
             }
         }

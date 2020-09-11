@@ -12,24 +12,19 @@ class Physics : public Component
 	float m_angle;
 	bool m_collisionResolved;
 
-	enum class Side
-	{
-		TOP, BOTTOM, LEFT, RIGHT
-	};
-
 public:
 	~Physics() override {}
 	Physics();
 	void Operation() override;
 
 	inline const int GetSpeed() const { return m_speed; }
+	inline const float GetAngle() const { return m_angle; }
 	void SetSpeed(int units);
 	void SetAngle(float degrees);
 
 	void OnCollisionEnter(Component* collidedOther) override;
 
 private:
-	Side GetCollidingSide(CircleCollision& position, BoxCollision& collision);
 	void ResolveBallCollision(BoxCollision* collidedRect);
 	void Move();
 };
