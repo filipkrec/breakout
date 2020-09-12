@@ -1,10 +1,12 @@
 #include "Scene.h"
 
-Scene Scene::m_activeScene;
+Scene* Scene::m_activeScene;
 
-Scene::Scene()
-	: m_gameObjectsAltered(false),m_musicId(0),m_music("")
-{}
+Scene::Scene() 
+	: m_delete(false), m_gameObjectsAltered(false), m_musicId(0), m_music("")
+{
+	
+}
 
 std::vector<GameObject*>& Scene::GetObjects()
 {
@@ -73,32 +75,39 @@ void Scene::StopMusic()
 
 void Scene::Process()
 {
-	m_gameObjectsAltered = false;
-	for (GameObject* obj : m_gameObjects)
+	if (!m_gameObjectsAltered)
 	{
-		obj->Process();
+		for (GameObject* obj : m_gameObjects)
+		{
+			obj->Process();
+		}
 	}
+	m_gameObjectsAltered = false;
+	ProcessDestroyed();
 }
 
 Scene& Scene::GetActiveScene()
 {
-	return m_activeScene;
+	return *m_activeScene;
 }
 
-void Scene::LoadScene(Scene& scene)
+void Scene::LoadScene(Scene* scene)
 {
-	m_activeScene.Clear();
+	if(m_activeScene)
+	m_activeScene->Destroy();
+
 	m_activeScene = scene;
-	m_activeScene.PlayMusic();
+	m_activeScene->PlayMusic();
 }
 
-void Scene::Clear()
+void Scene::Destroy()
 {
+	m_delete = true;
+
 	StopMusic();
-	m_gameObjects.erase(
-		std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
-			[&](GameObject* x) {return true; }),
-		m_gameObjects.end());
+
+	for (GameObject* x : m_gameObjects)
+		x->Destroy();
 }
 
 void Scene::ProcessDestroyed()
@@ -114,4 +123,7 @@ void Scene::ProcessDestroyed()
 				return false;
 								}),
 		m_gameObjects.end());
+
+	if (m_delete)
+		delete this;
 }

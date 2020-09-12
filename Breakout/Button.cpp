@@ -37,8 +37,17 @@ void Button::Update()
 
 void Button::SetTextColor(SDL_Color color)
 {
-	Text* text = dynamic_cast<Text*>(GetText());
+	Text* textObj = dynamic_cast<Text*>(GetText());
 
-	if(text)
-	text->SetColor(color);
+	if(textObj)
+		textObj->SetColor(color);
+}
+
+
+void Button::SetText(std::string text)
+{
+	Text* textObj = dynamic_cast<Text*>(GetText());
+
+	if (textObj)
+		textObj->SetText(text);
 }

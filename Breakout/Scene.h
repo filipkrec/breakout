@@ -4,17 +4,20 @@
 
 class Scene
 {
-	static Scene m_activeScene;
+	static Scene* m_activeScene;
+
+	bool m_delete;
 
 	std::vector<GameObject*> m_gameObjects;
 	std::string m_music;
 	int m_musicId;
 	bool m_gameObjectsAltered;
 public:
-	static Scene& GetActiveScene();
-	static void LoadScene(Scene& scene);
-
 	Scene();
+
+	static Scene& GetActiveScene();
+	static void LoadScene(Scene* scene);
+
 	std::vector<GameObject*>& GetObjects();
 	void Add(GameObject* gameObject);
 	GameObject* GetByName(std::string name);
@@ -28,6 +31,6 @@ public:
 	inline const bool InteruptIteration() const { return m_gameObjectsAltered; }
 
 	void ProcessDestroyed();
-	void Clear();
+	void Destroy();
 	void Process();
 };

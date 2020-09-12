@@ -1,5 +1,6 @@
 #pragma once
 #include "Arena.h"
+#include "WallBottom.h"
 
 int Arena::m_minHeight;
 
@@ -22,7 +23,7 @@ Arena::~Arena()
 }
 
 Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, SDL_Texture* wallTexture, SDL_Texture* backgroundTexture, int brickWidth, int brickHeight, int screenWidth, int screenHeight)
-    :GameObject("Arena"),m_background(nullptr), m_centerX(screenWidth / 2), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
+    :GameObject("Arena"),m_background(nullptr), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
     , m_columnCount(columnCount), m_brickCount(0), m_brickWidth(brickWidth), m_brickHeight(brickHeight)
 {
     m_minHeight = screenHeight / 3;
@@ -63,6 +64,7 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
     m_walls[0] = new GameObject("WallBot",Vector2(originLeft, horOriginBot));
     m_walls[0]->Add(new Sprite(wallTexture, Vector2(horWallWidth, wallThickness)));
     m_walls[0]->Add(new BoxCollision(Vector2(horWallWidth, wallThickness)));
+    m_walls[0]->Add(new WallBottom());
 
     //TopHorizontal wall
     m_walls[1] = new GameObject("WallTop", Vector2(originLeft, originTop));
@@ -84,6 +86,8 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
         m_background = new GameObject(Vector2(originLeft + wallThickness - 1, vertOriginBot));
         m_background->Add(new Sprite(backgroundTexture, Vector2(levelWidth + 1, levelHeight)));
     }
+
+    m_paddleSpawn = Vector2(screenWidth / 2, vertOriginBot + 25);
 }
 
 
@@ -192,4 +196,15 @@ void Arena::LoadBricks(std::string layout,const std::vector<Brick*>& brickTypes)
 int Arena::GetBrickCount()
 {
     return m_brickCount;
+}
+
+
+const Vector2 Arena::GetPaddleStartingPoint(Paddle* paddle) const
+{
+    return Vector2(-paddle->m_width/2, 0) + m_paddleSpawn;
+}
+
+const  Vector2 Arena::GetBallStartingPoint(Ball* ball) const
+{
+    return Vector2(-ball->m_radius, m_minHeight) + m_paddleSpawn;
 }

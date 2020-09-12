@@ -167,10 +167,12 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="WallBottom.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,11 +192,13 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="WallBottom.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

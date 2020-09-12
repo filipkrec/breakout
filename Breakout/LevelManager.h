@@ -11,10 +11,12 @@ class LevelManager
 	std::vector<Level*> m_levels;
 
 	int m_currentScore;
-	Text* m_score;
+	Text* m_scoreTxt;
 
 	int m_currentLives;
-	Text* m_lives;
+	Text* m_livesTxt;
+
+	Text* m_currentLevelTxt;
 
 	int m_brickCount;
 
@@ -33,6 +35,7 @@ public:
 	void SetBall(Ball* ball);
 	void SetLivesText(Text* livesText);
 	void SetScoreText(Text* scoreText);
+	void SetCurrentLevelText(Text* currentLevelText);
 	void BrickDestroyed(int score);
 	void LifeLost();
 

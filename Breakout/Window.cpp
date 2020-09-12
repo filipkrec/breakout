@@ -45,8 +45,6 @@ void Window::GameLoop()
 
         SDL_RenderPresent(TextureManager::GetManager()->GetRenderer());
 
-        Scene::GetActiveScene().ProcessDestroyed();
-
         frameEnd = SDL_GetTicks() - frameStart;
         if (1000 / fpsLimit > frameEnd)
             SDL_Delay(1000 / fpsLimit - frameEnd);

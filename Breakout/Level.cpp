@@ -2,11 +2,13 @@
 
 Level::~Level()
 {
-	delete m_arena;
+	ClearFromScene();
 
 	m_brickTypes.erase(
 		std::remove_if(m_brickTypes.begin(), m_brickTypes.end(),
-			[&](Brick* x) {return true; }),
+			[&](Brick* x) {
+				delete x;
+				return true; }),
 		m_brickTypes.end());
 }
 
@@ -42,9 +44,12 @@ void Level::Load(std::string xmlFile)
 	m_rowSpacing = LoadIntAttribute(element, "RowSpacing");
 	m_columnSpacing = LoadIntAttribute(element, "ColumnSpacing"); 
 	
-	TextureManager::GetManager()->LoadTexture(std::to_string(m_ordinal),
-		LoadStringAttribute(element, "BackgroundTexture"));
-	m_board = TextureManager::GetManager()->GetTexture(std::to_string(m_ordinal));
+	std::string backgroundFile = LoadStringAttribute(element, "BackgroundTexture");
+
+	std::string backgroundFileName = backgroundFile.substr(backgroundFile.find_last_of('/') + 1, backgroundFile.find_last_of('.') - backgroundFile.find_last_of('/') - 1);
+
+	TextureManager::GetManager()->LoadTexture(backgroundFileName,backgroundFile);
+	m_board = TextureManager::GetManager()->GetTexture(backgroundFileName);
 
 	//BrickTypes
 	element = root->FirstChildElement("BrickTypes");
@@ -129,16 +134,13 @@ int Level::LoadIntAttribute(tinyxml2::XMLElement* element, std::string attribute
 
 void Level::Initialise(Paddle* paddle,Ball* ball, Scene* scene)
 {
-	const int downAngle = 270;
-
 	m_arena = new Arena(m_columnCount,m_rowCount,m_rowSpacing,m_columnSpacing,m_wallTexture,m_board,60,40);
 	m_arena->LoadBricks(m_layout, m_brickTypes);
 	m_arena->AddToScene(*scene);
-	ball->SetPosition(Vector2(m_arena->GetCenter(), paddle->GetPosition().y + 300));
+	ball->SetPosition(m_arena->GetBallStartingPoint(ball));
 	ball->SetSpeed(m_ballStartSpeed);
-	ball->SetAngle(downAngle);
-	float paddlewidth = static_cast<BoxCollision*>(paddle->GetBoxCollision())->GetCollisionRect().w / 2;
-	paddle->SetPosition(Vector2(m_arena->GetCenter() - paddlewidth, paddle->GetPosition().y));
+	ball->SetAngle(ball->m_startingAngle);
+	paddle->SetPosition(m_arena->GetPaddleStartingPoint(paddle));
 }
 
 int Level::GetBrickCount()

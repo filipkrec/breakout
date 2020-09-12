@@ -10,7 +10,6 @@ class Level
 {
 	const int m_ballStartSpeed = 6;
 
-	int m_ordinal;
 	int m_rowCount;
 	int m_columnCount;
 	int m_rowSpacing;
@@ -34,4 +33,5 @@ public:
 	void Initialise(Paddle* paddle,Ball* ball, Scene* scene);
 	int GetBrickCount();
 	void ClearFromScene();
+	const Arena* GetArena() const { return m_arena; }
 };

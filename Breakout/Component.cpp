@@ -24,6 +24,7 @@ bool Component::IsComposite() const {
 
 void Component::Process()
 {
+    std::string name = GetName();
     if (m_active)
     {
         Operation();

@@ -141,6 +141,8 @@ void GameObject::Destroy()
 
 void GameObject::Clear()
 {
+    std::string name = GetName();
+
     m_children.erase(
         std::remove_if(m_children.begin(), m_children.end(),
             [&](Component* x) {

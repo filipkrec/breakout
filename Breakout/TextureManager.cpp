@@ -37,7 +37,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 		!= m_textures.end())
 	{
 #ifdef _DEBUG
-		std::cout << "ERROR: texture already loaded" << std::endl;
+		std::cout << "ERROR: texture already loaded -" << name << std::endl;
 #endif
 		return;
 	}
@@ -97,6 +97,18 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 
 void TextureManager::LoadText(std::string name, std::string text, int size, const SDL_Color& color)
 {
+	if (std::find_if(m_textures.begin(), m_textures.end(),
+		[&name, &color](const std::pair <std::string, SDL_Texture*>& x) 
+		{ 
+		return x.first == name + ColorToString(color);
+		})
+		!= m_textures.end())
+	{
+#ifdef _DEBUG
+		std::cout << "ERROR: text already loaded - " << text << std::endl;
+#endif
+		return;
+	}
 	TTF_Font* font = TTF_OpenFont("../Assets/Fonts/ariblk.ttf", size);
 
 	if (!font)
@@ -114,7 +126,7 @@ void TextureManager::LoadText(std::string name, std::string text, int size, cons
 	SDL_FreeSurface(surfaceMessage);
 
 	if (msg)
-		m_textures.push_back(std::make_pair(name, msg));
+		m_textures.push_back(std::make_pair(name + ColorToString(color), msg));
 	else
 	{
 #ifdef _DEBUG 
@@ -142,10 +154,20 @@ SDL_Texture* TextureManager::GetTexture(std::string name)
 
 void TextureManager::DeleteTexture(std::string name)
 {
+	SDL_Texture* texture = nullptr;
 	m_textures.erase(
 		std::remove_if(m_textures.begin(), m_textures.end(),
-			[&](const std::pair <std::string, SDL_Texture*> x) {return x.first == name; }),
+			[&](const std::pair <std::string, SDL_Texture*> x) {
+				if (x.first == name)
+				{
+					texture = x.second;
+					return true;
+				}
+				return false;
+			}),
 		m_textures.end());
+
+	SDL_DestroyTexture(texture);
 }
 
 void TextureManager::Clear()
@@ -156,4 +178,10 @@ void TextureManager::Clear()
 				delete x.second;
 				return true; }),
 		m_textures.end());
+}
+
+
+std::string TextureManager::ColorToString(SDL_Color color)
+{
+	return std::to_string(color.r) + "," + std::to_string(color.g) + "," + std::to_string(color.b);
 }

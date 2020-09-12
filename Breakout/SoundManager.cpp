@@ -24,6 +24,17 @@ SoundManager::SoundManager()
 
 void SoundManager::AddSound(std::string name, std::string file)
 {
+	std::vector<std::pair <std::string, Mix_Chunk*>>::iterator it = std::find_if(m_sounds.begin(), m_sounds.end(),
+		[&name](const std::pair <std::string, Mix_Chunk*>& x) { return x.first == name; });
+
+	if (it != m_sounds.end())
+	{
+#ifdef _DEBUG
+		std::cout << "Sound already loaded - " << file  << std::endl;
+#endif
+		return;
+	}
+
 	std::string link = "../Assets/" + file;
 	Mix_Chunk* sample = Mix_LoadWAV(link.c_str());
 

@@ -1,19 +1,21 @@
 #pragma once
 #include "Scene.h"
 #include "Brick.h"
+#include "Paddle.h"
+#include "Ball.h"
 
 class Arena : public GameObject
 {
 public:
 	static int m_minHeight;
 
-private: 
+private:
 
 	GameObject* m_walls[4];
 	GameObject* m_background;
 	std::vector<Brick*> m_bricks;
 
-	int m_centerX;
+	Vector2 m_paddleSpawn;
 	Vector2 m_brickOrigin;
 	int m_columnCount;
 
@@ -32,5 +34,6 @@ public:
 	void LoadBricks(std::string layout, const std::vector<Brick*>& brickTypes);
 	int GetBrickCount();
 
-	inline const int GetCenter() const { return m_centerX; }
+	const Vector2 GetPaddleStartingPoint(Paddle* paddle) const;
+	const Vector2 GetBallStartingPoint(Ball* ball) const;
 };

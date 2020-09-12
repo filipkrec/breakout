@@ -1,17 +1,12 @@
 #include "Ball.h"
 
 Ball::Ball()
-	:GameObject(Vector2(775, 425))
+	:GameObject("Ball")
 {
-    const int rad = 25;
-
     TextureManager::GetManager()->LoadTexture("Ball", "Textures/Balls/Ball1.dds");
-    Add(new Sprite(TextureManager::GetManager()->GetTexture("Ball"), Vector2(rad * 2, rad * 2)));
+    Add(new Sprite(TextureManager::GetManager()->GetTexture("Ball"), Vector2(m_radius * 2, m_radius * 2)));
     Add(new Physics());
-    Add(new CircleCollision(rad));
-
-    SetSpeed(20);
-    SetAngle(270);
+    Add(new CircleCollision(m_radius));
 }
 
 void Ball::Update()

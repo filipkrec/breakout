@@ -21,4 +21,6 @@ public:
 	SDL_Texture* GetTexture(std::string name);
 	void DeleteTexture(std::string name);
 	void Clear();
+
+	static std::string ColorToString(SDL_Color color);
 };
