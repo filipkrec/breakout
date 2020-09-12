@@ -47,7 +47,7 @@ void Brick::OnCollisionEnterGO(Component* other)
 		if (m_HP == 0)
 		{
 			Destroy();
-			LevelManager::BrickDestroyed(m_score);
+			LevelManager::GetManager()->BrickDestroyed(m_score);
 			SoundManager::GetManager()->PlaySound(m_id + "break");
 		}
 	}

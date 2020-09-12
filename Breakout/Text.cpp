@@ -10,9 +10,12 @@ Text::Text(std::string text, Vector2 size, const SDL_Color& color, Vector2 offse
 
 void Text::Render()
 {
-	m_rect.x = GetPosition().x;
-	m_rect.y = GetPosition().y;
-	SDL_RenderCopy(TextureManager::GetManager()->GetRenderer(), m_texture, NULL, &m_rect.SDLRect());
+	if (!m_hidden)
+	{
+		m_rect.x = GetPosition().x;
+		m_rect.y = GetPosition().y;
+		SDL_RenderCopy(TextureManager::GetManager()->GetRenderer(), m_texture, NULL, &m_rect.SDLRect());
+	}
 }
 
 void Text::Operation()
@@ -39,7 +42,24 @@ void Text::SetOffset(Vector2 offset)
 
 void Text::SetText(std::string text)
 {
-	TextureManager::GetManager()->DeleteTexture(text);
+	TextureManager::GetManager()->DeleteTexture(m_text);
 	TextureManager::GetManager()->LoadText(text, text, m_size, m_color);
 	m_texture = TextureManager::GetManager()->GetTexture(text);
+}
+
+void Text::SetColor(SDL_Color color)
+{
+	TextureManager::GetManager()->DeleteTexture(m_text);
+	TextureManager::GetManager()->LoadText(m_text, m_text, m_size, color);
+	m_texture = TextureManager::GetManager()->GetTexture(m_text);
+}
+
+void Text::Hide()
+{
+	m_hidden = true;
+}
+
+void Text::Show()
+{
+	m_hidden = false;
 }

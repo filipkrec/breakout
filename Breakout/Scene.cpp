@@ -17,6 +17,18 @@ void Scene::Add(GameObject* gameObject)
 	m_gameObjects.push_back(gameObject);
 }
 
+GameObject* Scene::GetByName(std::string name)
+{
+	auto it = std::find_if(m_gameObjects.begin(), m_gameObjects.end(), [&name](GameObject* x) {
+		return x->GetName() == name;
+		});
+
+	if (it != m_gameObjects.end())
+		return *it;
+
+	return nullptr;
+}
+
 void Scene::Destroy(GameObject* gameObject)
 {
 	gameObject->Destroy();
@@ -29,9 +41,17 @@ void Scene::PlaceFront(GameObject* gameobject)
 			GameObject* x = *it; // or std::move(*it)
 			m_gameObjects.erase(it);
 			m_gameObjects.push_back(x);
+			for (Component* c : x->GetChildren())
+			{
+				GameObject* child = dynamic_cast<GameObject*>(c);
+				if (child)
+					PlaceFront(child);
+			}
+
 			break;
 		}
 	}
+	
 }
 
 void Scene::LoadMusic(std::string name, std::string link)
@@ -56,7 +76,7 @@ void Scene::Process()
 	m_gameObjectsAltered = false;
 	for (GameObject* obj : m_gameObjects)
 	{
-		obj->Operation();
+		obj->Process();
 	}
 }
 

@@ -7,6 +7,8 @@
 
 class Text : public Component
 {
+	bool m_hidden;
+
 	const int m_size = 144;
 
 	std::string m_text;
@@ -30,6 +32,10 @@ public:
 	void SetOffset(Vector2 offset);
 
 	void SetText(std::string text);
+	void SetColor(SDL_Color color);
+
+	void Hide();
+	void Show();
 
 	void Operation() override;
 };

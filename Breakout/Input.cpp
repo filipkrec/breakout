@@ -137,3 +137,9 @@ bool Input::LMBClicked()
 {
     return m_leftMouseClicked;
 }
+
+
+void Input::Exit()
+{
+    m_running = false;
+}

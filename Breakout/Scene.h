@@ -17,6 +17,7 @@ public:
 	Scene();
 	std::vector<GameObject*>& GetObjects();
 	void Add(GameObject* gameObject);
+	GameObject* GetByName(std::string name);
 	void Destroy(GameObject* gameObject);
 	void PlaceFront(GameObject* gameobject);
 

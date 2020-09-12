@@ -26,6 +26,7 @@ public :
 	static bool LMBClicked();
 
 	static void TogglePause();
+	static void Exit();
 
 	static bool WindowEvent();
 	static Vector2 GetWindowEventValues();

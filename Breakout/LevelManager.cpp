@@ -1,14 +1,21 @@
 #include "LevelManager.h"
 
-std::vector<Level*>::iterator LevelManager::m_currentLevel;
-std::vector<Level*> LevelManager::m_levels;
+LevelManager* LevelManager::m_instance;
 
-int LevelManager::m_currentScore;
-int LevelManager::m_brickCount;
+LevelManager::LevelManager()
+{
+	SoundManager::GetManager()->AddSound("LifeLost", "Sounds/LifeLost.wav");
+	SoundManager::GetManager()->AddSound("GameOver", "Sounds/GameOver.wav");
+}
 
-Paddle* LevelManager::m_activePaddle;
-Ball* LevelManager::m_activeBall;
-
+LevelManager* LevelManager::GetManager()
+{
+	if (!m_instance)
+	{
+		m_instance = new LevelManager();
+	}
+	return m_instance;
+}
 
 void LevelManager::LoadLevel(std::string level)
 {
@@ -24,6 +31,7 @@ void LevelManager::AddFirst()
 {
 	if (m_levels.size() > 0)
 	{
+		m_currentLives = startingLives;
 		m_currentScore = 0;
 		if (*m_currentLevel)
 			(*m_currentLevel)->ClearFromScene();
@@ -65,6 +73,16 @@ void LevelManager::SetBall(Ball* ball)
 	m_activeBall = ball;
 }
 
+void LevelManager::SetLivesText(Text* livesText)
+{
+	m_lives = livesText;
+}
+
+void LevelManager::SetScoreText(Text* scoreText)
+{
+	m_score = scoreText;
+}
+
 void LevelManager::Clear()
 {
 	delete m_activeBall;
@@ -86,5 +104,15 @@ void LevelManager::BrickDestroyed(int score)
 	if (m_brickCount == 0)
 	{
 		LevelManager::AddNext();
+	}
+}
+
+void LevelManager::LifeLost()
+{
+	m_currentLives--;
+	SoundManager::GetManager()->PlaySound("LifeLost");
+	if (m_currentLives == 0)
+	{
+		SoundManager::GetManager()->PlaySound("GameOver");
 	}
 }

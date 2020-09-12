@@ -33,6 +33,20 @@ Component* GameObject::GetComponent()
     return nullptr;
 }
 
+GameObject* GameObject::GetChildGameObject(std::string name)
+{
+    GameObject* current;
+    for (Component* comp : m_children)
+    {
+        current = dynamic_cast<GameObject*>(comp);
+
+        if (current)
+            if (current->GetName() == name)
+                return current;
+    }
+    return nullptr;
+}
+
 void GameObject::Add(Component* component) {
     this->m_children.push_back(component);
     component->SetParent(this);
@@ -53,7 +67,7 @@ void GameObject::Operation() {
     Update();
     
     for (Component* c : m_children) {
-        c->Operation();
+        c->Process();
     }
 }
 
@@ -65,6 +79,11 @@ void GameObject::Move(Vector2 movement)
 {
     m_position.x += movement.x;
     m_position.y += movement.y;
+}
+
+void GameObject::SetName(std::string name)
+{
+    m_name = name;
 }
 
 std::string& GameObject::GetName() const
@@ -102,8 +121,6 @@ Component* GameObject::GetText()
 {
     return GetComponent<Text>();
 }
-
-
 
 void GameObject::SetPosition(Vector2 newPosition)
 {

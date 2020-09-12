@@ -1,5 +1,9 @@
 #include "Component.h"
 
+Component::Component()
+    :m_active(true)
+{
+}
 
 void Component::SetParent(Component* parent) {
     if (parent->IsComposite())
@@ -18,8 +22,17 @@ bool Component::IsComposite() const {
     return false;
 }
 
+void Component::Process()
+{
+    if (m_active)
+    {
+        Operation();
+    }
+}
+
 Vector2 Component::GetPosition() const { return m_parent->GetPosition(); }
 
+void Component::SetName(std::string name) { m_parent->SetName(name); }
 std::string& Component::GetName() const { return m_parent->GetName(); }
 
 void Component::SetPosition(Vector2 newPosition) {}
@@ -45,4 +58,15 @@ void Component::OnCollisionExit(Component* collidedOther)
     {
         m_parent->OnCollisionExit(collidedOther);
     }
+}
+
+
+void Component::Activate()
+{
+    m_active = true;
+}
+
+void Component::Deactivate()
+{
+    m_active = false;
 }

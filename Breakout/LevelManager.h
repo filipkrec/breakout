@@ -3,23 +3,38 @@
 
 class LevelManager
 {
-	static std::vector<Level*>::iterator m_currentLevel;
-	static std::vector<Level*> m_levels;
+	const int startingLives = 3;
 
-	static int m_currentScore;
-	static int m_brickCount;
+	static LevelManager* m_instance;
 
-	static Paddle* m_activePaddle;
-	static Ball* m_activeBall;
+	std::vector<Level*>::iterator m_currentLevel;
+	std::vector<Level*> m_levels;
+
+	int m_currentScore;
+	Text* m_score;
+
+	int m_currentLives;
+	Text* m_lives;
+
+	int m_brickCount;
+
+	Paddle* m_activePaddle;
+	Ball* m_activeBall;
 
 public:
-	static void LoadLevel(std::string level);
-	static void AddFirst();
-	static void AddNext();
-	static Level* GetCurrent();
-	static void SetPaddle(Paddle* paddle);
-	static void SetBall(Ball* ball);
-	static void BrickDestroyed(int score);
+	static LevelManager* GetManager();
 
-	static void Clear();
+	LevelManager();
+	void LoadLevel(std::string level);
+	void AddFirst();
+	void AddNext();
+	Level* GetCurrent();
+	void SetPaddle(Paddle* paddle);
+	void SetBall(Ball* ball);
+	void SetLivesText(Text* livesText);
+	void SetScoreText(Text* scoreText);
+	void BrickDestroyed(int score);
+	void LifeLost();
+
+	void Clear();
 };

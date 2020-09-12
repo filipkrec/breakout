@@ -36,6 +36,14 @@ void Paddle::Update()
     if (Input::Clicked(SDLK_p))
     {
         Input::TogglePause();
+        GameObject* UI = Scene::GetActiveScene().GetByName("UI");
+        GameObject* pausedMenu = UI->GetChildGameObject("Paused");
+
+        if(pausedMenu)
+        if (!pausedMenu->Active())
+            pausedMenu->Activate();
+        else
+            pausedMenu->Deactivate();
     }
 
 }

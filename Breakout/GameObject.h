@@ -30,6 +30,8 @@ public:
     template <class T> 
     Component* GetComponent();
 
+    GameObject* GetChildGameObject(std::string name);
+
     void Add(Component* component) override;
 
     void Remove(Component* component) override;
@@ -40,6 +42,7 @@ public:
 
     void Move(Vector2 movement);
 
+    void SetName(std::string name) override;
     std::string& GetName() const override;
 
     Vector2 GetPosition() const override;
@@ -58,6 +61,8 @@ public:
 
     void OnCollisionEnter(Component* collidedOther) override;
     void AllowCollisionProcess();
+
+    inline std::vector<Component*>& GetChildren() { return m_children; }
 
 protected:
     virtual void OnCollisionEnterGO(Component* collidedOther);
