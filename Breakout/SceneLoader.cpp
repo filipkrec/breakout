@@ -30,6 +30,7 @@ void SceneLoader::LoadGame()
     Paddle* paddle = new Paddle();
 
     LevelManager::GetManager()->Clear();
+    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level3.xml");
     LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level.xml");
     LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level2.xml");
     LevelManager::GetManager()->SetBall(ball);

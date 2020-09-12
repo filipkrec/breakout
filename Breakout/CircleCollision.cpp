@@ -21,19 +21,22 @@ void CircleCollision::Collide()
 		if(!go->Active()) continue;
 
 		BoxCollision* bc = dynamic_cast<BoxCollision*>(go->GetBoxCollision());
+		BoxCollision* collidedExists = nullptr;
 
-		std::vector<BoxCollision*>::iterator it = std::find_if(m_collided.begin(), m_collided.end(),
-			[&bc](BoxCollision* x)
+		for (BoxCollision* x: m_collided)
+		{
+			if (x == bc)
 			{
-				return x == bc;
+				collidedExists = x;
+				break;
 			}
-		);
+		}
 
 		if (bc && CheckCollision(bc->GetCollisionRect()))
 		{
 
 			CheckCollision(bc->GetCollisionRect());
-			if (it == m_collided.end())
+			if (!collidedExists)
 			{
 				if (m_collided.size() == 2)
 				{
@@ -49,11 +52,16 @@ void CircleCollision::Collide()
 					m_collided.push_back(bc);
 			}
 		}
-		else if (it != m_collided.end())
+		else if (collidedExists)
 		{
 			OnCollisionExit(bc);
 			bc->OnCollisionExit(this);
-			m_collided.erase(it);
+			m_collided.erase(
+				std::remove_if(m_collided.begin(), m_collided.end(),
+					[&](const BoxCollision* x) {
+						return x == collidedExists;
+					}),
+				m_collided.end());
 		}
 	}
 }
