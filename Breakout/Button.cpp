@@ -29,7 +29,7 @@ void Button::Update()
 
 		std::cout << x << "," << y << std::endl;
 
-		if (((BoxCollision*)GetBoxCollision())->CheckPointCollision(Vector2(x, y)))
+		if (((BoxCollision*)GetBoxCollision())->CheckPointCollision(Vector2(x, y)) && m_onClick)
 			m_onClick();
 	}
 }

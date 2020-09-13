@@ -28,7 +28,7 @@ public:
 		//insert score above worse and below better scores
 
 		std::string scores = "";
-		std::ifstream scoresIn("../Scores.txt");
+		std::ifstream scoresIn("Scores.txt");
 		unsigned int i = 0;
 		std::string currentName;
 		std::string decodedLine;

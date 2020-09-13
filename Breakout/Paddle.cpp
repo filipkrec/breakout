@@ -31,7 +31,7 @@ void Paddle::Update()
         ((Physics*)GetComponent<Physics>())->SetAngle(0);
     }
 
-    if (Input::Clicked(SDLK_p))
+    if (Input::Clicked(SDLK_p) || Input::Clicked(SDLK_ESCAPE))
     {
         Input::TogglePause();
         GameObject* UI = Scene::GetActiveScene().GetByName("UI");

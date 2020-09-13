@@ -14,6 +14,8 @@ public:
 	static SoundManager* GetManager();
 	void AddSound(std::string name, std::string file);
 	void ChangeMasterVolume(int volumePercentage);
+	void VolumeOff();
+	void VolumeOn();
 	void ChangeVolume(std::string name, int volumePercentage = 100);
 	int PlaySound(std::string name, bool loop = false);
 	void StopSound(int soundId);

@@ -23,8 +23,8 @@ void SceneLoader::LoadMenu()
     Button* highScores = new Button(TextureManager::GetManager()->GetTexture("Button"), "Highscores", screenCenter - buttonSize / 2, buttonSize,
         LoadHighScores);
 
-    Button* Options = new Button(TextureManager::GetManager()->GetTexture("Button"), "Options", screenCenter - buttonSize / 2 - buttonPadding * 3, buttonSize,
-        LoadGame);
+    Button* Options = new Button(TextureManager::GetManager()->GetTexture("Button"), "Options", screenCenter - buttonSize / 2 - buttonPadding, buttonSize,
+        LoadOptions);
 
     GameObject* menuBackground = new GameObject();
     menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), Vector2(screenX, screenY)));
@@ -64,16 +64,17 @@ void SceneLoader::ReloadMenu()
 
 void SceneLoader::LoadHighScores()
 {
+    TextureManager::GetManager()->LoadTexture("ScoreBG", "Textures/UI/ScoreBG.dds");
     const float screenX = Rect::GetResolutionRatio().x;
     const float screenY = Rect::GetResolutionRatio().y;
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 buttonSize(150, 50);
-    const Vector2 buttonPadding(0, screenY / 5);
-    const Vector2 scorePadding(0, screenY / 15 );
+    const Vector2 padding(0, screenY / 5);
     const Vector2 highScoreSize(300, 80);
 
     Scene* highscoreScreen = new Scene();
-    Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", screenCenter - buttonSize / 2 - buttonPadding * 2, buttonSize,
+    Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", 
+        screenCenter - buttonSize / 2 - padding * 2, buttonSize,
         ReloadMenu);
 
     std::vector<std::string> highscores = SaveManager::get_scores();
@@ -83,16 +84,17 @@ void SceneLoader::LoadHighScores()
 
     for (int i = 0; i < highscores.size();++i)
     {
-        GameObject* highScoreTextGo = new GameObject();
-        Text* highScoreText = new Text(std::to_string(i + 1) + highscores[i], highScoreSize, black);
-        highScoreTextGo->Add(highScoreText);
-        highScoreTextGo->SetPosition(Vector2(screenCenter.x - highScoreSize.x / 2, screenY - scorePadding.y * (i + 3)));
-        highScoresGo->Add(highScoreTextGo);
+        Button* highScoreTextGO = new Button(
+            TextureManager::GetManager()->GetTexture("ScoreBG"),
+            std::to_string(i + 1) + ". " + highscores[i],
+            Vector2(screenCenter.x - highScoreSize.x / 2, screenY - padding.y - buttonSize.y * (i * 1.5f)),
+            highScoreSize,
+            nullptr);
+        highScoresGo->Add(highScoreTextGO);
     }
 
-
     GameObject* menuBackground = new GameObject();
-    menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("ScoreBoardBackground"), Vector2(screenX, screenY)));
+    menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), Vector2(screenX, screenY)));
     highscoreScreen->Add(menuBackground);
     highscoreScreen->Add(highScoresGo);
     highscoreScreen->Add(back);
@@ -101,20 +103,95 @@ void SceneLoader::LoadHighScores()
 
 void SceneLoader::LoadOptions()
 {
+    TextureManager::GetManager()->LoadTexture("ScoreBG", "Textures/UI/ScoreBG.dds");
     const float screenX = Rect::GetResolutionRatio().x;
     const float screenY = Rect::GetResolutionRatio().y;
     const Vector2 screenCenter = Rect::GetScreenCenter();
-    const Vector2 buttonSize(400, 100);
-    const Vector2 buttonPadding(0, screenY / 5);
+    const Vector2 backButtonSize(150, 50);
+    const Vector2 buttonSize(200, 75);
+    const Vector2 titleSize(400, 100);
+    const Vector2 buttonPaddingHorizontal(50, 0);
+    const Vector2 buttonPaddingVertical(0, 50);
+    const Vector2 paddingHorizontal(screenX / 4, 0);
+    const Vector2 paddingVertical(0, screenY / 5);
 
     Scene* options = new Scene();
-    Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", screenCenter - buttonSize / 2 - buttonPadding * 2, buttonSize,
+    Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", 
+        screenCenter - backButtonSize / 2 - paddingVertical * 2,
+        backButtonSize,
         ReloadMenu);
+
+    //VOLUME
+    Button* volumeText = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "   Sound   ",
+        Vector2(screenCenter.x - titleSize.x / 2, screenY - paddingVertical.y),
+        titleSize,
+        nullptr);
+
+    Button* volumeOff = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "Off",
+        Vector2(screenCenter.x - buttonSize.x - buttonSize.x / 2 - buttonPaddingHorizontal.x,
+            volumeText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
+        buttonSize,
+        [] {SoundManager::GetManager()->VolumeOff(); });
+
+    Button* volumeOn = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "On",
+        Vector2(screenCenter.x + buttonSize.x / 2 + buttonPaddingHorizontal.x,
+            volumeText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
+        buttonSize,
+        [] {SoundManager::GetManager()->VolumeOn(); });
+
+    //ASPECT RATIO
+    Button* aspectText = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "Aspect ratio",
+        Vector2(screenCenter.x - titleSize.x / 2, 
+            volumeOn->GetPosition().y - buttonPaddingVertical.y - titleSize.y),
+        titleSize,
+        nullptr);
+
+    Button* aspect169 = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "16:9",
+        Vector2(screenCenter.x - buttonSize.x/2 - buttonPaddingHorizontal.x - buttonSize.x ,
+            aspectText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
+        buttonSize,
+        [] {Rect::SetResolutionRatio(Vector2(16, 9), false); 
+    LoadOptions(); });
+
+    Button* aspect1610 = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "16:10",
+        Vector2(screenCenter.x - buttonSize.x / 2,
+            aspectText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
+        buttonSize,
+        [] {Rect::SetResolutionRatio(Vector2(16, 10), false);
+    LoadOptions(); });
+
+    Button* aspect43 = new Button(
+        TextureManager::GetManager()->GetTexture("ScoreBG"),
+        "4:3",
+        Vector2(screenCenter.x + buttonSize.x / 2 + buttonPaddingHorizontal.x,
+            aspectText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
+        buttonSize,
+        [] {Rect::SetResolutionRatio(Vector2(4, 3), false);
+    LoadOptions(); });
 
     GameObject* menuBackground = new GameObject();
     menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), Vector2(screenX, screenY)));
     options->Add(menuBackground);
     options->Add(back);
+    options->Add(volumeText);
+    options->Add(volumeOn);
+    options->Add(volumeOff);
+    options->Add(aspectText);
+    options->Add(aspect1610);
+    options->Add(aspect169);
+    options->Add(aspect43);
     Scene::LoadScene(options , false);
 }
 
@@ -130,10 +207,6 @@ void SceneLoader::LoadGame()
     Ball* ball = new Ball();
     Paddle* paddle = new Paddle();
 
-    LevelManager::GetManager()->Clear();
-    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level.xml");
-    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level2.xml");
-    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level3.xml");
     LevelManager::GetManager()->SetBall(ball);
     LevelManager::GetManager()->SetPaddle(paddle);
 

@@ -6,6 +6,9 @@ LevelManager* LevelManager::m_instance;
 
 LevelManager::LevelManager()
 {
+	LoadLevel("../Assets/Levels/Level.xml");
+	LoadLevel("../Assets/Levels/Level2.xml");
+	LoadLevel("../Assets/Levels/Level3.xml");
 	SoundManager::GetManager()->AddSound("LifeLost", "Sounds/LifeLost.wav");
 	SoundManager::GetManager()->AddSound("GameOver", "Sounds/GameOver.wav");
 	SoundManager::GetManager()->AddSound("Victory", "Sounds/Victory.wav");
@@ -69,7 +72,16 @@ void LevelManager::AddNext()
 		Scene::GetActiveScene().StopMusic();
 		SoundManager::GetManager()->PlaySound("Victory");
 		m_activePaddle->Destroy();
-		m_activeBall->Destroy();
+		m_activeBall->Destroy();		
+		GameObject* UI = Scene::GetActiveScene().GetByName("UI");
+		if (UI)
+		{
+			Button* victory = dynamic_cast<Button*>(UI->GetChildGameObject("Victory"));
+			if (victory)
+			{
+				victory->Activate();
+			}
+		}
 		SaveManager::set_score("DefaultName", m_currentScore);
 	}
 }

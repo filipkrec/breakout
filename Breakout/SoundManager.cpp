@@ -61,6 +61,24 @@ void SoundManager::ChangeMasterVolume(int volumePercentage)
 	}
 }
 
+void SoundManager::VolumeOff()
+{
+	m_masterVolume = 0;
+	for (std::pair<std::string, Mix_Chunk*>& sound : m_sounds)
+	{
+		sound.second->volume = 0;
+	}
+}
+
+void SoundManager::VolumeOn()
+{
+	m_masterVolume = 100;
+	for (std::pair<std::string, Mix_Chunk*>& sound : m_sounds)
+	{
+		sound.second->volume = MIX_MAX_VOLUME;
+	}
+}
+
 void SoundManager::ChangeVolume(std::string name, int volumePercentage)
 {
 	GetSound(name)->volume = MIX_MAX_VOLUME * volumePercentage / 100.0f;
