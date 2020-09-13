@@ -7,6 +7,7 @@ LevelManager::LevelManager()
 {
 	SoundManager::GetManager()->AddSound("LifeLost", "Sounds/LifeLost.wav");
 	SoundManager::GetManager()->AddSound("GameOver", "Sounds/GameOver.wav");
+	SoundManager::GetManager()->AddSound("Victory", "Sounds/Victory.wav");
 }
 
 LevelManager* LevelManager::GetManager()
@@ -61,6 +62,13 @@ void LevelManager::AddNext()
 		Scene::GetActiveScene().PlaceFront(m_activeBall);
 
 		m_currentLevelTxt->SetText(std::to_string(std::distance(m_levels.begin(), m_currentLevel) + 1));
+	}
+	else
+	{
+		Scene::GetActiveScene().StopMusic();
+		SoundManager::GetManager()->PlaySound("Victory");
+		m_activePaddle->Destroy();
+		m_activeBall->Destroy();
 	}
 }
 

@@ -30,9 +30,9 @@ void SceneLoader::LoadGame()
     Paddle* paddle = new Paddle();
 
     LevelManager::GetManager()->Clear();
-    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level3.xml");
     LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level.xml");
     LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level2.xml");
+    LevelManager::GetManager()->LoadLevel("../Assets/Levels/Level3.xml");
     LevelManager::GetManager()->SetBall(ball);
     LevelManager::GetManager()->SetPaddle(paddle);
 
@@ -65,6 +65,7 @@ void SceneLoader::LoadUI()
     UI->SetName("UI");
     TextureManager::GetManager()->LoadTexture("ScoreBoard", "Textures/UI/ScoreBoard.dds");
     TextureManager::GetManager()->LoadTexture("GameOver", "Textures/UI/GameOver.dds");
+    TextureManager::GetManager()->LoadTexture("Victory", "Textures/UI/Victory.dds");
 
     Button* score = new Button(TextureManager::GetManager()->GetTexture("ScoreBoard"), std::to_string(0),
         Vector2(unitsX - 150, unitsY - 75), Vector2(100, 50), [] {});
@@ -96,6 +97,11 @@ void SceneLoader::LoadUI()
     gameOver->SetName("GameOver");
     UI->Add(gameOver);
     gameOver->Deactivate();
+
+    Button* victory = new Button(TextureManager::GetManager()->GetTexture("Victory"), "", Vector2(unitsX / 2 - 250, unitsY / 2 - 250), Vector2(500, 500), LoadMenu);
+    victory->SetName("Victory");
+    UI->Add(victory);
+    victory->Deactivate();
 
     GameObject* paused = new GameObject();
     paused->SetName("Paused");

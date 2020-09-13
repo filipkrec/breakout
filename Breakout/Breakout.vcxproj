@@ -166,6 +166,7 @@
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="SaveManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="SoundManager.h" />
