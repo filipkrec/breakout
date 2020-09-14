@@ -114,10 +114,10 @@ BoxCollision::Side BoxCollision::GetCollidingSide(Component& circleComp)
 #endif
 
 
-	if (angle >= rectAngleA && angle <= rectAngleB)
+	if (angle > rectAngleA && angle < rectAngleB)
 		return Side::BOTTOM;
 	else if
-		(angle >= rectAngleC && angle <= rectAngleD)
+		(angle > rectAngleC && angle < rectAngleD)
 		return Side::TOP;
 	else if
 		(angle > rectAngleD && angle < rectAngleA)

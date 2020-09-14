@@ -68,8 +68,11 @@ void CircleCollision::Collide()
 
 bool CircleCollision::CheckCollision(const Rect& rect)
 {
-	float circleDistanceX = abs((GetPosition().x + m_radius) - (rect.x + rect.w / 2));
-	float circleDistanceY = abs((GetPosition().y + m_radius) - (rect.y + rect.h / 2));
+	const float circleCenterX = (GetPosition().x + m_radius);
+	const float circleCenterY = (GetPosition().y + m_radius);
+
+	float circleDistanceX = abs(circleCenterX - (rect.x + rect.w / 2));
+	float circleDistanceY = abs(circleCenterY - (rect.y + rect.h / 2));
 
 	if (circleDistanceX > (rect.w / 2 + m_radius)) { return false; }
 	if (circleDistanceY > (rect.h / 2 + m_radius)) { return false; }
@@ -77,8 +80,8 @@ bool CircleCollision::CheckCollision(const Rect& rect)
 	if (circleDistanceX <= (rect.w / 2)) { return true; }
 	if (circleDistanceY <= (rect.h / 2)) { return true; }
 
-	float closestX = (GetPosition().x < rect.x ? rect.x : (GetPosition().x > (rect.x + rect.w) ? (rect.x + rect.w) : GetPosition().x));
-	float closestY = (GetPosition().y < (rect.y + rect.h) ? (rect.y + rect.h) : (GetPosition().y > rect.y ? rect.y : GetPosition().y));
+	float closestX = (circleCenterX < rect.x ? rect.x : (circleCenterX > (rect.x + rect.w) ? (rect.x + rect.w) : circleCenterX));
+	float closestY = (circleCenterY > (rect.y + rect.h) ? (rect.y + rect.h) : (circleCenterY < rect.y ? rect.y : circleCenterY));
 
 	float cornerDistance_sq = pow((circleDistanceX - closestX),2) +
 		pow((circleDistanceY - closestY),2);

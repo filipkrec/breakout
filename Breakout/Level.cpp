@@ -156,4 +156,11 @@ void Level::ClearFromScene()
 {
 	if(m_arena)
 		m_arena->Destroy();
+
+	for (GameObject* go : Scene::GetActiveScene().GetObjects())
+	{
+		Brick* brick = dynamic_cast<Brick*>(go);
+		if (brick)
+			brick->Destroy();
+	}
 }

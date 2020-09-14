@@ -6,6 +6,7 @@ LevelManager* LevelManager::m_instance;
 
 LevelManager::LevelManager()
 {
+	LoadLevel("Assets/Levels/test.xml");
 	LoadLevel("Assets/Levels/Level.xml");
 	LoadLevel("Assets/Levels/Level2.xml");
 	LoadLevel("Assets/Levels/Level3.xml");
@@ -64,6 +65,12 @@ void LevelManager::AddNext()
 
 		Scene::GetActiveScene().PlaceFront(m_activePaddle);
 		Scene::GetActiveScene().PlaceFront(m_activeBall);
+
+		GameObject* UI = Scene::GetActiveScene().GetByName("UI");
+		if (UI)
+		{
+			Scene::GetActiveScene().PlaceFront(UI);
+		}
 
 		m_currentLevelTxt->SetText(std::to_string(std::distance(m_levels.begin(), m_currentLevel) + 1));
 	}
