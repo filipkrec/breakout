@@ -43,8 +43,8 @@ void SoundManager::AddSound(std::string name, std::string file)
 	{
 #ifdef _DEBUG
 		std::cout << "Error: Sample " << file << " failed to load! " << std::endl;
-		return;
 #endif
+		return;
 	}
 	else 
 	sample->volume = m_masterVolume;
