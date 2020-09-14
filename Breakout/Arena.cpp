@@ -26,15 +26,16 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
     :GameObject("Arena"),m_background(nullptr), m_rowSpacing(rowSpacing), m_columnSpacing(columnSpacing)
     , m_columnCount(columnCount), m_brickCount(0), m_brickWidth(brickWidth), m_brickHeight(brickHeight)
 {
-    const int screenX = Rect::GetResolutionRatio().x;
-    const int screenY = Rect::GetResolutionRatio().y;
+    const int screenX = static_cast<int>(Rect::GetResolutionRatio().x);
+    const int screenY = static_cast<int>(Rect::GetResolutionRatio().y);
 
     m_minHeight = screenY / 3;
 
     const int padding = 25;
     const int wallThickness = 50;
 
-    const int levelHeight = 900 - (padding + wallThickness) * 2;
+    const int arenaHeight = 900;
+    const int levelHeight = arenaHeight - (padding + wallThickness) * 2;
 
     if (levelHeight < m_minHeight)
     {
@@ -47,14 +48,15 @@ Arena::Arena(int columnCount, int rowCount, int rowSpacing, int columnSpacing, S
 
     if (levelWidth > screenX)
     {
-        m_brickWidth = (screenX - (padding + wallThickness) * 2 - columnSpacing) / (columnCount + columnSpacing);
         levelWidth = screenX - (padding + wallThickness) * 2;
+        m_brickWidth = (levelWidth - columnSpacing * 2) / (columnCount + columnSpacing);
+        levelWidth = columnSpacing + columnCount * (m_brickWidth + columnSpacing);
     }
 
     const int leftoverWidth = screenX - levelWidth - wallThickness * 2;
     const int originLeft = leftoverWidth / 2;
     const int originRight = leftoverWidth / 2 + levelWidth + wallThickness;
-    const int horOriginBot = padding + (screenY - 900) / 2;
+    const int horOriginBot = padding + (screenY - arenaHeight) / 2;
     const int vertOriginBot = horOriginBot + wallThickness - 1;
     const int horWallWidth = levelWidth + wallThickness * 2;
     const int vertWallHeight = levelHeight;

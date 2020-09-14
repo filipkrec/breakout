@@ -6,9 +6,9 @@ LevelManager* LevelManager::m_instance;
 
 LevelManager::LevelManager()
 {
-	LoadLevel("../Assets/Levels/Level.xml");
-	LoadLevel("../Assets/Levels/Level2.xml");
-	LoadLevel("../Assets/Levels/Level3.xml");
+	LoadLevel("Assets/Levels/Level.xml");
+	LoadLevel("Assets/Levels/Level2.xml");
+	LoadLevel("Assets/Levels/Level3.xml");
 	SoundManager::GetManager()->AddSound("LifeLost", "Sounds/LifeLost.wav");
 	SoundManager::GetManager()->AddSound("GameOver", "Sounds/GameOver.wav");
 	SoundManager::GetManager()->AddSound("Victory", "Sounds/Victory.wav");
@@ -128,6 +128,11 @@ void LevelManager::Clear()
 
 	m_activePaddle = nullptr;
 
+	ClearLevels();
+}
+
+void LevelManager::ClearLevels()
+{
 	m_levels.erase(
 		std::remove_if(m_levels.begin(), m_levels.end(),
 			[&](const Level* x) {

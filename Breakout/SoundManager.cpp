@@ -36,7 +36,7 @@ void SoundManager::AddSound(std::string name, std::string file)
 		return;
 	}
 
-	std::string link = "../Assets/" + file;
+	std::string link = "Assets/" + file;
 	Mix_Chunk* sample = Mix_LoadWAV(link.c_str());
 
 	if (!sample)
@@ -46,7 +46,7 @@ void SoundManager::AddSound(std::string name, std::string file)
 		return;
 #endif
 	}
-	
+	else 
 	sample->volume = m_masterVolume;
 
 	m_sounds.push_back(std::pair<std::string, Mix_Chunk*>(name, sample));
@@ -57,7 +57,7 @@ void SoundManager::ChangeMasterVolume(int volumePercentage)
 	m_masterVolume = volumePercentage;
 	for (std::pair<std::string, Mix_Chunk*>& sound : m_sounds)
 	{
-		sound.second->volume = MIX_MAX_VOLUME * volumePercentage / 100.0f;
+		sound.second->volume = static_cast<Uint8>(static_cast<float>(MIX_MAX_VOLUME) * static_cast<float>(volumePercentage) / 100.0f);
 	}
 }
 
@@ -81,7 +81,7 @@ void SoundManager::VolumeOn()
 
 void SoundManager::ChangeVolume(std::string name, int volumePercentage)
 {
-	GetSound(name)->volume = MIX_MAX_VOLUME * volumePercentage / 100.0f;
+	GetSound(name)->volume = static_cast<Uint8>(static_cast<float>(MIX_MAX_VOLUME) * static_cast<float>(volumePercentage) / 100.0f);
 }
 
 Mix_Chunk* SoundManager::GetSound(std::string name)

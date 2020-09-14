@@ -3,6 +3,11 @@
 
 TextureManager* TextureManager::m_instance;
 
+TextureManager::TextureManager()
+	:m_renderer(nullptr)
+{
+}
+
 TextureManager* TextureManager::GetManager()
 {
 	if (!m_instance)
@@ -44,7 +49,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 
 	
 	std::string path =  imgLink;
-	path = "../Assets/" + imgLink;
+	path = "Assets/" + imgLink;
 
 	SDL_Texture* tex;
 	SDL_Surface* temp;
@@ -70,6 +75,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 		}
 		catch (int e)
 		{
+			static_cast<void>(e);
 #ifdef _DEBUG
 			std::cout << "ERROR: "<< e << "Unsupported image format" <<std::endl;
 #endif
@@ -109,7 +115,7 @@ void TextureManager::LoadText(std::string name, std::string text, int size, cons
 #endif
 		return;
 	}
-	TTF_Font* font = TTF_OpenFont("../Assets/Fonts/ariblk.ttf", size);
+	TTF_Font* font = TTF_OpenFont("Assets/Fonts/ariblk.ttf", size);
 
 	if (!font)
 	{
@@ -175,7 +181,7 @@ void TextureManager::Clear()
 	m_textures.erase(
 		std::remove_if(m_textures.begin(), m_textures.end(),
 			[&](const std::pair <std::string, SDL_Texture*> x) { 
-				delete x.second;
+				SDL_DestroyTexture(x.second);
 				return true; }),
 		m_textures.end());
 }

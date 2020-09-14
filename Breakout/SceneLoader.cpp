@@ -119,20 +119,19 @@ void SceneLoader::LoadHighScores()
 void SceneLoader::LoadOptions()
 {
     TextureManager::GetManager()->LoadTexture("ScoreBG", "Textures/UI/ScoreBG.dds");
-    const float screenX = static_cast<float>(Rect::GetResolutionRatio().x);
-    const float screenY = static_cast<float>(Rect::GetResolutionRatio().y);
+    const Vector2 screenSize(Rect::GetResolutionRatio().x, Rect::GetResolutionRatio().y);
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 backButtonSize(150, 50);
     const Vector2 buttonSize(200, 75);
     const Vector2 titleSize(400, 100);
     const Vector2 buttonPaddingHorizontal(50, 0);
     const Vector2 buttonPaddingVertical(0, 50);
-    const Vector2 paddingHorizontal(screenX / 4, 0.0f);
-    const Vector2 paddingVertical(0.0f, screenY / 5);
+    const Vector2 paddingHorizontal(screenSize.x / 4, 0.0f);
+    const Vector2 paddingVertical(0.0f, screenSize.y / 5);
 
     Scene* options = new Scene();
     Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", 
-        screenCenter + Vector2(screenX / 4, 0.0f) - backButtonSize / 2 - paddingVertical * 2,
+        screenCenter + Vector2(screenSize.x / 4, 0.0f) - backButtonSize / 2 - paddingVertical * 2,
         backButtonSize,
         ReloadMenu);
 
@@ -140,7 +139,7 @@ void SceneLoader::LoadOptions()
     Button* volumeText = new Button(
         TextureManager::GetManager()->GetTexture("ScoreBG"),
         "   Sound   ",
-        Vector2(screenCenter.x - titleSize.x / 2, screenY - paddingVertical.y),
+        Vector2(screenCenter.x - titleSize.x / 2, screenSize.y - paddingVertical.y),
         titleSize,
         nullptr);
 
@@ -194,10 +193,10 @@ void SceneLoader::LoadOptions()
             aspectText->GetPosition().y - buttonPaddingVertical.y - buttonSize.y),
         buttonSize,
         [] {Rect::SetResolutionRatio(Vector2(4, 3), false);
-    LoadOptions(); });
+    LoadOptions();});
 
     GameObject* menuBackground = new GameObject();
-    menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), Vector2(screenX, screenY)));
+    menuBackground->Add(new Sprite(TextureManager::GetManager()->GetTexture("MenuBackground"), screenSize));
     options->Add(menuBackground);
     options->Add(back);
     options->Add(volumeText);
@@ -253,25 +252,26 @@ void SceneLoader::FillBackground(Scene* scene)
 
 void SceneLoader::LoadUI()
 {
-    const float screenX = Rect::GetResolutionRatio().x;
-    const float screenY = Rect::GetResolutionRatio().y;
+    const Vector2 screenSize(Rect::GetResolutionRatio().x, Rect::GetResolutionRatio().y);
 
     GameObject* UI = new GameObject();
     UI->SetName("UI");
     TextureManager::GetManager()->LoadTexture("ScoreBoard", "Textures/UI/ScoreBoard.dds");
+    TextureManager::GetManager()->LoadTexture("ScoreBoardLives", "Textures/UI/ScoreBoardLives.dds");
+    TextureManager::GetManager()->LoadTexture("ScoreBoardLevels", "Textures/UI/ScoreBoardLevels.dds");
     TextureManager::GetManager()->LoadTexture("GameOver", "Textures/UI/GameOver.dds");
     TextureManager::GetManager()->LoadTexture("Victory", "Textures/UI/Victory.dds");
 
     Button* score = new Button(TextureManager::GetManager()->GetTexture("ScoreBoard"), std::to_string(0),
-        Vector2(screenX - 150, screenY - 75), Vector2(100, 50), [] {});
+        Vector2(screenSize.x - 150, screenSize.y - 150), Vector2(100, 50), [] {});
     score->SetName("Score");
     UI->Add(score);
     Text* txt = dynamic_cast<Text*>(score->GetText());
     if (txt)
         LevelManager::GetManager()->SetScoreText(txt);
 
-    Button* currentLevel = new Button(TextureManager::GetManager()->GetTexture("ScoreBoard"), std::to_string(1),
-        Vector2(screenX - 150, screenY - 150), Vector2(100, 50), [] {});
+    Button* currentLevel = new Button(TextureManager::GetManager()->GetTexture("ScoreBoardLevels"), std::to_string(1),
+        Vector2(screenSize.x - 150, screenSize.y - 75), Vector2(100, 50), [] {});
     currentLevel->SetName("CurrentLevel");
     UI->Add(currentLevel);
 
@@ -279,8 +279,8 @@ void SceneLoader::LoadUI()
     if (txt)
         LevelManager::GetManager()->SetCurrentLevelText(txt);
 
-    Button* lives = new Button(TextureManager::GetManager()->GetTexture("ScoreBoard"), std::to_string(0),
-        Vector2(50.0f, screenY - 75), Vector2(100, 50), [] {});
+    Button* lives = new Button(TextureManager::GetManager()->GetTexture("ScoreBoardLives"), std::to_string(0),
+        Vector2(50.0f, screenSize.y - 75), Vector2(100, 50), [] {});
     lives->SetName("Lives");
     UI->Add(lives);
 
@@ -288,12 +288,12 @@ void SceneLoader::LoadUI()
     if(txt)
         LevelManager::GetManager()->SetLivesText(txt);
 
-    Button* gameOver = new Button(TextureManager::GetManager()->GetTexture("GameOver"), "", Vector2(screenX / 2 - 250, screenY / 2 - 250), Vector2(500, 500), LoadMenu);
+    Button* gameOver = new Button(TextureManager::GetManager()->GetTexture("GameOver"), "", Vector2(screenSize.x / 2 - 250, screenSize.y / 2 - 250), Vector2(500, 500), LoadMenu);
     gameOver->SetName("GameOver");
     UI->Add(gameOver);
     gameOver->Deactivate();
 
-    Button* victory = new Button(TextureManager::GetManager()->GetTexture("Victory"), "", Vector2(screenX / 2 - 250, screenY / 2 - 250), Vector2(500, 500), LoadMenu);
+    Button* victory = new Button(TextureManager::GetManager()->GetTexture("Victory"), "", Vector2(screenSize.x / 2 - 250, screenSize.y / 2 - 250), Vector2(500, 500), LoadMenu);
     victory->SetName("Victory");
     UI->Add(victory);
     victory->Deactivate();
@@ -303,7 +303,7 @@ void SceneLoader::LoadUI()
     UI->Add(paused);
     paused->Deactivate();
 
-    Button* pauseContinue = new Button(nullptr, "Continue", Vector2(screenX / 2 - 160, screenY - 300), Vector2(320, 100),
+    Button* pauseContinue = new Button(nullptr, "Continue", Vector2(screenSize.x / 2 - 160, screenSize.y / 2 + 100), Vector2(320, 100),
         []()
         {
             Input::TogglePause();
@@ -317,7 +317,7 @@ void SceneLoader::LoadUI()
     pauseContinue->SetTextColor(yellow);
     paused->Add(pauseContinue);
 
-    Button* quitGame = new Button(nullptr, "Quit", Vector2(screenX / 2 - 80, screenY - 450), Vector2(160, 100), 
+    Button* quitGame = new Button(nullptr, "Quit", Vector2(screenSize.x / 2 - 80, screenSize.y / 2 - 50), Vector2(160, 100),
         []
         {
             if (Input::Paused())
@@ -328,7 +328,7 @@ void SceneLoader::LoadUI()
     quitGame->SetTextColor(yellow);
     paused->Add(quitGame);
 
-    Button* exitGame = new Button(nullptr, "Exit", Vector2(screenX / 2 - 80, screenY - 600), Vector2(160, 100), Input::Exit);
+    Button* exitGame = new Button(nullptr, "Exit", Vector2(screenSize.x / 2 - 80, screenSize.y / 2 - 200), Vector2(160, 100), Input::Exit);
     exitGame->SetTextColor(yellow);
     paused->Add(exitGame);
 

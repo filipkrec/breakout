@@ -13,6 +13,7 @@ class TextureManager
 	std::vector<std::pair <std::string, SDL_Texture*>> m_textures;
 	SDL_Renderer* m_renderer;
 public:
+	TextureManager();
 	static TextureManager* GetManager();
 	SDL_Renderer* GetRenderer();
 	void SetRenderer(SDL_Renderer* rend);

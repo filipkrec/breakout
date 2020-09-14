@@ -53,8 +53,9 @@ void GameObject::Add(Component* component) {
 }
 
 void GameObject::Remove(Component* component) {
-    std::remove_if(m_children.begin(), m_children.end(),
-        [&](Component* x) {return x == component; }),
+
+    static_cast<void>(std::remove_if(m_children.begin(), m_children.end(),
+        [&component](Component* x) { return x == component; }));
 
         component->SetParent(nullptr);
 }
