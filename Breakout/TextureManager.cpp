@@ -1,5 +1,6 @@
 #include "TextureManager.h"
 #include "IL/il.h"
+#include <algorithm>
 
 TextureManager* TextureManager::m_instance;
 

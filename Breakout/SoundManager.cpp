@@ -1,4 +1,5 @@
 #include "SoundManager.h"
+#include <algorithm>
 
 SoundManager* SoundManager::m_instance;
 

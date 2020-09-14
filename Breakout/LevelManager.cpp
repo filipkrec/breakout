@@ -6,7 +6,6 @@ LevelManager* LevelManager::m_instance;
 
 LevelManager::LevelManager()
 {
-	LoadLevel("Assets/Levels/test.xml");
 	LoadLevel("Assets/Levels/Level.xml");
 	LoadLevel("Assets/Levels/Level2.xml");
 	LoadLevel("Assets/Levels/Level3.xml");
