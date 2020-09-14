@@ -25,7 +25,7 @@ public:
 	inline const Vector2 GetCenter() const { return Vector2(GetPosition().x + m_radius / 2, GetPosition().y + m_radius); }
 
 	std::vector<BoxCollision*>& GetColliding();
-	const int GetCollidingCount() const { return m_collided.size(); };
+	const int GetCollidingCount() const { return static_cast<int>(m_collided.size()); };
 
 	void Operation() override;
 };

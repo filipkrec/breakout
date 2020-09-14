@@ -71,8 +71,8 @@ void Paddle::OnCollisionEnterGO(Component* collidedOther)
         if (m_hitCounter > 5)
         {
             m_hitCounter = 0;
-            if (ballPhys->GetSpeed() < Ball::m_maxSpeed);
-            ballPhys->SetSpeed(ballPhys->GetSpeed() + 1);
+            if (ballPhys->GetSpeed() < Ball::m_maxSpeed)
+                ballPhys->SetSpeed(ballPhys->GetSpeed() + 1);
         }
         Vector2 centerToBall =
             Vector2(

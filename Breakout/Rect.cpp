@@ -6,14 +6,15 @@ Vector2 Rect::m_resolution;
 Vector2 Rect::m_resolutionRatio;
 
 Rect::Rect()
+	:x(0),y(0),w(0),h(0)
 {}
 
 Rect::Rect(Vector2 position, Vector2 size)
 {
-	x = position.x;
-	y = position.y;
-	w = size.x;
-	h = size.y;
+	x = static_cast<int>(position.x);
+	y = static_cast<int>(position.y);
+	w = static_cast<int>(size.x);
+	h = static_cast<int>(size.y);
 }
 
 const SDL_Rect Rect::SDLRect() const
@@ -36,7 +37,7 @@ void Rect::SetRatio(Vector2 resolution, bool setResolution)
 
 void Rect::SetResolutionRatio(Vector2 resolution, bool setResolution)
 {
-	int screenRatioInt = round(resolution.x / resolution.y * 100);
+	int screenRatioInt = static_cast<int>(round(resolution.x / resolution.y * 100));
 
 	if (screenRatioInt == 133)
 	{

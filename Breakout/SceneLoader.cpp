@@ -9,7 +9,7 @@ void SceneLoader::LoadMenu()
     const Vector2 screenSize(Rect::GetResolutionRatio().x, Rect::GetResolutionRatio().y);
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 buttonSize(400, 100);
-    const Vector2 buttonPadding(0, screenSize.y / 5);
+    const Vector2 buttonPadding(0.0f, screenSize.y / 5);
 
     Scene* menu = new Scene();
     TextureManager::GetManager()->LoadTexture("MenuBackground", "Textures/Backgrounds/MenuBackground.dds");
@@ -17,19 +17,19 @@ void SceneLoader::LoadMenu()
     menu->LoadMusic("MenuMusic", "Sounds/Music/MenuMusic.wav");
 
     Button* newGame = new Button(TextureManager::GetManager()->GetTexture("Button"), "New Game",
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding, buttonSize,
         LoadGame);
 
     Button* highScores = new Button(TextureManager::GetManager()->GetTexture("Button"), "Highscores", 
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 2, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 2, buttonSize,
         LoadHighScores);
 
     Button* options = new Button(TextureManager::GetManager()->GetTexture("Button"), "Options", 
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 3, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 3, buttonSize,
         LoadOptions);
 
     Button* exit = new Button(TextureManager::GetManager()->GetTexture("Button"), "Exit", 
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 4, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 4, buttonSize,
         [] {Input::Exit(); });
 
     GameObject* menuBackground = new GameObject();
@@ -47,24 +47,24 @@ void SceneLoader::ReloadMenu()
     const Vector2 screenSize(Rect::GetResolutionRatio().x, Rect::GetResolutionRatio().y);
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 buttonSize(400, 100);
-    const Vector2 buttonPadding(0, screenSize.y / 5);
+    const Vector2 buttonPadding(0.0f, screenSize.y / 5);
 
     Scene* menu = new Scene();
 
     Button* newGame = new Button(TextureManager::GetManager()->GetTexture("Button"), "New Game",
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding, buttonSize,
         LoadGame);
 
     Button* highScores = new Button(TextureManager::GetManager()->GetTexture("Button"), "Highscores",
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 2, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 2, buttonSize,
         LoadHighScores);
 
     Button* options = new Button(TextureManager::GetManager()->GetTexture("Button"), "Options",
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 3, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 3, buttonSize,
         LoadOptions);
 
     Button* exit = new Button(TextureManager::GetManager()->GetTexture("Button"), "Exit",
-        screenSize - Vector2(screenSize.x / 2, 0) - buttonSize / 2 - buttonPadding * 4, buttonSize,
+        screenSize - Vector2(screenSize.x / 2, 0.0f) - buttonSize / 2 - buttonPadding * 4, buttonSize,
         [] {Input::Exit(); });
 
     GameObject* menuBackground = new GameObject();
@@ -80,16 +80,16 @@ void SceneLoader::ReloadMenu()
 void SceneLoader::LoadHighScores()
 {
     TextureManager::GetManager()->LoadTexture("ScoreBG", "Textures/UI/ScoreBG.dds");
-    const float screenX = Rect::GetResolutionRatio().x;
-    const float screenY = Rect::GetResolutionRatio().y;
+    const float screenX = static_cast<float>(Rect::GetResolutionRatio().x);
+    const float screenY = static_cast<float>(Rect::GetResolutionRatio().y);
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 buttonSize(150, 50);
-    const Vector2 padding(0, screenY / 5);
+    const Vector2 padding(0.0f, screenY / 5);
     const Vector2 highScoreSize(300, 80);
 
     Scene* highscoreScreen = new Scene();
     Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", 
-        screenCenter + Vector2(screenX / 4, 0) - buttonSize / 2 - padding * 2, buttonSize,
+        screenCenter + Vector2(screenX / 4, 0.0f) - buttonSize / 2 - padding * 2, buttonSize,
         ReloadMenu);
 
     std::vector<std::string> highscores = SaveManager::get_scores();
@@ -119,20 +119,20 @@ void SceneLoader::LoadHighScores()
 void SceneLoader::LoadOptions()
 {
     TextureManager::GetManager()->LoadTexture("ScoreBG", "Textures/UI/ScoreBG.dds");
-    const float screenX = Rect::GetResolutionRatio().x;
-    const float screenY = Rect::GetResolutionRatio().y;
+    const float screenX = static_cast<float>(Rect::GetResolutionRatio().x);
+    const float screenY = static_cast<float>(Rect::GetResolutionRatio().y);
     const Vector2 screenCenter = Rect::GetScreenCenter();
     const Vector2 backButtonSize(150, 50);
     const Vector2 buttonSize(200, 75);
     const Vector2 titleSize(400, 100);
     const Vector2 buttonPaddingHorizontal(50, 0);
     const Vector2 buttonPaddingVertical(0, 50);
-    const Vector2 paddingHorizontal(screenX / 4, 0);
-    const Vector2 paddingVertical(0, screenY / 5);
+    const Vector2 paddingHorizontal(screenX / 4, 0.0f);
+    const Vector2 paddingVertical(0.0f, screenY / 5);
 
     Scene* options = new Scene();
     Button* back = new Button(TextureManager::GetManager()->GetTexture("Button"), "Back", 
-        screenCenter + Vector2(screenX / 4, 0) - backButtonSize / 2 - paddingVertical * 2,
+        screenCenter + Vector2(screenX / 4, 0.0f) - backButtonSize / 2 - paddingVertical * 2,
         backButtonSize,
         ReloadMenu);
 
@@ -240,8 +240,8 @@ void SceneLoader::FillBackground(Scene* scene)
     const float screenY = Rect::GetResolutionRatio().y;
 
     const int textureSize = 400;
-    for (int x = 0; x < screenX; x += textureSize)
-        for (int y = 0; y < screenY; y += textureSize)
+    for (float x = 0; x < screenX; x += textureSize)
+        for (float y = 0; y < screenY; y += textureSize)
         {
             Sprite* img = new Sprite(TextureManager::GetManager()->GetTexture("BGTexture"), Vector2(textureSize, textureSize));
             GameObject* temp = new GameObject(Vector2(x, y));
@@ -280,7 +280,7 @@ void SceneLoader::LoadUI()
         LevelManager::GetManager()->SetCurrentLevelText(txt);
 
     Button* lives = new Button(TextureManager::GetManager()->GetTexture("ScoreBoard"), std::to_string(0),
-        Vector2(50, screenY - 75), Vector2(100, 50), [] {});
+        Vector2(50.0f, screenY - 75), Vector2(100, 50), [] {});
     lives->SetName("Lives");
     UI->Add(lives);
 

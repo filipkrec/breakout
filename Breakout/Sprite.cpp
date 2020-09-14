@@ -12,8 +12,8 @@ Sprite::Sprite(Sprite& other)
 
 void Sprite::Render()
 {
-	m_rect.x = GetPosition().x;
-	m_rect.y = GetPosition().y;
+	m_rect.x = static_cast<int>(GetPosition().x);
+	m_rect.y = static_cast<int>(GetPosition().y);
 	SDL_RenderCopy(TextureManager::GetManager()->GetRenderer(), m_texture, NULL, &m_rect.SDLRect());
 }
 
@@ -29,6 +29,6 @@ Vector2 Sprite::GetPosition()
 
 void Sprite::SetSize(Vector2 size)
 {
-	m_rect.w = size.x;
-	m_rect.h = size.y;
+	m_rect.w = static_cast<int>(size.x);
+	m_rect.h = static_cast<int>(size.y);
 }

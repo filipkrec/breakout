@@ -54,7 +54,7 @@ void Physics::ResolveBallCollision(BoxCollision* collidedRect)
 void Physics::Move()
 {
 	Vector2 moveVector = Vector2::AngleToVec(m_angle);
-	moveVector.Multiply(m_speed);
+	moveVector.Multiply(static_cast<float>(m_speed));
 
 	m_parent->Translate(moveVector);
 

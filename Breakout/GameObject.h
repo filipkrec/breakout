@@ -7,7 +7,7 @@
 #include "BoxCollision.h"
 #include "CircleCollision.h"
 #include <iostream>
-#include <vector>=
+#include <vector>
 
 class GameObject : public Component
 {

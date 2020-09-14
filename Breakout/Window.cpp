@@ -39,10 +39,10 @@ Window::Window(Vector2 size)
 	Uint32 flag = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
 	m_window = SDL_CreateWindow("SDL Test", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, size.x, size.y, flag);
+		SDL_WINDOWPOS_CENTERED, static_cast<int>(size.x), static_cast<int>(size.y), flag);
 
-    Rect::SetRatio(Vector2(size.x, size.y));
-    Rect::SetResolutionRatio(Vector2(size.x, size.y));
+    Rect::SetRatio(size);
+    Rect::SetResolutionRatio(size);
 
 	//renderer
 	TextureManager::GetManager()->SetRenderer(SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED));

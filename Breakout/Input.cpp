@@ -23,8 +23,8 @@ void Input::ProcessInput()
             if (m_event.window.event == SDL_WINDOWEVENT_RESIZED)
             {
                 m_windowEvent = true;
-                m_windowEventValues.x = m_event.window.data1;
-                m_windowEventValues.y = m_event.window.data2;
+                m_windowEventValues.x = static_cast<float>(m_event.window.data1);
+                m_windowEventValues.y = static_cast<float>(m_event.window.data2);
             }
             break;
         case SDL_MOUSEBUTTONDOWN:

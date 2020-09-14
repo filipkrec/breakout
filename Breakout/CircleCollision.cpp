@@ -40,7 +40,7 @@ void CircleCollision::Collide()
 			{
 				if (m_collided.size() == 2)
 				{
-					int test = m_collided.size();
+					int test = static_cast<int>(m_collided.size());
 				}
 
 				static_cast<GameObject*>(this->GetParent())->AllowCollisionProcess();

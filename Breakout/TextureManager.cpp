@@ -71,7 +71,7 @@ void TextureManager::LoadTexture(std::string name, std::string imgLink)
 		catch (int e)
 		{
 #ifdef _DEBUG
-			std::cout << "Unsupported image format" <<std::endl;
+			std::cout << "ERROR: "<< e << "Unsupported image format" <<std::endl;
 #endif
 		}
 		SDL_UnlockSurface(temp);

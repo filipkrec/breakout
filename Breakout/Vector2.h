@@ -9,20 +9,23 @@ struct Vector2
 
 	Vector2() { x = 0; y = 0; }
 	Vector2(float X, float Y) { x = X; y = Y; }
+	Vector2(int X, int Y) { x = static_cast<float>(X); y = static_cast<float>(Y); }
 
 	static Vector2 Zero() { return Vector2(0, 0); }
 
 	static float DistanceSqr(Vector2 A, Vector2 B) { return pow(A.x - B.x, 2) + pow(A.y - B.y, 2); }
 	static Vector2 minDistance(Vector2 Origin, Vector2 A, Vector2 B) { return DistanceSqr(Origin, A) < DistanceSqr(Origin, B) ? A : B; }
 
-	static float toRadians(int degrees)
+	static float toRadians(float degrees)
 	{
-		return degrees * (M_PI / 180.0f);
+		const double pi = M_PI;
+		return degrees * (static_cast<float>(pi) / 180.0f);
 	}
 
 	static float toDegrees(float radians)
 	{
-		return radians * (180.0f / M_PI);
+		const double pi = M_PI;
+		return radians * (180.0f / static_cast<float>(pi));
 	}
 
 	static float Length(Vector2 vec)
@@ -40,7 +43,7 @@ struct Vector2
 		return deg;
 	}
 
-	static Vector2 AngleToVec(int angle)
+	static Vector2 AngleToVec(float angle)
 	{
 		float rads = toRadians(angle);
 		Vector2 result;

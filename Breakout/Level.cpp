@@ -13,10 +13,14 @@ Level::~Level()
 }
 
 Level::Level()
+	: m_wallTexture(0),m_rowSpacing(0),m_rowCount(0),m_columnSpacing(0),m_columnCount(0),
+	m_board(0),m_arena(0)
 {
 }
 
 Level::Level(std::string xmlFile)
+	: m_wallTexture(0), m_rowSpacing(0), m_rowCount(0), m_columnSpacing(0), m_columnCount(0),
+	m_board(0), m_arena(0)
 {
 	Load(xmlFile);
 }
@@ -28,7 +32,7 @@ void Level::Load(std::string xmlFile)
 
 	using namespace tinyxml2;
 	XMLDocument doc;
-	if (doc.LoadFile(xmlFile.c_str()) != XML_SUCCESS)
+	if (doc.LoadFile(xmlFile.c_str()) != XMLError::XML_SUCCESS)
 	{
 #ifdef _DEBUG
 		std::cout << "ERROR: load failed - " << xmlFile << std::endl;

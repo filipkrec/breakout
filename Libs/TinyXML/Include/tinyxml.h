@@ -519,7 +519,7 @@ namespace tinyxml2
     };
 
     // WARNING: must match XMLDocument::_errorNames[]
-    enum XMLError {
+    enum class XMLError : unsigned long {
         XML_SUCCESS = 0,
         XML_NO_ATTRIBUTE,
         XML_WRONG_ATTRIBUTE_TYPE,
@@ -1342,7 +1342,7 @@ namespace tinyxml2
         XMLError QueryIntAttribute(const char* name, int* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryIntValue(value);
         }
@@ -1351,7 +1351,7 @@ namespace tinyxml2
         XMLError QueryUnsignedAttribute(const char* name, unsigned int* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryUnsignedValue(value);
         }
@@ -1360,7 +1360,7 @@ namespace tinyxml2
         XMLError QueryInt64Attribute(const char* name, int64_t* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryInt64Value(value);
         }
@@ -1369,7 +1369,7 @@ namespace tinyxml2
         XMLError QueryUnsigned64Attribute(const char* name, uint64_t* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryUnsigned64Value(value);
         }
@@ -1378,7 +1378,7 @@ namespace tinyxml2
         XMLError QueryBoolAttribute(const char* name, bool* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryBoolValue(value);
         }
@@ -1386,7 +1386,7 @@ namespace tinyxml2
         XMLError QueryDoubleAttribute(const char* name, double* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryDoubleValue(value);
         }
@@ -1394,7 +1394,7 @@ namespace tinyxml2
         XMLError QueryFloatAttribute(const char* name, float* value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             return a->QueryFloatValue(value);
         }
@@ -1403,10 +1403,10 @@ namespace tinyxml2
         XMLError QueryStringAttribute(const char* name, const char** value) const {
             const XMLAttribute* a = FindAttribute(name);
             if (!a) {
-                return XML_NO_ATTRIBUTE;
+                return XMLError::XML_NO_ATTRIBUTE;
             }
             *value = a->Value();
-            return XML_SUCCESS;
+            return XMLError::XML_SUCCESS;
         }
 
 
@@ -1667,7 +1667,7 @@ namespace tinyxml2
 
 
         // internal:
-        enum ElementClosingType {
+        enum class ElementClosingType {
             OPEN,		// <foo>
             CLOSED,		// <foo/>
             CLOSING		// </foo>
@@ -1701,7 +1701,7 @@ namespace tinyxml2
     };
 
 
-    enum Whitespace {
+    enum class Whitespace {
         PRESERVE_WHITESPACE,
         COLLAPSE_WHITESPACE
     };
@@ -1724,7 +1724,7 @@ namespace tinyxml2
         friend class XMLUnknown;
     public:
         /// constructor
-        XMLDocument(bool processEntities = true, Whitespace whitespaceMode = PRESERVE_WHITESPACE);
+        XMLDocument(bool processEntities = true, Whitespace whitespaceMode = Whitespace::PRESERVE_WHITESPACE);
         ~XMLDocument();
 
         virtual XMLDocument* ToDocument() {
@@ -1874,12 +1874,12 @@ namespace tinyxml2
         void DeleteNode(XMLNode* node);
 
         void ClearError() {
-            SetError(XML_SUCCESS, 0, 0);
+            SetError(XMLError::XML_SUCCESS, 0, 0);
         }
 
         /// Return true if there was an error parsing the document.
         bool Error() const {
-            return _errorID != XML_SUCCESS;
+            return _errorID != XMLError::XML_SUCCESS;
         }
         /// Return the errorID.
         XMLError  ErrorID() const {
@@ -1953,7 +1953,7 @@ namespace tinyxml2
         MemPoolT< sizeof(XMLText) >		 _textPool;
         MemPoolT< sizeof(XMLComment) >	 _commentPool;
 
-        static const char* _errorNames[XML_ERROR_COUNT];
+        static const char* _errorNames[19];
 
         void Parse();
 

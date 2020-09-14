@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL.h";
+#include "SDL.h"
 #include "Vector2.h"
 #include "TextureManager.h"
 #include "Rect.h"

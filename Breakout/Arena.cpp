@@ -187,7 +187,7 @@ void Arena::LoadBricks(std::string layout,const std::vector<Brick*>& brickTypes)
        
 
             currentColumn++;
-            i += currentBrick->GetId().size();
+            i += static_cast<int>(currentBrick->GetId().size());
         }
         else
         {

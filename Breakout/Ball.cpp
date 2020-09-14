@@ -23,7 +23,7 @@ void Ball::SetSpeed(int speed)
     }
 }
 
-void Ball::SetAngle(int angle)
+void Ball::SetAngle(float angle)
 {
     if (GetComponent<Physics>())
     {

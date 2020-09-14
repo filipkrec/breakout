@@ -14,8 +14,8 @@ BoxCollision::BoxCollision(BoxCollision& other)
 
 const Rect& BoxCollision::GetCollisionRect()
 {
-	m_rect.x = m_parent->GetPosition().x;
-	m_rect.y = m_parent->GetPosition().y;
+	m_rect.x = static_cast<int>(m_parent->GetPosition().x);
+	m_rect.y = static_cast<int>(m_parent->GetPosition().y);
 	return m_rect;
 }
 
@@ -67,8 +67,8 @@ bool BoxCollision::CheckPointCollision(const Vector2& point)
 
 void BoxCollision::SetSize(Vector2 size)
 {
-	m_rect.w = size.x;
-	m_rect.h = size.y;
+	m_rect.w = static_cast<int>(size.x);
+	m_rect.h = static_cast<int>(size.y);
 }
 
 
@@ -85,8 +85,8 @@ BoxCollision::Side BoxCollision::GetCollidingSide(Component& circleComp)
 
 	if (phys) //calc tunneling prevention
 	{
-		Vector2 backtrackVec = Vector2::AngleToVec(phys->GetAngle()) * -phys->GetSpeed();
-		float radius = circle->GetRadius();
+		Vector2 backtrackVec = Vector2::AngleToVec(phys->GetAngle()) * static_cast<float>(-phys->GetSpeed());
+		float radius = static_cast<float>(circle->GetRadius());
 		float circleDistanceX = abs((circleCenter.x + radius) - (rect.x + rect.w / 2));
 		float circleDistanceY = abs((circleCenter.y + radius) - (rect.y + rect.h / 2));
 		while (circleDistanceX < radius + rect.w/2 && circleDistanceY < radius + rect.h/2)
